@@ -1,0 +1,75 @@
+<resources>
+    <string name="app_name">Football Match Schedule</string>
+    <string name="title_activity_main">Football Leagues</string>
+    <string name="title_activity_league_details">League Details</string>
+    <string name="action_search">Search</string>
+    <string name="league_img_details">League Image Details</string>
+    <string name="logo_team_1">Logo Team 1</string>
+    <string name="logo_team_2">Logo Team 2</string>
+    <string name="vs">Vs</string>
+    <string name="prev_matches">Prev Matches</string>
+    <string name="next_matches">Next Matches</string>
+    <string name="tanggal">Minggu, 25 April 2019</string>
+    <string name="team1">Team 1</string>
+    <string name="team2">Team 2</string>
+    <string name="sport">Sport</string>
+    <string name="country">Country</string>
+    <string name="website">Website</string>
+    <string name="skor">0</string>
+    <string name="error_load_data">Periksa koneksi internet anda.</string>
+    <string name="textKiri">Text Kiri</string>
+    <string name="textTengah">Text Tengah</string>
+    <string name="textKanan">Text Kanan</string>
+    <string name="title_activity_matchs_details">MatchsDetailsActivity</string>
+    <string name="no_data">Data not Found.</string>
+    <string name="formation">Formation</string>
+    <string name="goal">Goal</string>
+    <string name="lineup_goal_keeper">Lineup Goal Keeper</string>
+    <string name="lineup_defense">Lineup Defense</string>
+    <string name="lineup_mid_field">Lineup Mid Field</string>
+    <string name="lineup_forward">Lineup Forward</string>
+    <string name="lineup_subtitutes">Lineup Subtitutes</string>
+    <string name="red_cards">Red Cards</string>
+    <string name="yellow_cards">Yellow Cards</string>
+    <string name="title_activity_search">Search</string>
+    <string name="search_hint">Type this to search</string>
+
+    <string-array name="league_id">
+        <item>4328</item>
+        <item>4334</item>
+        <item>4331</item>
+        <item>4332</item>
+        <item>4335</item>
+        <item>4346</item>
+        <item>4512</item>
+        <item>4356</item>
+        <item>4330</item>
+        <item>4396</item>
+    </string-array>
+
+    <string-array name="league_name">
+        <item>English Premier League</item>
+        <item>French Ligue 1</item>
+        <item>German Bundesliga</item>
+        <item>Italian Serie A</item>
+        <item>Spanish La Liga</item>
+        <item>American Major League Soccer</item>
+        <item>UEFA Super Cup</item>
+        <item>Australian A-League</item>
+        <item>Scottish Premier League</item>
+        <item>English League 1</item>
+    </string-array>
+
+    <string-array name="league_image">
+        <item>https://www.thesportsdb.com/images/media/league/badge/i6o0kh1549879062.png/preview</item>
+        <item>https://www.thesportsdb.com/images/media/league/badge/8f5jmf1516458074.png/preview</item>
+        <item>https://www.thesportsdb.com/images/media/league/badge/0j55yv1534764799.png/preview</item>
+        <item>https://www.thesportsdb.com/images/media/league/badge/ocy2fe1566216901.png/preview</item>
+        <item>https://www.thesportsdb.com/images/media/league/badge/7onmyv1534768460.png/preview</item>
+        <item>https://www.thesportsdb.com/images/media/league/badge/dqo6r91549878326.png/preview</item>
+        <item>https://www.thesportsdb.com/images/media/league/badge/1eimvx1551123834.png/preview</item>
+        <item>https://www.thesportsdb.com/images/media/league/badge/sfhanl1547383730.png/preview</item>
+        <item>https://www.thesportsdb.com/images/media/league/badge/vw72bl1534096708.png/preview</item>
+        <item>https://www.thesportsdb.com/images/media/league/badge/vm1qlp1535986713.png/preview</item>
+    </string-array>
+</resources>

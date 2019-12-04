@@ -1,0 +1,40 @@
+<resources>
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/primaryColor</item>
+        <item name="colorPrimaryDark">@color/primaryDarkColor</item>
+    </style>
+
+    <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="colorPrimary">@color/splashBackgroundColor</item>
+        <item name="colorPrimaryDark">@color/splashBackgroundColor</item>
+        <item name="android:windowBackground">@drawable/splash_activity_background</item>
+    </style>
+
+    <style name="MainTheme" parent="AppTheme">
+        <item name="android:windowAnimationStyle">@null</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="TextContent" parent="@style/TextAppearance.AppCompat">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="TextContent.Small">
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="TextContent.White">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+</resources>

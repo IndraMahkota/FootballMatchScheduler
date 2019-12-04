@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context="com.indramahkota.footballmatchschedule.ui.detail.MatchDetailsActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
+            app:contentScrim="?attr/colorPrimary"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:toolbarId="@+id/toolbar">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="?actionBarSize"
+                android:paddingBottom="?actionBarSize">
+
+                <TextView
+                    android:id="@+id/tvDate"
+                    style="@style/TextContent.White"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:text="@string/tanggal"/>
+
+                <TextView
+                    android:id="@+id/tvVs"
+                    style="@style/TextContent.Small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/vs"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvDate"/>
+
+                <TextView
+                    android:id="@+id/tvSkorTeam1"
+                    style="@style/TextContent.Small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="20dp"
+                    app:layout_constraintEnd_toStartOf="@id/tvVs"
+                    app:layout_constraintRight_toLeftOf="@id/tvVs"
+                    app:layout_constraintTop_toBottomOf="@+id/tvDate"
+                    android:text="@string/skor"/>
+
+                <TextView
+                    android:id="@+id/tvSkorTeam2"
+                    style="@style/TextContent.Small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="5dp"
+                    app:layout_constraintLeft_toRightOf="@id/tvVs"
+                    app:layout_constraintStart_toEndOf="@id/tvVs"
+                    app:layout_constraintTop_toBottomOf="@+id/tvDate"
+                    android:text="@string/skor"/>
+
+                <TextView
+                    android:id="@+id/tvTeam1Name"
+                    style="@style/TextContent.Small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:paddingBottom="20dp"
+                    app:layout_constraintEnd_toEndOf="@+id/ivTeam1Logo"
+                    app:layout_constraintStart_toStartOf="@+id/ivTeam1Logo"
+                    app:layout_constraintTop_toBottomOf="@+id/ivTeam1Logo"
+                    android:text="@string/team1"/>
+
+                <ImageView
+                    android:id="@+id/ivTeam1Logo"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="35dp"
+                    android:contentDescription="@string/logo_team_1"
+                    android:src="@drawable/image_error"
+                    app:layout_constraintEnd_toStartOf="@+id/tvSkorTeam1"
+                    app:layout_constraintHorizontal_bias="0.70"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvDate"/>
+
+                <TextView
+                    android:id="@+id/tvTeam2Name"
+                    style="@style/TextContent.Small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:paddingBottom="20dp"
+                    app:layout_constraintEnd_toEndOf="@+id/ivTeam2Logo"
+                    app:layout_constraintStart_toStartOf="@+id/ivTeam2Logo"
+                    app:layout_constraintTop_toBottomOf="@+id/ivTeam2Logo"
+                    android:text="@string/team2"/>
+
+                <ImageView
+                    android:id="@+id/ivTeam2Logo"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="35dp"
+                    android:contentDescription="@string/logo_team_2"
+                    android:src="@drawable/image_error"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.30"
+                    app:layout_constraintStart_toEndOf="@+id/tvSkorTeam2"
+                    app:layout_constraintTop_toBottomOf="@+id/tvDate"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:paddingTop="32dp" >
+
+            <include
+                android:id="@+id/formation"
+                layout="@layout/layout_text_views"/>
+
+            <include
+                android:id="@+id/goal_details"
+                layout="@layout/layout_text_views"/>
+
+            <include
+                android:id="@+id/lineup_goal_keeper"
+                layout="@layout/layout_text_views"/>
+
+            <include
+                android:id="@+id/lineup_defense"
+                layout="@layout/layout_text_views"/>
+
+            <include
+                android:id="@+id/lineup_mid_field"
+                layout="@layout/layout_text_views"/>
+
+            <include
+                android:id="@+id/lineup_forward"
+                layout="@layout/layout_text_views"/>
+
+            <include
+                android:id="@+id/lineup_substitutes"
+                layout="@layout/layout_text_views"/>
+
+            <include
+                android:id="@+id/red_cards"
+                layout="@layout/layout_text_views"/>
+
+            <include
+                android:id="@+id/yellow_cards"
+                layout="@layout/layout_text_views"/>
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/fab_margin"
+        app:layout_anchor="@id/app_bar"
+        app:layout_anchorGravity="bottom|end"
+        app:srcCompat="@drawable/ic_favorite_white"/>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

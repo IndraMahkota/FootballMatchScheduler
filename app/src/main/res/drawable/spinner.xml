@@ -1,0 +1,112 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:viewportWidth="100"
+    android:viewportHeight="100"
+    android:width="200dp"
+    android:height="200dp">
+    <group
+        android:pivotX="50"
+        android:pivotY="50">
+        <path
+            android:pathData="M50 24H50A3 6 0 0 1 53 30V30A3 6 0 0 1 50 36H50A3 6 0 0 1 47 30V30A3 6 0 0 1 50 24Z"
+            android:fillColor="#FE718D"
+            android:fillAlpha="0.0833333" />
+    </group>
+    <group
+        android:rotation="30"
+        android:pivotX="50"
+        android:pivotY="50">
+        <path
+            android:pathData="M50 24H50A3 6 0 0 1 53 30V30A3 6 0 0 1 50 36H50A3 6 0 0 1 47 30V30A3 6 0 0 1 50 24Z"
+            android:fillColor="#FE718D"
+            android:fillAlpha="0.166667" />
+    </group>
+    <group
+        android:rotation="60"
+        android:pivotX="50"
+        android:pivotY="50">
+        <path
+            android:pathData="M50 24H50A3 6 0 0 1 53 30V30A3 6 0 0 1 50 36H50A3 6 0 0 1 47 30V30A3 6 0 0 1 50 24Z"
+            android:fillColor="#FE718D"
+            android:fillAlpha="0.25" />
+    </group>
+    <group
+        android:rotation="90"
+        android:pivotX="50"
+        android:pivotY="50">
+        <path
+            android:pathData="M50 24H50A3 6 0 0 1 53 30V30A3 6 0 0 1 50 36H50A3 6 0 0 1 47 30V30A3 6 0 0 1 50 24Z"
+            android:fillColor="#FE718D"
+            android:fillAlpha="0.333333" />
+    </group>
+    <group
+        android:rotation="120"
+        android:pivotX="50"
+        android:pivotY="50">
+        <path
+            android:pathData="M50 24H50A3 6 0 0 1 53 30V30A3 6 0 0 1 50 36H50A3 6 0 0 1 47 30V30A3 6 0 0 1 50 24Z"
+            android:fillColor="#FE718D"
+            android:fillAlpha="0.416667" />
+    </group>
+    <group
+        android:rotation="150"
+        android:pivotX="50"
+        android:pivotY="50">
+        <path
+            android:pathData="M50 24H50A3 6 0 0 1 53 30V30A3 6 0 0 1 50 36H50A3 6 0 0 1 47 30V30A3 6 0 0 1 50 24Z"
+            android:fillColor="#FE718D"
+            android:fillAlpha="0.5" />
+    </group>
+    <group
+        android:rotation="180"
+        android:pivotX="50"
+        android:pivotY="50">
+        <path
+            android:pathData="M50 24H50A3 6 0 0 1 53 30V30A3 6 0 0 1 50 36H50A3 6 0 0 1 47 30V30A3 6 0 0 1 50 24Z"
+            android:fillColor="#FE718D"
+            android:fillAlpha="0.583333" />
+    </group>
+    <group
+        android:rotation="210"
+        android:pivotX="50"
+        android:pivotY="50">
+        <path
+            android:pathData="M50 24H50A3 6 0 0 1 53 30V30A3 6 0 0 1 50 36H50A3 6 0 0 1 47 30V30A3 6 0 0 1 50 24Z"
+            android:fillColor="#FE718D"
+            android:fillAlpha="0.666667" />
+    </group>
+    <group
+        android:rotation="240"
+        android:pivotX="50"
+        android:pivotY="50">
+        <path
+            android:pathData="M50 24H50A3 6 0 0 1 53 30V30A3 6 0 0 1 50 36H50A3 6 0 0 1 47 30V30A3 6 0 0 1 50 24Z"
+            android:fillColor="#FE718D"
+            android:fillAlpha="0.75" />
+    </group>
+    <group
+        android:rotation="270"
+        android:pivotX="50"
+        android:pivotY="50">
+        <path
+            android:pathData="M50 24H50A3 6 0 0 1 53 30V30A3 6 0 0 1 50 36H50A3 6 0 0 1 47 30V30A3 6 0 0 1 50 24Z"
+            android:fillColor="#FE718D"
+            android:fillAlpha="0.833333" />
+    </group>
+    <group
+        android:rotation="300"
+        android:pivotX="50"
+        android:pivotY="50">
+        <path
+            android:pathData="M50 24H50A3 6 0 0 1 53 30V30A3 6 0 0 1 50 36H50A3 6 0 0 1 47 30V30A3 6 0 0 1 50 24Z"
+            android:fillColor="#FE718D"
+            android:fillAlpha="0.916667" />
+    </group>
+    <group
+        android:rotation="330"
+        android:pivotX="50"
+        android:pivotY="50">
+        <path
+            android:pathData="M50 24H50A3 6 0 0 1 53 30V30A3 6 0 0 1 50 36H50A3 6 0 0 1 47 30V30A3 6 0 0 1 50 24Z"
+            android:fillColor="#FE718D" />
+    </group>
+</vector>
