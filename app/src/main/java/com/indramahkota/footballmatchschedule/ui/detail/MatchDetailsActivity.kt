@@ -41,14 +41,6 @@ class MatchDetailsActivity : AppCompatActivity() {
 
         matchDetail = intent.getParcelableExtra(PARCELABLE_MATCH_DATA)!!
 
-        Glide.with(this)
-            .load(R.drawable.spinner_animation)
-            .into(ivTeam1Logo)
-
-        Glide.with(this)
-            .load(R.drawable.spinner_animation)
-            .into(ivTeam2Logo)
-
         fab.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
@@ -66,7 +58,6 @@ class MatchDetailsActivity : AppCompatActivity() {
                 else -> {}
             }
         })
-        matchDetail.idEvent?.let { viewModel.loadMatchDetails(it) }
 
         viewModel.homeTeamDetails.observe(this, Observer<Resource<TeamDetailsApiResponse?>>{
             when (it.status) {
@@ -74,7 +65,6 @@ class MatchDetailsActivity : AppCompatActivity() {
                     if(it.data?.teams != null) {
                         Glide.with(this)
                             .load(it.data.teams[0].strTeamBadge ?: R.drawable.image_error)
-                            .placeholder(R.drawable.spinner_animation)
                             .error(R.drawable.image_error)
                             .transform(RoundedCorners(8))
                             .into(ivTeam1Logo)
@@ -91,7 +81,6 @@ class MatchDetailsActivity : AppCompatActivity() {
                     if(it.data?.teams != null) {
                         Glide.with(this)
                             .load(it.data.teams[0].strTeamBadge ?: R.drawable.image_error)
-                            .placeholder(R.drawable.spinner_animation)
                             .error(R.drawable.image_error)
                             .transform(RoundedCorners(8))
                             .into(ivTeam2Logo)
@@ -101,12 +90,13 @@ class MatchDetailsActivity : AppCompatActivity() {
                 else -> {}
             }
         })
+
+        matchDetail.idEvent?.let { viewModel.loadMatchDetails(it) }
+        matchDetail.idHomeTeam?.let { viewModel.loadHomeTeamDetails(it) }
+        matchDetail.idAwayTeam?.let { viewModel.loadAwayTeamDetails(it) }
     }
 
     private fun initializeUi(data: MatchDetailsApiModel) {
-        data.idHomeTeam?.let { viewModel.loadHomeTeamDetails(it) }
-        data.idAwayTeam?.let { viewModel.loadAwayTeamDetails(it) }
-
         tvDate.text = formatDateFromString(data.dateEvent ?: "")
         tvSkorTeam1.text = data.intHomeScore ?: "-"
         tvSkorTeam2.text = data.intAwayScore ?: "-"

@@ -9,6 +9,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <include
+            android:id="@+id/no_data"
+            layout="@layout/item_no_data"
+            android:visibility="gone" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_category"
             android:layout_width="match_parent"
@@ -17,10 +22,6 @@
             android:padding="10dp"
             tools:listitem="@layout/item_match_tab"/>
 
-        <include
-            android:id="@+id/no_data"
-            layout="@layout/item_no_data"
-            android:visibility="gone" />
 
         <com.facebook.shimmer.ShimmerFrameLayout
             android:id="@+id/shimmer_view_container"

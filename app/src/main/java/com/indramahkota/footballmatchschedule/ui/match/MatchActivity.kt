@@ -17,7 +17,11 @@ import com.indramahkota.footballmatchschedule.R
 import com.indramahkota.footballmatchschedule.data.source.Resource
 import com.indramahkota.footballmatchschedule.data.source.Status
 import com.indramahkota.footballmatchschedule.data.source.remote.apimodel.LeagueApiModel
+import com.indramahkota.footballmatchschedule.data.source.remote.apimodel.MatchDetailsApiModel
+import com.indramahkota.footballmatchschedule.data.source.remote.apimodel.TeamDetailsApiModel
 import com.indramahkota.footballmatchschedule.data.source.remote.apiresponse.LeagueDetailsApiResponse
+import com.indramahkota.footballmatchschedule.data.source.remote.apiresponse.MatchDetailsApiResponse
+import com.indramahkota.footballmatchschedule.data.source.remote.apiresponse.TeamDetailsApiResponse
 import com.indramahkota.footballmatchschedule.ui.match.adapter.TabPagerAdapter
 import com.indramahkota.footballmatchschedule.ui.match.fragment.NextMatchesFragment
 import com.indramahkota.footballmatchschedule.ui.match.fragment.PrevMatchesFragment
@@ -39,6 +43,14 @@ class MatchActivity : AppCompatActivity() {
     private lateinit var league: LeagueApiModel
     private lateinit var viewModel: LeagueDetailsViewModel
 
+    private var allTeamLoaded = false
+    private var nextMatchesLoaded = false
+    private var prevMatchesLoaded = false
+
+    private var allTeamData: MutableList<TeamDetailsApiModel> = mutableListOf()
+    private var nextMatchesData: MutableList<MatchDetailsApiModel> = mutableListOf()
+    private var prevMatchesData: MutableList<MatchDetailsApiModel> = mutableListOf()
+
     @set:Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
@@ -52,10 +64,6 @@ class MatchActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.title = league.strLeague
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
-        Glide.with(this)
-            .load(R.drawable.spinner_animation)
-            .into(image_league)
 
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(LeagueDetailsViewModel::class.java)
         viewModel.leagueDetails.observe(this, Observer<Resource<LeagueDetailsApiResponse?>>{
@@ -76,8 +84,58 @@ class MatchActivity : AppCompatActivity() {
                 else -> {}
             }
         })
-        viewModel.loadLeagueDetails(league.idLeague)
 
+        viewModel.allTeamInLeague.observe(this, Observer<Resource<TeamDetailsApiResponse?>>{
+            when (it.status) {
+                Status.SUCCESS -> {
+                    if(it.data?.teams != null) {
+                        allTeamData.addAll(it.data.teams)
+                    }
+                    allTeamLoaded = true
+                    checkData()
+                }
+                Status.ERROR -> toast(R.string.error_load_data)
+                else -> {}
+            }
+        })
+
+        viewModel.nextMatches.observe(this, Observer<Resource<MatchDetailsApiResponse?>>{
+            when (it.status) {
+                Status.SUCCESS -> {
+                    if(it.data?.events != null) {
+                        nextMatchesData.addAll(it.data.events)
+                    }
+                    nextMatchesLoaded = true
+                    checkData()
+                }
+                Status.ERROR -> toast(R.string.error_load_data)
+                else -> {}
+            }
+        })
+
+        viewModel.prevMatches.observe(this, Observer<Resource<MatchDetailsApiResponse?>>{
+            when (it.status) {
+                Status.SUCCESS -> {
+                    if(it.data?.events != null) {
+                        prevMatchesData.addAll(it.data.events)
+                    }
+                    prevMatchesLoaded = true
+                    checkData()
+                }
+                Status.ERROR -> toast(R.string.error_load_data)
+                else -> {}
+            }
+        })
+
+        viewModel.loadAllDetails(league.idLeague)
+    }
+
+    private fun checkData() {
+        if(allTeamLoaded && nextMatchesLoaded && prevMatchesLoaded)
+            setupFragment()
+    }
+
+    private fun setupFragment() {
         val listTitle = arrayOf(
             resources.getString(R.string.prev_matches),
             resources.getString(R.string.next_matches)

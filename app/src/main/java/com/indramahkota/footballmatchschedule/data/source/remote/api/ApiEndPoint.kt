@@ -18,6 +18,11 @@ interface ApiEndPoint {
         @Query("id") matchId : String
     ) : Call<TeamDetailsApiResponse>
 
+    @GET("lookup_all_teams.php")
+    fun getAllTeamByLeagueId(
+        @Query("id") leagueId : String
+    ) : Call<TeamDetailsApiResponse>
+
     @GET("lookupevent.php")
     fun getMatchDetailById(
         @Query("id") matchId : String

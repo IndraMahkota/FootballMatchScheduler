@@ -118,4 +118,25 @@ class FLeagueRepository @Inject constructor( private val api: ApiEndPoint ) : FL
 
         return result
     }
+
+    override fun loadAllTeamByLeagueId(id: String): LiveData<Resource<TeamDetailsApiResponse?>> {
+        val result: MutableLiveData<Resource<TeamDetailsApiResponse?>> = MutableLiveData()
+        result.postValue(Resource.loading(null))
+
+        val call: Call<TeamDetailsApiResponse> = api.getAllTeamByLeagueId(id)
+        call.enqueue(object : Callback<TeamDetailsApiResponse?> {
+            override fun onResponse(call: Call<TeamDetailsApiResponse?>, response: Response<TeamDetailsApiResponse?> ) {
+                if (response.body() != null) {
+                    val teamDetailsApiResponse = TeamDetailsApiResponse(response.body()!!.teams)
+                    result.postValue(Resource.success(teamDetailsApiResponse))
+                }
+            }
+
+            override fun onFailure(call: Call<TeamDetailsApiResponse?>, t: Throwable ) {
+                result.postValue(Resource.error(TeamDetailsApiResponse(null)))
+            }
+        })
+
+        return result
+    }
 }
