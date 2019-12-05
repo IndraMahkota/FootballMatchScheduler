@@ -34,7 +34,7 @@ class NextMatchesFragment : Fragment() {
         }
     }
 
-    private lateinit var viewModel: LeagueDetailsViewModel
+    //private lateinit var viewModel: LeagueDetailsViewModel
     private lateinit var linearLayoutManager: LinearLayoutManager
     private lateinit var matchAdapter: MatchAdapter
 
@@ -53,8 +53,8 @@ class NextMatchesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel = ViewModelProviders.of(this, viewModelFactory).get(LeagueDetailsViewModel::class.java)
-        viewModel.newNextMatchesData.observe(this, Observer<List<MatchModel>>{
+        val viewModel = activity?.let { ViewModelProviders.of(it).get(LeagueDetailsViewModel::class.java) }
+        viewModel?.newNextMatchesData?.observe(this, Observer<List<MatchModel>> {
             if(it.isNotEmpty()){
                 linearLayoutManager = LinearLayoutManager(view.context)
                 rv_category.layoutManager = linearLayoutManager

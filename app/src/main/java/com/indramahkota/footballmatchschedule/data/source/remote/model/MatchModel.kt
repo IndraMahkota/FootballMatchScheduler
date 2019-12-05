@@ -5,6 +5,9 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class MatchModel(
+    val idEvent: String,
+    val idHomeTeam: String,
+    val idAwayTeam: String,
     val dateEvent: String,
     val strHomeTeam: String,
     val strAwayTeam: String,

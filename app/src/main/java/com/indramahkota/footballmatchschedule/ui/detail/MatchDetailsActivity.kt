@@ -14,6 +14,7 @@ import com.indramahkota.footballmatchschedule.data.source.Status
 import com.indramahkota.footballmatchschedule.data.source.remote.apimodel.MatchDetailsApiModel
 import com.indramahkota.footballmatchschedule.data.source.remote.apiresponse.MatchDetailsApiResponse
 import com.indramahkota.footballmatchschedule.data.source.remote.apiresponse.TeamDetailsApiResponse
+import com.indramahkota.footballmatchschedule.data.source.remote.model.MatchModel
 import com.indramahkota.footballmatchschedule.utilities.formatDateFromString
 import com.indramahkota.footballmatchschedule.viewmodel.MatchDetailsViewModel
 import dagger.android.AndroidInjection
@@ -28,7 +29,7 @@ class MatchDetailsActivity : AppCompatActivity() {
         const val PARCELABLE_MATCH_DATA = "parcelable_match_data"
     }
 
-    private lateinit var matchDetail: MatchDetailsApiModel
+    private lateinit var matchDetail: MatchModel
     private lateinit var viewModel: MatchDetailsViewModel
 
     @set:Inject
@@ -91,9 +92,9 @@ class MatchDetailsActivity : AppCompatActivity() {
             }
         })
 
-        matchDetail.idEvent?.let { viewModel.loadMatchDetails(it) }
-        matchDetail.idHomeTeam?.let { viewModel.loadHomeTeamDetails(it) }
-        matchDetail.idAwayTeam?.let { viewModel.loadAwayTeamDetails(it) }
+        matchDetail.idEvent.let { viewModel.loadMatchDetails(it) }
+        matchDetail.idHomeTeam.let { viewModel.loadHomeTeamDetails(it) }
+        matchDetail.idAwayTeam.let { viewModel.loadAwayTeamDetails(it) }
     }
 
     private fun initializeUi(data: MatchDetailsApiModel) {

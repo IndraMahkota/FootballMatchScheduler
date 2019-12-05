@@ -67,10 +67,11 @@ class LeagueDetailsViewModel @Inject constructor(private val repository: FLeague
                 srcImgAwayTeam = listHelper[0].strTeamBadge.toString()
             }
 
-            newNextMatches.add(MatchModel(next[i].dateEvent ?: "",
-                next[i].strHomeTeam ?: "", next[i].strAwayTeam ?: "",
-                next[i].intHomeScore ?: "", next[i].intAwayScore ?: "",
-                srcImgHomeTeam, srcImgAwayTeam))
+            newNextMatches.add(MatchModel(next[i].idEvent ?: "",
+                next[i].idHomeTeam ?: "", next[i].idAwayTeam?: "",
+                next[i].dateEvent ?: "-", next[i].strHomeTeam ?: "-",
+                next[i].strAwayTeam ?: "-", next[i].intHomeScore ?: "-",
+                next[i].intAwayScore ?: "-", srcImgHomeTeam, srcImgAwayTeam))
         }
 
         newNextMatchesData.postValue(newNextMatches)
@@ -97,10 +98,11 @@ class LeagueDetailsViewModel @Inject constructor(private val repository: FLeague
                 srcImgAwayTeam = listHelper[0].strTeamBadge.toString()
             }
 
-            newPrevMatches.add(MatchModel(prev[i].dateEvent ?: "",
-                prev[i].strHomeTeam ?: "", prev[i].strAwayTeam ?: "",
-                prev[i].intHomeScore ?: "", prev[i].intAwayScore ?: "",
-                srcImgHomeTeam, srcImgAwayTeam))
+            newPrevMatches.add(MatchModel(prev[i].idEvent ?: "",
+                prev[i].idHomeTeam ?: "", prev[i].idAwayTeam?: "",
+                prev[i].dateEvent ?: "-",prev[i].strHomeTeam ?: "-",
+                prev[i].strAwayTeam ?: "-",prev[i].intHomeScore ?: "-",
+                prev[i].intAwayScore ?: "-", srcImgHomeTeam, srcImgAwayTeam))
         }
 
         newPrevMatchesData.postValue(newPrevMatches)

@@ -4,6 +4,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.indramahkota.footballmatchschedule.R
 import com.indramahkota.footballmatchschedule.data.source.remote.model.MatchModel
 import com.indramahkota.footballmatchschedule.utilities.formatDateFromString
@@ -33,6 +35,20 @@ class MatchAdapter(private val matchList: List<MatchModel>,
                 tvTeam2.text = match.strAwayTeam
                 tvSkorTeam1.text = match.intHomeScore
                 tvSkorTeam2.text = match.intAwayScore
+
+                Glide.with(this)
+                    .load(match.sourceHomeImage)
+                    .placeholder(R.drawable.spinner_animation)
+                    .error(R.drawable.image_error)
+                    .transform(RoundedCorners(8))
+                    .into(image_team1)
+
+                Glide.with(this)
+                    .load(match.sourceAwayImage)
+                    .placeholder(R.drawable.spinner_animation)
+                    .error(R.drawable.image_error)
+                    .transform(RoundedCorners(8))
+                    .into(image_team2)
             }
             itemView.setOnClickListener { listener(match) }
         }
