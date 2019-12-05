@@ -23,6 +23,7 @@ import javax.inject.Inject
 class PrevMatchesFragment : Fragment() {
     companion object {
         private const val ARG_SECTION_TITLE = "section_title"
+        private const val ARG_SAVE_DATA = "save_data"
 
         @JvmStatic
         fun newInstance(title: String): PrevMatchesFragment {
@@ -34,6 +35,7 @@ class PrevMatchesFragment : Fragment() {
         }
     }
 
+    private var matchsData = arrayListOf<MatchModel>()
     private lateinit var linearLayoutManager: LinearLayoutManager
     private lateinit var matchAdapter: MatchAdapter
 
@@ -43,6 +45,10 @@ class PrevMatchesFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidSupportInjection.inject(this)
         super.onCreate(savedInstanceState)
+
+        savedInstanceState?.run {
+            matchsData.addAll(savedInstanceState.getParcelableArrayList(ARG_SAVE_DATA)!!)
+        }
     }
 
     override fun onCreateView(
@@ -55,21 +61,41 @@ class PrevMatchesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        if(matchsData.isNotEmpty()){
+            initialize(view, matchsData)
+        } else {
+            getData(view)
+        }
+    }
+
+    private fun getData(view: View) {
         val viewModel = activity?.let { ViewModelProviders.of(it).get(LeagueDetailsViewModel::class.java) }
         viewModel?.newPrevMatchesData?.observe(this, Observer<List<MatchModel>> {
-            if(it.isNotEmpty()){
-                linearLayoutManager = LinearLayoutManager(view.context)
-                rv_category.layoutManager = linearLayoutManager
-                rv_category.setHasFixedSize(true)
-
-                matchAdapter = MatchAdapter(it){ matchModel ->
-                    startActivity(intentFor<MatchDetailsActivity>(PARCELABLE_MATCH_DATA to matchModel))
-                }
-                rv_category.adapter = matchAdapter
-            } else {
-                no_data.visibility = View.VISIBLE
-            }
-            shimmer_view_container.visibility = View.GONE
+            initialize(view, it)
         })
+    }
+
+    private fun initialize(view: View, it: List<MatchModel>) {
+        if(it.isNotEmpty()){
+            matchsData = ArrayList(it)
+
+            linearLayoutManager = LinearLayoutManager(view.context)
+            rv_category.layoutManager = linearLayoutManager
+            rv_category.setHasFixedSize(true)
+
+            matchAdapter = MatchAdapter(it){ matchModel ->
+                startActivity(intentFor<MatchDetailsActivity>(PARCELABLE_MATCH_DATA to matchModel))
+            }
+            rv_category.adapter = matchAdapter
+        } else {
+            no_data.visibility = View.VISIBLE
+        }
+
+        shimmer_view_container.visibility = View.GONE
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putParcelableArrayList(ARG_SAVE_DATA, matchsData)
     }
 }

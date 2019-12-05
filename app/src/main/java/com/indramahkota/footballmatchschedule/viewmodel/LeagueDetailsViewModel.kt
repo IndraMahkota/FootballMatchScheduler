@@ -1,5 +1,6 @@
 package com.indramahkota.footballmatchschedule.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
@@ -17,6 +18,8 @@ import javax.inject.Inject
 class LeagueDetailsViewModel @Inject constructor(private val repository: FLeagueRepository) :
     ViewModel() {
 
+    var nextHelper = arrayListOf<MatchModel>()
+    var prevHelper = arrayListOf<MatchModel>()
     var newNextMatchesData: MutableLiveData<List<MatchModel>> = MutableLiveData()
     var newPrevMatchesData: MutableLiveData<List<MatchModel>> = MutableLiveData()
 
@@ -82,6 +85,7 @@ class LeagueDetailsViewModel @Inject constructor(private val repository: FLeague
                 next[i].intAwayScore ?: "-", srcImgHomeTeam, srcImgAwayTeam))
         }
 
+        nextHelper = ArrayList(newNextMatches)
         newNextMatchesData.postValue(newNextMatches)
     }
 
@@ -121,6 +125,16 @@ class LeagueDetailsViewModel @Inject constructor(private val repository: FLeague
                 prev[i].intAwayScore ?: "-", srcImgHomeTeam, srcImgAwayTeam))
         }
 
+        prevHelper = ArrayList(newPrevMatches)
         newPrevMatchesData.postValue(newPrevMatches)
+    }
+
+    fun getAllMatchsData(): List<MatchModel>{
+        val arrayList = arrayListOf<MatchModel>()
+        arrayList.addAll(nextHelper)
+        arrayList.addAll(prevHelper)
+
+        Log.d("HHHH", arrayList.size.toString()+"1")
+        return arrayList
     }
 }

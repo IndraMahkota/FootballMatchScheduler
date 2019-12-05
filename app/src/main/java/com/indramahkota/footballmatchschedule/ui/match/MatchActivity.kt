@@ -3,6 +3,7 @@ package com.indramahkota.footballmatchschedule.ui.match
 import android.app.SearchManager
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
@@ -26,6 +27,7 @@ import com.indramahkota.footballmatchschedule.ui.match.adapter.TabPagerAdapter
 import com.indramahkota.footballmatchschedule.ui.match.fragment.NextMatchesFragment
 import com.indramahkota.footballmatchschedule.ui.match.fragment.PrevMatchesFragment
 import com.indramahkota.footballmatchschedule.ui.search.SearchActivity
+import com.indramahkota.footballmatchschedule.ui.search.SearchActivity.Companion.PARCELABLE_DATA
 import com.indramahkota.footballmatchschedule.ui.search.SearchActivity.Companion.STRING_DATA
 import com.indramahkota.footballmatchschedule.viewmodel.LeagueDetailsViewModel
 import dagger.android.AndroidInjection
@@ -163,7 +165,12 @@ class MatchActivity : AppCompatActivity() {
         searchView.queryHint = resources.getString(R.string.search_hint)
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
-                startActivity(intentFor<SearchActivity>(STRING_DATA to query))
+                startActivity(intentFor<SearchActivity>(
+                    STRING_DATA to query,
+                    PARCELABLE_DATA to viewModel.getAllMatchsData()))
+
+                Log.d("HHHH", viewModel.getAllMatchsData().size.toString()+"2")
+
                 return true
             }
 
