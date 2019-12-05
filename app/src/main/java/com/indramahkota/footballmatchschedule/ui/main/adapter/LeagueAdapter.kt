@@ -11,12 +11,13 @@ import com.indramahkota.footballmatchschedule.data.source.remote.apimodel.League
 import kotlinx.android.extensions.LayoutContainer
 import org.jetbrains.anko.AnkoContext
 
-class LeagueAdapter (private val items: List<LeagueApiModel>, private val listener: (LeagueApiModel) -> Unit) :
-    RecyclerView.Adapter<LeagueAdapter.ViewHolder>() {
+class LeagueAdapter (
+    private val items: List<LeagueApiModel>, private val listener: (LeagueApiModel) -> Unit
+) : RecyclerView.Adapter<LeagueAdapter.ViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder(
-        ItemsLeague().createView(
-        AnkoContext.Companion.create(parent.context, parent)))
+    override fun onCreateViewHolder(
+        parent: ViewGroup, viewType: Int
+    ) = ViewHolder( ItemsLeague().createView(AnkoContext.Companion.create(parent.context, parent)))
 
     override fun getItemCount(): Int = items.size
 
@@ -24,8 +25,10 @@ class LeagueAdapter (private val items: List<LeagueApiModel>, private val listen
         holder.bind(items[position], listener)
     }
 
-    inner class ViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView),
-        LayoutContainer {
+    inner class ViewHolder(
+        override val containerView: View
+    ) : RecyclerView.ViewHolder(containerView), LayoutContainer {
+
         private val image = itemView.findViewById<ImageView>(ItemsLeague.clubImage)
         private val name = itemView.findViewById<TextView>(ItemsLeague.clubName)
 
@@ -35,9 +38,7 @@ class LeagueAdapter (private val items: List<LeagueApiModel>, private val listen
                 .placeholder(R.drawable.spinner_animation)
                 .error(R.drawable.image_error)
                 .into(image)
-
             name.text = item.strLeague
-
             itemView.setOnClickListener { listener(item) }
         }
     }

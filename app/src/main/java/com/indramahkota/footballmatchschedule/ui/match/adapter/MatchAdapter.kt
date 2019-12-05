@@ -34,7 +34,6 @@ class MatchAdapter(private val matchList: List<MatchDetailsApiModel>?,
                 tvSkorTeam1.text = match?.intHomeScore ?: "-"
                 tvSkorTeam2.text = match?.intAwayScore ?: "-"
             }
-
             itemView.setOnClickListener { listener(match) }
         }
     }
