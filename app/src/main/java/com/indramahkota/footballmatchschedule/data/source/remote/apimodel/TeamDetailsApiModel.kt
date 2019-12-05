@@ -1,7 +1,10 @@
 package com.indramahkota.footballmatchschedule.data.source.remote.apimodel
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 data class TeamDetailsApiModel(
     @SerializedName("idLeague")
     val idLeague: String? = null,
@@ -103,4 +106,4 @@ data class TeamDetailsApiModel(
     val strWebsite: String? = null,
     @SerializedName("strYoutube")
     val strYoutube: String? = null
-)
+) : Parcelable
