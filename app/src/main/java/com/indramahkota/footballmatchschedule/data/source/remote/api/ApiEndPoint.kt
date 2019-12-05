@@ -2,7 +2,6 @@ package com.indramahkota.footballmatchschedule.data.source.remote.api
 
 import com.indramahkota.footballmatchschedule.data.source.remote.apiresponse.LeagueDetailsApiResponse
 import com.indramahkota.footballmatchschedule.data.source.remote.apiresponse.MatchDetailsApiResponse
-import com.indramahkota.footballmatchschedule.data.source.remote.apiresponse.SearchMatchsApiResponse
 import com.indramahkota.footballmatchschedule.data.source.remote.apiresponse.TeamDetailsApiResponse
 import retrofit2.Call
 import retrofit2.http.GET
