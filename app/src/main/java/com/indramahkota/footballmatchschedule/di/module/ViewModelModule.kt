@@ -4,10 +4,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.indramahkota.footballmatchschedule.di.scope.ViewModelKey
 import com.indramahkota.footballmatchschedule.di.factory.ViewModelFactory
-import com.indramahkota.footballmatchschedule.viewmodel.LeagueViewModel
+import com.indramahkota.footballmatchschedule.viewmodel.LeagueDetailsViewModel
 import com.indramahkota.footballmatchschedule.viewmodel.MatchDetailsViewModel
-import com.indramahkota.footballmatchschedule.viewmodel.MatchViewModel
-import com.indramahkota.footballmatchschedule.viewmodel.SearchMatchsViewModel
+import com.indramahkota.footballmatchschedule.viewmodel.MatchListViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -19,21 +18,16 @@ abstract class ViewModelModule {
 
     @Binds
     @IntoMap
-    @ViewModelKey(MatchViewModel::class)
-    protected abstract fun matchViewModel(matchViewModel: MatchViewModel?): ViewModel?
+    @ViewModelKey(MatchListViewModel::class)
+    protected abstract fun matchViewModel(matchListViewModel: MatchListViewModel?): ViewModel?
 
     @Binds
     @IntoMap
-    @ViewModelKey(LeagueViewModel::class)
-    protected abstract fun leagueViewModel(leagueViewModel: LeagueViewModel?): ViewModel?
+    @ViewModelKey(LeagueDetailsViewModel::class)
+    protected abstract fun leagueViewModel(leagueDetailsViewModel: LeagueDetailsViewModel?): ViewModel?
 
     @Binds
     @IntoMap
     @ViewModelKey(MatchDetailsViewModel::class)
     protected abstract fun matchDetailsViewModel(matchDetailsViewModel: MatchDetailsViewModel?): ViewModel?
-
-    @Binds
-    @IntoMap
-    @ViewModelKey(SearchMatchsViewModel::class)
-    protected abstract fun searchViewModel(searchMatchsViewModel: SearchMatchsViewModel?): ViewModel?
 }

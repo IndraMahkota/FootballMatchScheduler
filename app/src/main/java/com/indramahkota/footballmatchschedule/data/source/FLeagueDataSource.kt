@@ -12,5 +12,4 @@ interface FLeagueDataSource {
     fun loadLastMatchesByLeagueId(id: String): LiveData<Resource<MatchDetailsApiResponse?>>
     fun loadMatchDetailById(id: String): LiveData<Resource<MatchDetailsApiResponse?>>
     fun loadTeamDetailById(id: String): LiveData<Resource<TeamDetailsApiResponse?>>
-    fun searchMatchEvent(query: String): LiveData<Resource<SearchMatchsApiResponse?>>
 }

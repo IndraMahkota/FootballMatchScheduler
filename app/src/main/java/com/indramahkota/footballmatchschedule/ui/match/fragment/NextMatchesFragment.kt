@@ -18,7 +18,7 @@ import com.indramahkota.footballmatchschedule.ui.detail.MatchDetailsActivity
 import com.indramahkota.footballmatchschedule.ui.detail.MatchDetailsActivity.Companion.PARCELABLE_MATCH_DATA
 import com.indramahkota.footballmatchschedule.ui.match.MatchActivity.Companion.PARCELABLE_LEAGUE_DATA
 import com.indramahkota.footballmatchschedule.ui.match.adapter.MatchAdapter
-import com.indramahkota.footballmatchschedule.viewmodel.MatchViewModel
+import com.indramahkota.footballmatchschedule.viewmodel.MatchListViewModel
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.content_match_tab.*
 import org.jetbrains.anko.support.v4.intentFor
@@ -39,7 +39,7 @@ class NextMatchesFragment : Fragment() {
         }
     }
 
-    private lateinit var viewModel: MatchViewModel
+    private lateinit var viewModel: MatchListViewModel
     private lateinit var linearLayoutManager: LinearLayoutManager
     private lateinit var matchAdapter: MatchAdapter
 
@@ -62,7 +62,10 @@ class NextMatchesFragment : Fragment() {
         rv_category.layoutManager = linearLayoutManager
         rv_category.setHasFixedSize(true)
 
-        viewModel = ViewModelProviders.of(this, viewModelFactory).get(MatchViewModel::class.java)
+        matchAdapter = MatchAdapter(null){}
+        rv_category.adapter = matchAdapter
+
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(MatchListViewModel::class.java)
         viewModel.nextMatches.observe(this, Observer<Resource<MatchDetailsApiResponse?>>{
             when (it.status) {
                 Status.SUCCESS -> {

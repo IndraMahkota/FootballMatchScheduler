@@ -33,9 +33,4 @@ interface ApiEndPoint {
     fun getLastMatchesByLeagueId(
         @Query("id") leagueId : String
     ) : Call<MatchDetailsApiResponse>
-
-    @GET("searchevents.php")
-    fun searchEventByQuery(
-        @Query("e") query : String
-    ) : Call<SearchMatchsApiResponse>
 }
