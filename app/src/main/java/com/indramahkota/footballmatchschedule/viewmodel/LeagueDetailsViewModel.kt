@@ -48,7 +48,6 @@ class LeagueDetailsViewModel @Inject constructor(private val repository: FLeague
 
     fun setNewNextMatchesData(all: List<TeamDetailsApiModel>,
                               next: List<MatchDetailsApiModel>) {
-
         val newNextMatches: MutableList<MatchModel> = mutableListOf()
 
         for (i in next.indices) {
@@ -79,7 +78,6 @@ class LeagueDetailsViewModel @Inject constructor(private val repository: FLeague
 
     fun setNewPrevMatchesData(all: List<TeamDetailsApiModel>,
                               prev: List<MatchDetailsApiModel>) {
-
         val newPrevMatches: MutableList<MatchModel> = mutableListOf()
 
         for (i in prev.indices) {
