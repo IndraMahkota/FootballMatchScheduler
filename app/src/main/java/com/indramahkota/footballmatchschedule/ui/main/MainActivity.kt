@@ -6,9 +6,9 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.indramahkota.footballmatchschedule.R
 import com.indramahkota.footballmatchschedule.data.source.remote.apimodel.LeagueApiModel
-import com.indramahkota.footballmatchschedule.ui.detail.MatchDetailsActivity
 import com.indramahkota.footballmatchschedule.ui.main.adapter.LeagueAdapter
 import com.indramahkota.footballmatchschedule.ui.match.MatchActivity
+import com.indramahkota.footballmatchschedule.ui.match.MatchActivity.Companion.PARCELABLE_LEAGUE_DATA
 import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.matchParent
 import org.jetbrains.anko.recyclerview.v7.recyclerView
@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity() {
                 layoutManager = LinearLayoutManager(context)
                 addItemDecoration(DividerItemDecoration(context, 1))
                 adapter = LeagueAdapter(getData()) {
-                    startActivity(intentFor<MatchActivity>(MatchDetailsActivity.PARCELABLE_MATCH_DATA to it))
+                    startActivity(intentFor<MatchActivity>(PARCELABLE_LEAGUE_DATA to it))
                 }
             }
         }

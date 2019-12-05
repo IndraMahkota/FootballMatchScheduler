@@ -1,7 +1,6 @@
 package com.indramahkota.footballmatchschedule.ui.detail
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -72,7 +71,6 @@ class MatchDetailsActivity : AppCompatActivity() {
         viewModel.homeTeamDetails.observe(this, Observer<Resource<TeamDetailsApiResponse?>>{
             when (it.status) {
                 Status.SUCCESS -> {
-                    Log.d("TESTING_FAIL", "home scs")
                     if(it.data?.teams != null) {
                         Glide.with(this)
                             .load(it.data.teams[0].strTeamBadge ?: R.drawable.image_error)
@@ -85,13 +83,11 @@ class MatchDetailsActivity : AppCompatActivity() {
                 Status.ERROR -> toast(R.string.error_load_data)
                 else -> {}
             }
-            Log.d("TESTING_FAIL", "home")
         })
 
         viewModel.awayTeamDetails.observe(this, Observer<Resource<TeamDetailsApiResponse?>>{
             when (it.status) {
                 Status.SUCCESS -> {
-                    Log.d("TESTING_FAIL", "away scs")
                     if(it.data?.teams != null) {
                         Glide.with(this)
                             .load(it.data.teams[0].strTeamBadge ?: R.drawable.image_error)
@@ -104,15 +100,12 @@ class MatchDetailsActivity : AppCompatActivity() {
                 Status.ERROR -> toast(R.string.error_load_data)
                 else -> {}
             }
-            Log.d("TESTING_FAIL", "away")
         })
     }
 
     private fun initializeUi(data: MatchDetailsApiModel) {
         data.idHomeTeam?.let { viewModel.loadHomeTeamDetails(it) }
         data.idAwayTeam?.let { viewModel.loadAwayTeamDetails(it) }
-
-        Log.d("TESTING_FAIL", "shit")
 
         tvDate.text = formatDateFromString(data.dateEvent ?: "")
         tvSkorTeam1.text = data.intHomeScore ?: "-"
