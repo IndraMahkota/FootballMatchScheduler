@@ -3,7 +3,6 @@ package com.indramahkota.footballmatchschedule.ui.match
 import android.app.SearchManager
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
@@ -17,13 +16,12 @@ import com.google.android.material.tabs.TabLayout
 import com.indramahkota.footballmatchschedule.R
 import com.indramahkota.footballmatchschedule.data.source.Resource
 import com.indramahkota.footballmatchschedule.data.source.Status
-import com.indramahkota.footballmatchschedule.data.source.remote.model.LeagueModel
 import com.indramahkota.footballmatchschedule.data.source.remote.apimodel.MatchDetailsApiModel
 import com.indramahkota.footballmatchschedule.data.source.remote.apimodel.TeamDetailsApiModel
 import com.indramahkota.footballmatchschedule.data.source.remote.apiresponse.LeagueDetailsApiResponse
 import com.indramahkota.footballmatchschedule.data.source.remote.apiresponse.MatchDetailsApiResponse
 import com.indramahkota.footballmatchschedule.data.source.remote.apiresponse.TeamDetailsApiResponse
-import com.indramahkota.footballmatchschedule.data.source.remote.model.MatchModel
+import com.indramahkota.footballmatchschedule.data.source.remote.model.LeagueModel
 import com.indramahkota.footballmatchschedule.ui.match.adapter.TabPagerAdapter
 import com.indramahkota.footballmatchschedule.ui.match.fragment.NextMatchesFragment
 import com.indramahkota.footballmatchschedule.ui.match.fragment.PrevMatchesFragment
@@ -53,9 +51,6 @@ class MatchActivity : AppCompatActivity() {
     private var nextMatchesData: MutableList<MatchDetailsApiModel> = mutableListOf()
     private var prevMatchesData: MutableList<MatchDetailsApiModel> = mutableListOf()
 
-    private var newNextMatchesData: MutableList<MatchModel> = mutableListOf()
-    private var newPrevMatchesData: MutableList<MatchModel> = mutableListOf()
-
     @set:Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
@@ -69,6 +64,22 @@ class MatchActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.title = league.strLeague
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        val listTitle = arrayOf(
+            resources.getString(R.string.prev_matches),
+            resources.getString(R.string.next_matches)
+        )
+
+        val listFragment = mutableListOf(
+            PrevMatchesFragment.newInstance(listTitle[0]),
+            NextMatchesFragment.newInstance(listTitle[1])
+        )
+
+        val tabPagerAdapter = TabPagerAdapter(supportFragmentManager, listFragment, listTitle)
+        tabPagerAdapter.notifyDataSetChanged()
+        viewPager.adapter = tabPagerAdapter
+        val tabs: TabLayout = findViewById(R.id.tabLayout)
+        tabs.setupWithViewPager(viewPager)
 
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(LeagueDetailsViewModel::class.java)
         viewModel.leagueDetails.observe(this, Observer<Resource<LeagueDetailsApiResponse?>>{
@@ -96,7 +107,7 @@ class MatchActivity : AppCompatActivity() {
                         allTeamData.addAll(it.data.teams)
                     }
                     allTeamLoaded = true
-                    checkData()
+                    setData()
                 }
                 Status.ERROR -> toast(R.string.error_load_data)
                 else -> {}
@@ -110,7 +121,7 @@ class MatchActivity : AppCompatActivity() {
                         nextMatchesData.addAll(it.data.events)
                     }
                     nextMatchesLoaded = true
-                    checkData()
+                    setData()
                 }
                 Status.ERROR -> toast(R.string.error_load_data)
                 else -> {}
@@ -124,7 +135,7 @@ class MatchActivity : AppCompatActivity() {
                         prevMatchesData.addAll(it.data.events)
                     }
                     prevMatchesLoaded = true
-                    checkData()
+                    setData()
                 }
                 Status.ERROR -> toast(R.string.error_load_data)
                 else -> {}
@@ -134,79 +145,11 @@ class MatchActivity : AppCompatActivity() {
         viewModel.loadAllDetails(league.idLeague)
     }
 
-    private fun checkData() {
-        if(allTeamLoaded && nextMatchesLoaded && prevMatchesLoaded)
-            setupFragment()
-    }
-
-    private fun setupFragment() {
-        val listTitle = arrayOf(
-            resources.getString(R.string.prev_matches),
-            resources.getString(R.string.next_matches)
-        )
-
-        for (i in nextMatchesData.indices) {
-            val srcImgHomeTeam: String
-            val srcImgAwayTeam: String
-
-            val listHelper = allTeamData.filter {
-                it.idTeam.equals(nextMatchesData[i].idHomeTeam) ||
-                        it.idTeam.equals(nextMatchesData[i].idAwayTeam)
-            }
-
-            if(listHelper[0].idTeam.equals(nextMatchesData[i].idHomeTeam)){
-                srcImgHomeTeam = listHelper[0].strTeamBadge.toString()
-                srcImgAwayTeam = listHelper[1].strTeamBadge.toString()
-            } else {
-                srcImgHomeTeam = listHelper[1].strTeamBadge.toString()
-                srcImgAwayTeam = listHelper[0].strTeamBadge.toString()
-            }
-
-            newNextMatchesData.add(MatchModel(nextMatchesData[i].dateEvent ?: "",
-                nextMatchesData[i].strHomeTeam ?: "", nextMatchesData[i].strAwayTeam ?: "",
-                nextMatchesData[i].intHomeScore ?: "", nextMatchesData[i].intAwayScore ?: "",
-                srcImgHomeTeam, srcImgAwayTeam))
+    private fun setData() {
+        if(allTeamLoaded && nextMatchesLoaded && prevMatchesLoaded) {
+            viewModel.setNewNextMatchesData(allTeamData, nextMatchesData)
+            viewModel.setNewPrevMatchesData(allTeamData, prevMatchesData)
         }
-
-        for (i in prevMatchesData.indices) {
-            val srcImgHomeTeam: String
-            val srcImgAwayTeam: String
-
-            val listHelper = allTeamData.filter {
-                it.idTeam.equals(prevMatchesData[i].idHomeTeam) ||
-                        it.idTeam.equals(prevMatchesData[i].idAwayTeam)
-            }
-
-            if(listHelper[0].idTeam.equals(prevMatchesData[i].idHomeTeam)){
-                srcImgHomeTeam = listHelper[0].strTeamBadge.toString()
-                srcImgAwayTeam = listHelper[1].strTeamBadge.toString()
-            } else {
-                srcImgHomeTeam = listHelper[1].strTeamBadge.toString()
-                srcImgAwayTeam = listHelper[0].strTeamBadge.toString()
-            }
-
-            newPrevMatchesData.add(MatchModel(prevMatchesData[i].dateEvent ?: "",
-                prevMatchesData[i].strHomeTeam ?: "", prevMatchesData[i].strAwayTeam ?: "",
-                prevMatchesData[i].intHomeScore ?: "", prevMatchesData[i].intAwayScore ?: "",
-                srcImgHomeTeam, srcImgAwayTeam))
-        }
-
-        Log.d("TESTING", nextMatchesData.size.toString())
-        Log.d("TESTING", newNextMatchesData.size.toString())
-
-        Log.d("TESTING", prevMatchesData.size.toString())
-        Log.d("TESTING", newPrevMatchesData.size.toString())
-
-        val listFragment = mutableListOf(
-            PrevMatchesFragment.newInstance(listTitle[0]),
-            NextMatchesFragment.newInstance(listTitle[1])
-        )
-
-        val tabPagerAdapter = TabPagerAdapter(supportFragmentManager, listFragment, listTitle)
-        tabPagerAdapter.notifyDataSetChanged()
-        viewPager.adapter = tabPagerAdapter
-        val tabs: TabLayout = findViewById(R.id.tabLayout)
-        tabs.setupWithViewPager(viewPager)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
