@@ -3,6 +3,7 @@ package com.indramahkota.footballmatchschedule.data.source
 import androidx.lifecycle.LiveData
 import com.indramahkota.footballmatchschedule.data.source.remote.apiresponse.LeagueDetailsApiResponse
 import com.indramahkota.footballmatchschedule.data.source.remote.apiresponse.MatchDetailsApiResponse
+import com.indramahkota.footballmatchschedule.data.source.remote.apiresponse.SearchMatchsApiResponse
 import com.indramahkota.footballmatchschedule.data.source.remote.apiresponse.TeamDetailsApiResponse
 
 interface FLeagueDataSource {
@@ -11,5 +12,5 @@ interface FLeagueDataSource {
     fun loadLastMatchesByLeagueId(id: String): LiveData<Resource<MatchDetailsApiResponse?>>
     fun loadMatchDetailById(id: String): LiveData<Resource<MatchDetailsApiResponse?>>
     fun loadTeamDetailById(id: String): LiveData<Resource<TeamDetailsApiResponse?>>
-    fun searchMatchEvent(query: String): LiveData<Resource<MatchDetailsApiResponse?>>
+    fun searchMatchEvent(query: String): LiveData<Resource<SearchMatchsApiResponse?>>
 }

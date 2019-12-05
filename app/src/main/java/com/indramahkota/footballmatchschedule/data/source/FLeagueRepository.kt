@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.indramahkota.footballmatchschedule.data.source.remote.api.ApiEndPoint
 import com.indramahkota.footballmatchschedule.data.source.remote.apiresponse.LeagueDetailsApiResponse
 import com.indramahkota.footballmatchschedule.data.source.remote.apiresponse.MatchDetailsApiResponse
+import com.indramahkota.footballmatchschedule.data.source.remote.apiresponse.SearchMatchsApiResponse
 import com.indramahkota.footballmatchschedule.data.source.remote.apiresponse.TeamDetailsApiResponse
 import retrofit2.Call
 import retrofit2.Callback
@@ -119,21 +120,21 @@ class FLeagueRepository @Inject constructor( private val api: ApiEndPoint ) : FL
         return result
     }
 
-    override fun searchMatchEvent(query: String): LiveData<Resource<MatchDetailsApiResponse?>> {
-        val result: MutableLiveData<Resource<MatchDetailsApiResponse?>> = MutableLiveData()
+    override fun searchMatchEvent(query: String): LiveData<Resource<SearchMatchsApiResponse?>> {
+        val result: MutableLiveData<Resource<SearchMatchsApiResponse?>> = MutableLiveData()
         result.postValue(Resource.loading(null))
 
-        val call: Call<MatchDetailsApiResponse> = api.searchEventByQuery(query)
-        call.enqueue(object : Callback<MatchDetailsApiResponse?> {
-            override fun onResponse(call: Call<MatchDetailsApiResponse?>, response: Response<MatchDetailsApiResponse?> ) {
+        val call: Call<SearchMatchsApiResponse> = api.searchEventByQuery(query)
+        call.enqueue(object : Callback<SearchMatchsApiResponse?> {
+            override fun onResponse(call: Call<SearchMatchsApiResponse?>, response: Response<SearchMatchsApiResponse?> ) {
                 if (response.body() != null) {
-                    val matchApiResponse = MatchDetailsApiResponse(response.body()!!.events)
-                    result.postValue(Resource.success(matchApiResponse))
+                    val searchApiResponse = SearchMatchsApiResponse(response.body()!!.event)
+                    result.postValue(Resource.success(searchApiResponse))
                 }
             }
 
-            override fun onFailure(call: Call<MatchDetailsApiResponse?>, t: Throwable ) {
-                result.postValue(Resource.error(MatchDetailsApiResponse(null)))
+            override fun onFailure(call: Call<SearchMatchsApiResponse?>, t: Throwable ) {
+                result.postValue(Resource.error(SearchMatchsApiResponse(null)))
             }
         })
 

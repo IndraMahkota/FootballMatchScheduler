@@ -11,11 +11,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.indramahkota.footballmatchschedule.R
 import com.indramahkota.footballmatchschedule.data.source.Resource
 import com.indramahkota.footballmatchschedule.data.source.Status
-import com.indramahkota.footballmatchschedule.data.source.remote.apiresponse.MatchDetailsApiResponse
+import com.indramahkota.footballmatchschedule.data.source.remote.apiresponse.SearchMatchsApiResponse
 import com.indramahkota.footballmatchschedule.ui.detail.MatchDetailsActivity
 import com.indramahkota.footballmatchschedule.ui.detail.MatchDetailsActivity.Companion.PARCELABLE_MATCH_DATA
 import com.indramahkota.footballmatchschedule.ui.match.adapter.MatchAdapter
-import com.indramahkota.footballmatchschedule.viewmodel.SearchViewModel
+import com.indramahkota.footballmatchschedule.viewmodel.SearchMatchsViewModel
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.content_match_tab.*
 import org.jetbrains.anko.intentFor
@@ -28,7 +28,7 @@ class SearchActivity : AppCompatActivity() {
         const val STRING_DATA = "string_data"
     }
 
-    private lateinit var viewModel: SearchViewModel
+    private lateinit var viewModel: SearchMatchsViewModel
     private lateinit var linearLayoutManager: LinearLayoutManager
     private lateinit var matchAdapter: MatchAdapter
 
@@ -48,12 +48,13 @@ class SearchActivity : AppCompatActivity() {
         rv_category.layoutManager = linearLayoutManager
         rv_category.setHasFixedSize(true)
 
-        viewModel = ViewModelProviders.of(this, viewModelFactory).get(SearchViewModel::class.java)
-        viewModel.searchEvent.observe(this, Observer<Resource<MatchDetailsApiResponse?>>{
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(SearchMatchsViewModel::class.java)
+        viewModel.searchEvent.observe(this, Observer<Resource<SearchMatchsApiResponse?>>{
             when (it.status) {
                 Status.SUCCESS -> {
-                    if(it.data?.events != null) {
-                        matchAdapter = MatchAdapter(it.data.events){ matchDetailsApiModel ->
+                    if(it.data?.event != null) {
+                        val searchResult = it.data.event.filter { matchDetailsApiModel -> matchDetailsApiModel.strSport.equals("Soccer") }
+                        matchAdapter = MatchAdapter(searchResult){ matchDetailsApiModel ->
                             startActivity(intentFor<MatchDetailsActivity>(PARCELABLE_MATCH_DATA to matchDetailsApiModel))
                         }
                         rv_category.adapter = matchAdapter

@@ -6,14 +6,14 @@ import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.indramahkota.footballmatchschedule.data.source.FLeagueRepository
 import com.indramahkota.footballmatchschedule.data.source.Resource
-import com.indramahkota.footballmatchschedule.data.source.remote.apiresponse.MatchDetailsApiResponse
+import com.indramahkota.footballmatchschedule.data.source.remote.apiresponse.SearchMatchsApiResponse
 import javax.inject.Inject
 
-class SearchViewModel @Inject constructor(private val repository: FLeagueRepository) :
+class SearchMatchsViewModel @Inject constructor(private val repository: FLeagueRepository) :
     ViewModel() {
 
     private val querySearch = MutableLiveData<String>()
-    var searchEvent: LiveData<Resource<MatchDetailsApiResponse?>> =
+    var searchEvent: LiveData<Resource<SearchMatchsApiResponse?>> =
         Transformations.switchMap(querySearch) { query: String ->
             repository.searchMatchEvent( query )
         }

@@ -7,7 +7,7 @@ import com.indramahkota.footballmatchschedule.di.factory.ViewModelFactory
 import com.indramahkota.footballmatchschedule.viewmodel.LeagueViewModel
 import com.indramahkota.footballmatchschedule.viewmodel.MatchDetailsViewModel
 import com.indramahkota.footballmatchschedule.viewmodel.MatchViewModel
-import com.indramahkota.footballmatchschedule.viewmodel.SearchViewModel
+import com.indramahkota.footballmatchschedule.viewmodel.SearchMatchsViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -34,6 +34,6 @@ abstract class ViewModelModule {
 
     @Binds
     @IntoMap
-    @ViewModelKey(SearchViewModel::class)
-    protected abstract fun searchViewModel(searchViewModel: SearchViewModel?): ViewModel?
+    @ViewModelKey(SearchMatchsViewModel::class)
+    protected abstract fun searchViewModel(searchMatchsViewModel: SearchMatchsViewModel?): ViewModel?
 }
