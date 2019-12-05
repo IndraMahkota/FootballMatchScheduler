@@ -36,10 +36,11 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:layout_marginEnd="10dp"
+        android:text="@string/team1"
         app:layout_constraintEnd_toStartOf="@+id/tvVs"
+        app:layout_constraintHorizontal_bias="0.40"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvDate"
-        android:text="@string/team1"/>
+        app:layout_constraintTop_toBottomOf="@+id/tvDate" />
 
     <TextView
         android:id="@+id/tvSkorTeam1"
@@ -47,10 +48,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="10dp"
+        android:text="@string/skor"
         app:layout_constraintEnd_toStartOf="@+id/tvVs"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvDate"
-        android:text="@string/skor"/>
+        app:layout_constraintTop_toBottomOf="@+id/tvDate" />
 
     <TextView
         android:id="@+id/tvTeam2"
@@ -58,10 +58,11 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="30dp"
+        android:text="@string/team2"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.60"
         app:layout_constraintStart_toEndOf="@+id/tvVs"
-        app:layout_constraintTop_toBottomOf="@+id/tvDate"
-        android:text="@string/team2"/>
+        app:layout_constraintTop_toBottomOf="@+id/tvDate" />
 
     <TextView
         android:id="@+id/tvSkorTeam2"
@@ -69,8 +70,29 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="5dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:text="@string/skor"
         app:layout_constraintStart_toEndOf="@+id/tvVs"
-        app:layout_constraintTop_toBottomOf="@+id/tvDate"
-        android:text="@string/skor"/>
+        app:layout_constraintTop_toBottomOf="@+id/tvDate" />
+
+    <ImageView
+        android:id="@+id/image_team1"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="5dp"
+        android:contentDescription="@string/league_img_details"
+        android:src="@drawable/spinner_animation"
+        app:layout_constraintBottom_toTopOf="@+id/tvTeam1"
+        app:layout_constraintEnd_toEndOf="@+id/tvTeam1"
+        app:layout_constraintStart_toStartOf="@+id/tvTeam1" />
+
+    <ImageView
+        android:id="@+id/image_team2"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="5dp"
+        android:contentDescription="@string/league_img_details"
+        android:src="@drawable/spinner_animation"
+        app:layout_constraintBottom_toTopOf="@+id/tvTeam2"
+        app:layout_constraintEnd_toEndOf="@+id/tvTeam2"
+        app:layout_constraintStart_toStartOf="@+id/tvTeam2" />
 </androidx.constraintlayout.widget.ConstraintLayout>

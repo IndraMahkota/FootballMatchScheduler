@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.indramahkota.footballmatchschedule.R
-import com.indramahkota.footballmatchschedule.data.source.remote.apimodel.LeagueApiModel
+import com.indramahkota.footballmatchschedule.data.source.remote.model.LeagueModel
 import com.indramahkota.footballmatchschedule.ui.main.adapter.LeagueAdapter
 import com.indramahkota.footballmatchschedule.ui.match.MatchActivity
 import com.indramahkota.footballmatchschedule.ui.match.MatchActivity.Companion.PARCELABLE_LEAGUE_DATA
@@ -31,12 +31,14 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun getData() : List<LeagueApiModel> {
-        val items: MutableList<LeagueApiModel> = mutableListOf()
+    private fun getData() : List<LeagueModel> {
+        val items: MutableList<LeagueModel> = mutableListOf()
         val idLeague = resources.getStringArray(R.array.league_id)
         val nameLeague = resources.getStringArray(R.array.league_name)
         val imageLeague = resources.getStringArray(R.array.league_image)
-        for (i in idLeague.indices) items.add(LeagueApiModel(idLeague[i], nameLeague[i], imageLeague[i]))
+        for (i in idLeague.indices) items.add(
+            LeagueModel( idLeague[i], nameLeague[i], imageLeague[i] )
+        )
         return items
     }
 }

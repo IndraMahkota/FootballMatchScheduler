@@ -7,12 +7,12 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.indramahkota.footballmatchschedule.R
-import com.indramahkota.footballmatchschedule.data.source.remote.apimodel.LeagueApiModel
+import com.indramahkota.footballmatchschedule.data.source.remote.model.LeagueModel
 import kotlinx.android.extensions.LayoutContainer
 import org.jetbrains.anko.AnkoContext
 
-class LeagueAdapter ( private val items: List<LeagueApiModel>,
-    private val listener: (LeagueApiModel) -> Unit ) : RecyclerView.Adapter<LeagueAdapter.ViewHolder>() {
+class LeagueAdapter (private val items: List<LeagueModel>,
+                     private val listener: (LeagueModel) -> Unit ) : RecyclerView.Adapter<LeagueAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder( parent: ViewGroup, viewType: Int
     ) = ViewHolder( ItemsLeague().createView(AnkoContext.Companion.create(parent.context, parent)))
@@ -30,7 +30,7 @@ class LeagueAdapter ( private val items: List<LeagueApiModel>,
         private val image = itemView.findViewById<ImageView>(ItemsLeague.clubImage)
         private val name = itemView.findViewById<TextView>(ItemsLeague.clubName)
 
-        fun bind(item: LeagueApiModel, listener: (LeagueApiModel) -> Unit) {
+        fun bind(item: LeagueModel, listener: (LeagueModel) -> Unit) {
             Glide.with(itemView.context)
                 .load(item.imgLeague)
                 .placeholder(R.drawable.spinner_animation)
