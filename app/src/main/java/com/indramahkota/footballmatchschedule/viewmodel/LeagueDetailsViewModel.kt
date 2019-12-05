@@ -51,20 +51,28 @@ class LeagueDetailsViewModel @Inject constructor(private val repository: FLeague
         val newNextMatches: MutableList<MatchModel> = mutableListOf()
 
         for (i in next.indices) {
-            val srcImgHomeTeam: String
-            val srcImgAwayTeam: String
-
             val listHelper = all.filter {
                 it.idTeam.equals(next[i].idHomeTeam) ||
                         it.idTeam.equals(next[i].idAwayTeam)
             }
 
-            if(listHelper[0].idTeam.equals(next[i].idHomeTeam)){
-                srcImgHomeTeam = listHelper[0].strTeamBadge.toString()
-                srcImgAwayTeam = listHelper[1].strTeamBadge.toString()
-            } else {
-                srcImgHomeTeam = listHelper[1].strTeamBadge.toString()
-                srcImgAwayTeam = listHelper[0].strTeamBadge.toString()
+            var srcImgHomeTeam = ""
+            var srcImgAwayTeam = ""
+
+            if(listHelper.size == 2) {
+                if(listHelper[0].idTeam.equals(next[i].idHomeTeam)){
+                    srcImgHomeTeam = listHelper[0].strTeamBadge ?: ""
+                    srcImgAwayTeam = listHelper[1].strTeamBadge ?: ""
+                } else {
+                    srcImgAwayTeam = listHelper[0].strTeamBadge ?: ""
+                    srcImgHomeTeam = listHelper[1].strTeamBadge ?: ""
+                }
+            } else if (listHelper.size == 1) {
+                if(listHelper[0].idTeam.equals(next[i].idHomeTeam)){
+                    srcImgHomeTeam = listHelper[0].strTeamBadge ?: ""
+                } else {
+                    srcImgAwayTeam = listHelper[0].strTeamBadge ?: ""
+                }
             }
 
             newNextMatches.add(MatchModel(next[i].idEvent ?: "",
@@ -82,20 +90,28 @@ class LeagueDetailsViewModel @Inject constructor(private val repository: FLeague
         val newPrevMatches: MutableList<MatchModel> = mutableListOf()
 
         for (i in prev.indices) {
-            val srcImgHomeTeam: String
-            val srcImgAwayTeam: String
-
             val listHelper = all.filter {
                 it.idTeam.equals(prev[i].idHomeTeam) ||
                         it.idTeam.equals(prev[i].idAwayTeam)
             }
 
-            if(listHelper[0].idTeam.equals(prev[i].idHomeTeam)){
-                srcImgHomeTeam = listHelper[0].strTeamBadge.toString()
-                srcImgAwayTeam = listHelper[1].strTeamBadge.toString()
-            } else {
-                srcImgHomeTeam = listHelper[1].strTeamBadge.toString()
-                srcImgAwayTeam = listHelper[0].strTeamBadge.toString()
+            var srcImgHomeTeam = ""
+            var srcImgAwayTeam = ""
+
+            if(listHelper.size == 2) {
+                if(listHelper[0].idTeam.equals(prev[i].idHomeTeam)){
+                    srcImgHomeTeam = listHelper[0].strTeamBadge ?: ""
+                    srcImgAwayTeam = listHelper[1].strTeamBadge ?: ""
+                } else {
+                    srcImgAwayTeam = listHelper[0].strTeamBadge ?: ""
+                    srcImgHomeTeam = listHelper[1].strTeamBadge ?: ""
+                }
+            } else if (listHelper.size == 1) {
+                if(listHelper[0].idTeam.equals(prev[i].idHomeTeam)){
+                    srcImgHomeTeam = listHelper[0].strTeamBadge ?: ""
+                } else {
+                    srcImgAwayTeam = listHelper[0].strTeamBadge ?: ""
+                }
             }
 
             newPrevMatches.add(MatchModel(prev[i].idEvent ?: "",
