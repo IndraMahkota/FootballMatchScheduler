@@ -3,7 +3,6 @@ package com.indramahkota.footballmatchschedule.data.source
 import androidx.lifecycle.LiveData
 import com.indramahkota.footballmatchschedule.data.source.remote.apiresponse.LeagueDetailsApiResponse
 import com.indramahkota.footballmatchschedule.data.source.remote.apiresponse.MatchDetailsApiResponse
-import com.indramahkota.footballmatchschedule.data.source.remote.apiresponse.SearchMatchsApiResponse
 import com.indramahkota.footballmatchschedule.data.source.remote.apiresponse.TeamDetailsApiResponse
 
 interface FLeagueDataSource {

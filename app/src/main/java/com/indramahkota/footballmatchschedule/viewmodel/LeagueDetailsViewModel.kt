@@ -9,7 +9,7 @@ import com.indramahkota.footballmatchschedule.data.source.Resource
 import com.indramahkota.footballmatchschedule.data.source.remote.apiresponse.LeagueDetailsApiResponse
 import javax.inject.Inject
 
-class LeagueViewModel @Inject constructor(private val repository: FLeagueRepository) :
+class LeagueDetailsViewModel @Inject constructor(private val repository: FLeagueRepository) :
     ViewModel() {
     private val leagueId = MutableLiveData<String>()
     var leagueDetails: LiveData<Resource<LeagueDetailsApiResponse?>> =

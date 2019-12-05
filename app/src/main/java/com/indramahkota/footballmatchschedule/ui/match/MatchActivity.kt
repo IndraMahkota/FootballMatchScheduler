@@ -23,7 +23,7 @@ import com.indramahkota.footballmatchschedule.ui.match.fragment.NextMatchesFragm
 import com.indramahkota.footballmatchschedule.ui.match.fragment.PrevMatchesFragment
 import com.indramahkota.footballmatchschedule.ui.search.SearchActivity
 import com.indramahkota.footballmatchschedule.ui.search.SearchActivity.Companion.STRING_DATA
-import com.indramahkota.footballmatchschedule.viewmodel.LeagueViewModel
+import com.indramahkota.footballmatchschedule.viewmodel.LeagueDetailsViewModel
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_details.*
 import org.jetbrains.anko.intentFor
@@ -37,7 +37,7 @@ class MatchActivity : AppCompatActivity() {
     }
 
     private lateinit var league: LeagueApiModel
-    private lateinit var viewModel: LeagueViewModel
+    private lateinit var viewModel: LeagueDetailsViewModel
 
     @set:Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -57,7 +57,7 @@ class MatchActivity : AppCompatActivity() {
             .load(R.drawable.spinner_animation)
             .into(image_league)
 
-        viewModel = ViewModelProviders.of(this, viewModelFactory).get(LeagueViewModel::class.java)
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(LeagueDetailsViewModel::class.java)
         viewModel.leagueDetails.observe(this, Observer<Resource<LeagueDetailsApiResponse?>>{
             when (it.status) {
                 Status.SUCCESS -> {

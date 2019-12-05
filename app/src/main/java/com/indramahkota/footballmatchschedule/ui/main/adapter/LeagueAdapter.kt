@@ -11,12 +11,10 @@ import com.indramahkota.footballmatchschedule.data.source.remote.apimodel.League
 import kotlinx.android.extensions.LayoutContainer
 import org.jetbrains.anko.AnkoContext
 
-class LeagueAdapter (
-    private val items: List<LeagueApiModel>, private val listener: (LeagueApiModel) -> Unit
-) : RecyclerView.Adapter<LeagueAdapter.ViewHolder>() {
+class LeagueAdapter ( private val items: List<LeagueApiModel>,
+    private val listener: (LeagueApiModel) -> Unit ) : RecyclerView.Adapter<LeagueAdapter.ViewHolder>() {
 
-    override fun onCreateViewHolder(
-        parent: ViewGroup, viewType: Int
+    override fun onCreateViewHolder( parent: ViewGroup, viewType: Int
     ) = ViewHolder( ItemsLeague().createView(AnkoContext.Companion.create(parent.context, parent)))
 
     override fun getItemCount(): Int = items.size
