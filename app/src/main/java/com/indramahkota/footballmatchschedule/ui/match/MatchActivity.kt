@@ -3,7 +3,6 @@ package com.indramahkota.footballmatchschedule.ui.match
 import android.app.SearchManager
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
@@ -34,6 +33,7 @@ import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_details.*
 import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.toast
+import java.util.*
 import javax.inject.Inject
 
 class MatchActivity : AppCompatActivity() {
@@ -166,11 +166,8 @@ class MatchActivity : AppCompatActivity() {
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
                 startActivity(intentFor<SearchActivity>(
-                    STRING_DATA to query,
+                    STRING_DATA to query.toLowerCase(Locale.getDefault()),
                     PARCELABLE_DATA to viewModel.getAllMatchsData()))
-
-                Log.d("HHHH", viewModel.getAllMatchsData().size.toString()+"2")
-
                 return true
             }
 

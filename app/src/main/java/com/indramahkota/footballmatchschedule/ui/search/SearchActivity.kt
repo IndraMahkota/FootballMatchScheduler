@@ -1,7 +1,6 @@
 package com.indramahkota.footballmatchschedule.ui.search
 
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -13,6 +12,8 @@ import com.indramahkota.footballmatchschedule.ui.detail.MatchDetailsActivity.Com
 import com.indramahkota.footballmatchschedule.ui.match.adapter.MatchAdapter
 import kotlinx.android.synthetic.main.activity_search.*
 import org.jetbrains.anko.intentFor
+import java.util.*
+import kotlin.collections.ArrayList
 
 class SearchActivity : AppCompatActivity() {
 
@@ -36,17 +37,24 @@ class SearchActivity : AppCompatActivity() {
         query = intent.getStringExtra(STRING_DATA)!!
         allData = ArrayList(intent.getParcelableArrayListExtra(PARCELABLE_DATA)!!)
 
-        Log.d("HHHH", allData.size.toString()+"3")
-
-        linearLayoutManager = LinearLayoutManager(this)
-        rv_category.layoutManager = linearLayoutManager
-        rv_category.setHasFixedSize(true)
-
-        matchAdapter = MatchAdapter(allData){ matchModel ->
-            startActivity(intentFor<MatchDetailsActivity>(PARCELABLE_MATCH_DATA to matchModel))
+        val newData = allData.filter {
+            it.strHomeTeam.toLowerCase(Locale.getDefault()).contains(query) ||
+                    it.strAwayTeam.toLowerCase(Locale.getDefault()).contains(query)
         }
-        rv_category.adapter = matchAdapter
-        //no_data.visibility = View.VISIBLE
+
+        if(newData.isNotEmpty()) {
+            linearLayoutManager = LinearLayoutManager(this)
+            rv_category.layoutManager = linearLayoutManager
+            rv_category.setHasFixedSize(true)
+
+            matchAdapter = MatchAdapter(newData){ matchModel ->
+                startActivity(intentFor<MatchDetailsActivity>(PARCELABLE_MATCH_DATA to matchModel))
+            }
+            rv_category.adapter = matchAdapter
+        } else {
+            no_data.visibility = View.VISIBLE
+        }
+
         shimmer_view_container.visibility = View.GONE
     }
 
