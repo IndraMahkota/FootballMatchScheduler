@@ -1,6 +1,8 @@
 package com.indramahkota.footballmatchschedule.ui.detail
 
 import android.os.Bundle
+import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -39,6 +41,9 @@ class MatchDetailsActivity : AppCompatActivity() {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_matchs_details)
+
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         matchDetail = intent.getParcelableExtra(PARCELABLE_MATCH_DATA)!!
 
@@ -97,6 +102,15 @@ class MatchDetailsActivity : AppCompatActivity() {
         matchDetail.idAwayTeam.let { viewModel.loadAwayTeamDetails(it) }
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return if (item.itemId == android.R.id.home) {
+            finish()
+            true
+        } else {
+            super.onOptionsItemSelected(item)
+        }
+    }
+
     private fun initializeUi(data: MatchDetailsApiModel) {
         tvDate.text = formatDateFromString(data.dateEvent ?: "")
         tvSkorTeam1.text = data.intHomeScore ?: "-"
@@ -139,5 +153,7 @@ class MatchDetailsActivity : AppCompatActivity() {
         yellow_cards.tvLeft.text = data.strHomeYellowCards ?: "-"
         yellow_cards.tvCenter.text = getString(R.string.yellow_cards)
         yellow_cards.tvRight.text = data.strAwayYellowCards ?: "-"
+
+        shimmer_view_container.visibility = View.GONE
     }
 }

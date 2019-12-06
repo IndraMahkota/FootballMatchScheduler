@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:paddingTop="8dp"
     android:paddingBottom="16dp">
 
@@ -15,20 +16,20 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintWidth_default="percent"
         app:layout_constraintWidth_percent="0.33"
-        android:text="@string/textKiri"/>
+        tools:text="@string/textKiri"/>
 
     <TextView
         android:id="@+id/tvCenter"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:textStyle="bold"
+        tools:textStyle="bold"
         app:layout_constraintLeft_toRightOf="@+id/tvLeft"
         app:layout_constraintRight_toLeftOf="@+id/tvRight"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintWidth_default="percent"
         app:layout_constraintWidth_percent="0.33"
-        android:text="@string/textTengah"/>
+        tools:text="@string/textTengah"/>
 
     <TextView
         android:id="@+id/tvRight"
@@ -39,6 +40,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintWidth_default="percent"
         app:layout_constraintWidth_percent="0.33"
-        android:text="@string/textKanan"/>
+        tools:text="@string/textKanan"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

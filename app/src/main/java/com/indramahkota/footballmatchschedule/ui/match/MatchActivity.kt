@@ -30,7 +30,7 @@ import com.indramahkota.footballmatchschedule.ui.search.SearchActivity.Companion
 import com.indramahkota.footballmatchschedule.ui.search.SearchActivity.Companion.STRING_DATA
 import com.indramahkota.footballmatchschedule.viewmodel.LeagueDetailsViewModel
 import dagger.android.AndroidInjection
-import kotlinx.android.synthetic.main.activity_details.*
+import kotlinx.android.synthetic.main.activity_league_details.*
 import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.toast
 import java.util.*
@@ -59,7 +59,7 @@ class MatchActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_details)
+        setContentView(R.layout.activity_league_details)
 
         league = intent.getParcelableExtra(PARCELABLE_LEAGUE_DATA)!!
 

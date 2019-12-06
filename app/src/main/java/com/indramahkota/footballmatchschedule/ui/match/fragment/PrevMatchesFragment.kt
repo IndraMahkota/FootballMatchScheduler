@@ -86,6 +86,7 @@ class PrevMatchesFragment : Fragment() {
             matchAdapter = MatchAdapter(it){ matchModel ->
                 startActivity(intentFor<MatchDetailsActivity>(PARCELABLE_MATCH_DATA to matchModel))
             }
+            matchAdapter.notifyDataSetChanged()
             rv_category.adapter = matchAdapter
         } else {
             no_data.visibility = View.VISIBLE

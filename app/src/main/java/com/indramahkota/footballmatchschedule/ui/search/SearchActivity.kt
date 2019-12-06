@@ -50,6 +50,7 @@ class SearchActivity : AppCompatActivity() {
             matchAdapter = MatchAdapter(newData){ matchModel ->
                 startActivity(intentFor<MatchDetailsActivity>(PARCELABLE_MATCH_DATA to matchModel))
             }
+            matchAdapter.notifyDataSetChanged()
             rv_category.adapter = matchAdapter
         } else {
             no_data.visibility = View.VISIBLE

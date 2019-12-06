@@ -126,6 +126,14 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?actionBarSize"
+                android:gravity="bottom"
+                app:layout_collapseMode="pin"
+                app:layout_scrollFlags="scroll|snap|enterAlways"
+                app:title="@string/title_activity_matchs_details"/>
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -134,50 +142,79 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <LinearLayout
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
-            android:paddingTop="32dp" >
+            android:layout_height="match_parent">
 
-            <include
-                android:id="@+id/formation"
-                layout="@layout/layout_text_views"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:paddingTop="32dp" >
 
-            <include
-                android:id="@+id/goal_details"
-                layout="@layout/layout_text_views"/>
+                <include
+                    android:id="@+id/formation"
+                    layout="@layout/layout_text_views"/>
 
-            <include
-                android:id="@+id/lineup_goal_keeper"
-                layout="@layout/layout_text_views"/>
+                <include
+                    android:id="@+id/goal_details"
+                    layout="@layout/layout_text_views"/>
 
-            <include
-                android:id="@+id/lineup_defense"
-                layout="@layout/layout_text_views"/>
+                <include
+                    android:id="@+id/lineup_goal_keeper"
+                    layout="@layout/layout_text_views"/>
 
-            <include
-                android:id="@+id/lineup_mid_field"
-                layout="@layout/layout_text_views"/>
+                <include
+                    android:id="@+id/lineup_defense"
+                    layout="@layout/layout_text_views"/>
 
-            <include
-                android:id="@+id/lineup_forward"
-                layout="@layout/layout_text_views"/>
+                <include
+                    android:id="@+id/lineup_mid_field"
+                    layout="@layout/layout_text_views"/>
 
-            <include
-                android:id="@+id/lineup_substitutes"
-                layout="@layout/layout_text_views"/>
+                <include
+                    android:id="@+id/lineup_forward"
+                    layout="@layout/layout_text_views"/>
 
-            <include
-                android:id="@+id/red_cards"
-                layout="@layout/layout_text_views"/>
+                <include
+                    android:id="@+id/lineup_substitutes"
+                    layout="@layout/layout_text_views"/>
 
-            <include
-                android:id="@+id/yellow_cards"
-                layout="@layout/layout_text_views"/>
-        </LinearLayout>
+                <include
+                    android:id="@+id/red_cards"
+                    layout="@layout/layout_text_views"/>
+
+                <include
+                    android:id="@+id/yellow_cards"
+                    layout="@layout/layout_text_views"/>
+            </LinearLayout>
+
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/shimmer_view_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="10dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <include layout="@layout/layout_text_views_loading"/>
+                    <include layout="@layout/layout_text_views_loading"/>
+                    <include layout="@layout/layout_text_views_loading"/>
+                    <include layout="@layout/layout_text_views_loading"/>
+                    <include layout="@layout/layout_text_views_loading"/>
+                    <include layout="@layout/layout_text_views_loading"/>
+                    <include layout="@layout/layout_text_views_loading"/>
+                    <include layout="@layout/layout_text_views_loading"/>
+                    <include layout="@layout/layout_text_views_loading"/>
+                </LinearLayout>
+
+            </com.facebook.shimmer.ShimmerFrameLayout>
+        </FrameLayout>
 
     </androidx.core.widget.NestedScrollView>
 
