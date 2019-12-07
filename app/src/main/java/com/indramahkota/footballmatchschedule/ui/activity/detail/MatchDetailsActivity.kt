@@ -6,7 +6,6 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.google.android.material.snackbar.Snackbar
@@ -52,7 +51,7 @@ class MatchDetailsActivity : AppCompatActivity() {
                 .setAction("Action", null).show()
         }
 
-        viewModel = ViewModelProviders.of(this, viewModelFactory).get(MatchDetailsViewModel::class.java)
+        viewModel = ViewModelProvider(this, viewModelFactory).get(MatchDetailsViewModel::class.java)
         viewModel.matchDetails.observe(this, Observer<Resource<MatchDetailsApiResponse?>>{
             when (it.status) {
                 Status.SUCCESS -> {

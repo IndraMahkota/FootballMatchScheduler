@@ -53,10 +53,7 @@ class MatchActivity : AppCompatActivity() {
         supportActionBar?.title = league.strLeague
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        val listTitle = arrayOf(
-            resources.getString(R.string.prev_matches),
-            resources.getString(R.string.next_matches)
-        )
+        val listTitle = arrayOf( resources.getString(R.string.prev_matches), resources.getString(R.string.next_matches) )
 
         val listFragment = mutableListOf(
             MatchFragment.newInstance(resources.getString(R.string.prev_matches_fragment)),
