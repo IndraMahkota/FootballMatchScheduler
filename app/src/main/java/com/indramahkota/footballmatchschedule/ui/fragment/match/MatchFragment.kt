@@ -7,14 +7,13 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.indramahkota.footballmatchschedule.R
 import com.indramahkota.footballmatchschedule.data.source.Resource
 import com.indramahkota.footballmatchschedule.data.source.Status.*
 import com.indramahkota.footballmatchschedule.data.source.locale.entity.MatchEntity
 import com.indramahkota.footballmatchschedule.ui.activity.detail.MatchDetailsActivity
-import com.indramahkota.footballmatchschedule.ui.fragment.adapter.MatchAdapter
+import com.indramahkota.footballmatchschedule.ui.fragment.match.adapter.MatchAdapter
 import com.indramahkota.footballmatchschedule.viewmodel.LeagueDetailsViewModel
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.content_match_tab.*
@@ -76,15 +75,15 @@ class MatchFragment : Fragment() {
     }
 
     private fun getPrevListData(view: View) {
-        val viewModel = activity?.let { ViewModelProviders.of(it, viewModelFactory).get(LeagueDetailsViewModel::class.java) }
-        viewModel?.newPrevMatchesData?.observe(this, Observer<Resource<List<MatchEntity>?>> {
+        val viewModel = activity?.let { ViewModelProvider(it, viewModelFactory).get(LeagueDetailsViewModel::class.java) }
+        viewModel?.newPrevMatchesData?.observe(viewLifecycleOwner, Observer<Resource<List<MatchEntity>?>> {
             checkState(view, it)
         })
     }
 
     private fun getNextListData(view: View) {
-        val viewModel = activity?.let { ViewModelProviders.of(it, viewModelFactory).get(LeagueDetailsViewModel::class.java) }
-        viewModel?.newNextMatchesData?.observe(this, Observer<Resource<List<MatchEntity>?>> {
+        val viewModel = activity?.let { ViewModelProvider(it, viewModelFactory).get(LeagueDetailsViewModel::class.java) }
+        viewModel?.newNextMatchesData?.observe(viewLifecycleOwner, Observer<Resource<List<MatchEntity>?>> {
             checkState(view, it)
         })
     }

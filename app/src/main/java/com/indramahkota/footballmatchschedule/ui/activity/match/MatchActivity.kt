@@ -9,7 +9,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.google.android.material.tabs.TabLayout
@@ -21,7 +20,7 @@ import com.indramahkota.footballmatchschedule.data.source.remote.apiresponse.Lea
 import com.indramahkota.footballmatchschedule.ui.activity.search.SearchActivity
 import com.indramahkota.footballmatchschedule.ui.activity.search.SearchActivity.Companion.PARCELABLE_DATA
 import com.indramahkota.footballmatchschedule.ui.activity.search.SearchActivity.Companion.STRING_DATA
-import com.indramahkota.footballmatchschedule.ui.fragment.adapter.TabPagerAdapter
+import com.indramahkota.footballmatchschedule.ui.fragment.match.adapter.TabPagerAdapter
 import com.indramahkota.footballmatchschedule.ui.fragment.match.MatchFragment
 import com.indramahkota.footballmatchschedule.viewmodel.LeagueDetailsViewModel
 import dagger.android.AndroidInjection
@@ -70,7 +69,7 @@ class MatchActivity : AppCompatActivity() {
         val tabs: TabLayout = findViewById(R.id.tabLayout)
         tabs.setupWithViewPager(viewPager)
 
-        viewModel = ViewModelProviders.of(this, viewModelFactory).get(LeagueDetailsViewModel::class.java)
+        viewModel = ViewModelProvider(this, viewModelFactory).get(LeagueDetailsViewModel::class.java)
         viewModel.leagueDetails.observe(this, Observer<Resource<LeagueDetailsApiResponse?>>{
             when (it.status) {
                 SUCCESS -> {

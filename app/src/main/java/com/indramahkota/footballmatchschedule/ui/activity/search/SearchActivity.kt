@@ -9,7 +9,7 @@ import com.indramahkota.footballmatchschedule.R
 import com.indramahkota.footballmatchschedule.data.source.locale.entity.MatchEntity
 import com.indramahkota.footballmatchschedule.ui.activity.detail.MatchDetailsActivity
 import com.indramahkota.footballmatchschedule.ui.activity.detail.MatchDetailsActivity.Companion.PARCELABLE_MATCH_DATA
-import com.indramahkota.footballmatchschedule.ui.fragment.adapter.MatchAdapter
+import com.indramahkota.footballmatchschedule.ui.fragment.match.adapter.MatchAdapter
 import kotlinx.android.synthetic.main.activity_search.*
 import org.jetbrains.anko.intentFor
 import java.util.*

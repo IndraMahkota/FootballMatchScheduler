@@ -1,9 +1,6 @@
 package com.indramahkota.footballmatchschedule.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import com.indramahkota.footballmatchschedule.data.source.FLeagueRepository
 import com.indramahkota.footballmatchschedule.data.source.Resource
 import com.indramahkota.footballmatchschedule.data.source.locale.entity.MatchEntity
@@ -24,16 +21,17 @@ class LeagueDetailsViewModel @Inject constructor(private val repository: FLeague
     var newPrevMatchesData: MutableLiveData<Resource<List<MatchEntity>?>> = MutableLiveData()
 
     private val leagueId = MutableLiveData<String>()
-
     var leagueDetails: LiveData<Resource<LeagueDetailsApiResponse?>> =
         Transformations.switchMap(leagueId) { id: String ->
-            repository.loadLeagueDetailsByLeagueId( id )
+            liveData(context = viewModelScope.coroutineContext + Dispatchers.IO) {
+                emit(repository.loadLeagueDetailsByLeagueId( id ))
+            }
         }
 
     fun loadAllDetails(id: String) {
         leagueId.value = id
 
-        GlobalScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             val allTeamResource = async { repository.loadAllTeamByLeagueId(id) }
             val nextMatchResource = async { repository.loadNextMatchesByLeagueId(id) }
             val prevMatchResource = async { repository.loadLastMatchesByLeagueId(id) }

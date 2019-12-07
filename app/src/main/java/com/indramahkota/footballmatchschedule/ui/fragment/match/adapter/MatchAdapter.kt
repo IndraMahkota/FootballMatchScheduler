@@ -1,4 +1,4 @@
-package com.indramahkota.footballmatchschedule.ui.fragment.adapter
+package com.indramahkota.footballmatchschedule.ui.fragment.match.adapter
 
 import android.view.LayoutInflater
 import android.view.View
