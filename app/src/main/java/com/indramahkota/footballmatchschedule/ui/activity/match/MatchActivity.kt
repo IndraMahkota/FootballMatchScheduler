@@ -16,18 +16,17 @@ import com.google.android.material.tabs.TabLayout
 import com.indramahkota.footballmatchschedule.R
 import com.indramahkota.footballmatchschedule.data.source.Resource
 import com.indramahkota.footballmatchschedule.data.source.Status
+import com.indramahkota.footballmatchschedule.data.source.locale.entity.LeagueEntity
 import com.indramahkota.footballmatchschedule.data.source.remote.apimodel.MatchDetailsApiModel
 import com.indramahkota.footballmatchschedule.data.source.remote.apimodel.TeamDetailsApiModel
 import com.indramahkota.footballmatchschedule.data.source.remote.apiresponse.LeagueDetailsApiResponse
 import com.indramahkota.footballmatchschedule.data.source.remote.apiresponse.MatchDetailsApiResponse
 import com.indramahkota.footballmatchschedule.data.source.remote.apiresponse.TeamDetailsApiResponse
-import com.indramahkota.footballmatchschedule.data.source.locale.entity.LeagueEntity
-import com.indramahkota.footballmatchschedule.ui.fragment.adapter.TabPagerAdapter
-import com.indramahkota.footballmatchschedule.ui.fragment.fragment.NextMatchesFragment
-import com.indramahkota.footballmatchschedule.ui.fragment.fragment.PrevMatchesFragment
 import com.indramahkota.footballmatchschedule.ui.activity.search.SearchActivity
 import com.indramahkota.footballmatchschedule.ui.activity.search.SearchActivity.Companion.PARCELABLE_DATA
 import com.indramahkota.footballmatchschedule.ui.activity.search.SearchActivity.Companion.STRING_DATA
+import com.indramahkota.footballmatchschedule.ui.fragment.adapter.TabPagerAdapter
+import com.indramahkota.footballmatchschedule.ui.fragment.match.MatchFragment
 import com.indramahkota.footballmatchschedule.viewmodel.LeagueDetailsViewModel
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_league_details.*
@@ -73,8 +72,8 @@ class MatchActivity : AppCompatActivity() {
         )
 
         val listFragment = mutableListOf(
-            PrevMatchesFragment.newInstance(listTitle[0]),
-            NextMatchesFragment.newInstance(listTitle[1])
+            MatchFragment.newInstance(resources.getString(R.string.prev_matches_fragment)),
+            MatchFragment.newInstance(resources.getString(R.string.next_matches_fragment))
         )
 
         val tabPagerAdapter = TabPagerAdapter(supportFragmentManager, listFragment, listTitle)

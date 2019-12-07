@@ -33,6 +33,8 @@
     <string name="yellow_cards">Yellow Cards</string>
     <string name="title_activity_search">Search</string>
     <string name="search_hint">Type this to search</string>
+    <string name="prev_matches_fragment">Previous Matchs Fragment</string>
+    <string name="next_matches_fragment">Next Matchs Fragment</string>
 
     <string-array name="league_id">
         <item>4328</item>
