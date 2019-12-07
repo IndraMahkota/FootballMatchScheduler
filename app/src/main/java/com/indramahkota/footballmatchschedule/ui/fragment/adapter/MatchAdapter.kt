@@ -8,7 +8,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.indramahkota.footballmatchschedule.R
 import com.indramahkota.footballmatchschedule.data.source.locale.entity.MatchEntity
-import com.indramahkota.footballmatchschedule.utilities.formatDateFromString
+import com.indramahkota.footballmatchschedule.utilities.Utilities.formatDateFromString
 import kotlinx.android.synthetic.main.item_match_tab.view.*
 
 class MatchAdapter(private val matchList: List<MatchEntity>,

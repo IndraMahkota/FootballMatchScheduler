@@ -17,7 +17,7 @@ import com.indramahkota.footballmatchschedule.data.source.remote.apimodel.MatchD
 import com.indramahkota.footballmatchschedule.data.source.remote.apiresponse.MatchDetailsApiResponse
 import com.indramahkota.footballmatchschedule.data.source.remote.apiresponse.TeamDetailsApiResponse
 import com.indramahkota.footballmatchschedule.data.source.locale.entity.MatchEntity
-import com.indramahkota.footballmatchschedule.utilities.formatDateFromString
+import com.indramahkota.footballmatchschedule.utilities.Utilities.formatDateFromString
 import com.indramahkota.footballmatchschedule.viewmodel.MatchDetailsViewModel
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_matchs_details.*
