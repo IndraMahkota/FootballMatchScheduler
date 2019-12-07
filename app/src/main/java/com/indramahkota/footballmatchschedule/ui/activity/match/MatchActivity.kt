@@ -1,4 +1,4 @@
-package com.indramahkota.footballmatchschedule.ui.match
+package com.indramahkota.footballmatchschedule.ui.activity.match
 
 import android.app.SearchManager
 import android.content.Context
@@ -21,13 +21,13 @@ import com.indramahkota.footballmatchschedule.data.source.remote.apimodel.TeamDe
 import com.indramahkota.footballmatchschedule.data.source.remote.apiresponse.LeagueDetailsApiResponse
 import com.indramahkota.footballmatchschedule.data.source.remote.apiresponse.MatchDetailsApiResponse
 import com.indramahkota.footballmatchschedule.data.source.remote.apiresponse.TeamDetailsApiResponse
-import com.indramahkota.footballmatchschedule.data.source.remote.model.LeagueModel
-import com.indramahkota.footballmatchschedule.ui.match.adapter.TabPagerAdapter
-import com.indramahkota.footballmatchschedule.ui.match.fragment.NextMatchesFragment
-import com.indramahkota.footballmatchschedule.ui.match.fragment.PrevMatchesFragment
-import com.indramahkota.footballmatchschedule.ui.search.SearchActivity
-import com.indramahkota.footballmatchschedule.ui.search.SearchActivity.Companion.PARCELABLE_DATA
-import com.indramahkota.footballmatchschedule.ui.search.SearchActivity.Companion.STRING_DATA
+import com.indramahkota.footballmatchschedule.data.source.locale.entity.LeagueEntity
+import com.indramahkota.footballmatchschedule.ui.fragment.adapter.TabPagerAdapter
+import com.indramahkota.footballmatchschedule.ui.fragment.fragment.NextMatchesFragment
+import com.indramahkota.footballmatchschedule.ui.fragment.fragment.PrevMatchesFragment
+import com.indramahkota.footballmatchschedule.ui.activity.search.SearchActivity
+import com.indramahkota.footballmatchschedule.ui.activity.search.SearchActivity.Companion.PARCELABLE_DATA
+import com.indramahkota.footballmatchschedule.ui.activity.search.SearchActivity.Companion.STRING_DATA
 import com.indramahkota.footballmatchschedule.viewmodel.LeagueDetailsViewModel
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_league_details.*
@@ -42,7 +42,7 @@ class MatchActivity : AppCompatActivity() {
         const val PARCELABLE_LEAGUE_DATA = "parcelable_league_data"
     }
 
-    private lateinit var league: LeagueModel
+    private lateinit var league: LeagueEntity
     private lateinit var viewModel: LeagueDetailsViewModel
 
     private var allTeamLoaded = false
@@ -89,6 +89,7 @@ class MatchActivity : AppCompatActivity() {
                 Status.SUCCESS -> {
                     Glide.with(this)
                         .load(it.data?.leagues?.get(0)?.strPoster ?: R.drawable.image_error)
+                        .placeholder(R.drawable.spinner_animation)
                         .error(R.drawable.image_error)
                         .transform(RoundedCorners(8))
                         .into(image_league)

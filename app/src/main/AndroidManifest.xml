@@ -15,7 +15,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".ui.splash.SplashActivity"
+            android:name="com.indramahkota.footballmatchschedule.ui.activity.splash.SplashActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -25,18 +25,18 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.main.MainActivity"
+            android:name="com.indramahkota.footballmatchschedule.ui.activity.main.MainActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/MainTheme" />
         <activity
-            android:name=".ui.match.MatchActivity"
+            android:name="com.indramahkota.footballmatchschedule.ui.activity.match.MatchActivity"
             android:label="@string/title_activity_league_details"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ui.detail.MatchDetailsActivity"
+            android:name="com.indramahkota.footballmatchschedule.ui.activity.detail.MatchDetailsActivity"
             android:label="@string/title_activity_matchs_details"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ui.search.SearchActivity"
+        <activity android:name="com.indramahkota.footballmatchschedule.ui.activity.search.SearchActivity"
             android:label="@string/title_activity_search"/>
     </application>
 

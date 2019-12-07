@@ -1,4 +1,4 @@
-package com.indramahkota.footballmatchschedule.ui.match.fragment
+package com.indramahkota.footballmatchschedule.ui.fragment.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,24 +10,24 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.indramahkota.footballmatchschedule.R
-import com.indramahkota.footballmatchschedule.data.source.remote.model.MatchModel
-import com.indramahkota.footballmatchschedule.ui.detail.MatchDetailsActivity
-import com.indramahkota.footballmatchschedule.ui.detail.MatchDetailsActivity.Companion.PARCELABLE_MATCH_DATA
-import com.indramahkota.footballmatchschedule.ui.match.adapter.MatchAdapter
+import com.indramahkota.footballmatchschedule.data.source.locale.entity.MatchEntity
+import com.indramahkota.footballmatchschedule.ui.activity.detail.MatchDetailsActivity
+import com.indramahkota.footballmatchschedule.ui.activity.detail.MatchDetailsActivity.Companion.PARCELABLE_MATCH_DATA
+import com.indramahkota.footballmatchschedule.ui.fragment.adapter.MatchAdapter
 import com.indramahkota.footballmatchschedule.viewmodel.LeagueDetailsViewModel
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.content_match_tab.*
 import org.jetbrains.anko.support.v4.intentFor
 import javax.inject.Inject
 
-class NextMatchesFragment : Fragment() {
+class PrevMatchesFragment : Fragment() {
     companion object {
         private const val ARG_SECTION_TITLE = "section_title"
         private const val ARG_SAVE_DATA = "save_data"
 
         @JvmStatic
-        fun newInstance(title: String): NextMatchesFragment {
-            return NextMatchesFragment().apply {
+        fun newInstance(title: String): PrevMatchesFragment {
+            return PrevMatchesFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_SECTION_TITLE, title)
                 }
@@ -35,7 +35,7 @@ class NextMatchesFragment : Fragment() {
         }
     }
 
-    private var matchsData = arrayListOf<MatchModel>()
+    private var matchsData = arrayListOf<MatchEntity>()
     private lateinit var linearLayoutManager: LinearLayoutManager
     private lateinit var matchAdapter: MatchAdapter
 
@@ -51,7 +51,10 @@ class NextMatchesFragment : Fragment() {
         }
     }
 
-    override fun onCreateView( inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle? ): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         return inflater.inflate(R.layout.content_match_tab, container, false)
     }
 
@@ -67,12 +70,12 @@ class NextMatchesFragment : Fragment() {
 
     private fun getData(view: View) {
         val viewModel = activity?.let { ViewModelProviders.of(it).get(LeagueDetailsViewModel::class.java) }
-        viewModel?.newNextMatchesData?.observe(this, Observer<List<MatchModel>> {
+        viewModel?.newPrevMatchesData?.observe(this, Observer<List<MatchEntity>> {
             initialize(view, it)
         })
     }
 
-    private fun initialize(view: View, it: List<MatchModel>) {
+    private fun initialize(view: View, it: List<MatchEntity>) {
         if(it.isNotEmpty()){
             matchsData = ArrayList(it)
 
@@ -80,7 +83,7 @@ class NextMatchesFragment : Fragment() {
             rv_category.layoutManager = linearLayoutManager
             rv_category.setHasFixedSize(true)
 
-            matchAdapter = MatchAdapter(matchsData){ matchModel ->
+            matchAdapter = MatchAdapter(it){ matchModel ->
                 startActivity(intentFor<MatchDetailsActivity>(PARCELABLE_MATCH_DATA to matchModel))
             }
             matchAdapter.notifyDataSetChanged()

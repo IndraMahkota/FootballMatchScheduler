@@ -1,4 +1,4 @@
-package com.indramahkota.footballmatchschedule.ui.detail
+package com.indramahkota.footballmatchschedule.ui.activity.detail
 
 import android.os.Bundle
 import android.view.MenuItem
@@ -16,7 +16,7 @@ import com.indramahkota.footballmatchschedule.data.source.Status
 import com.indramahkota.footballmatchschedule.data.source.remote.apimodel.MatchDetailsApiModel
 import com.indramahkota.footballmatchschedule.data.source.remote.apiresponse.MatchDetailsApiResponse
 import com.indramahkota.footballmatchschedule.data.source.remote.apiresponse.TeamDetailsApiResponse
-import com.indramahkota.footballmatchschedule.data.source.remote.model.MatchModel
+import com.indramahkota.footballmatchschedule.data.source.locale.entity.MatchEntity
 import com.indramahkota.footballmatchschedule.utilities.formatDateFromString
 import com.indramahkota.footballmatchschedule.viewmodel.MatchDetailsViewModel
 import dagger.android.AndroidInjection
@@ -31,7 +31,7 @@ class MatchDetailsActivity : AppCompatActivity() {
         const val PARCELABLE_MATCH_DATA = "parcelable_match_data"
     }
 
-    private lateinit var matchDetail: MatchModel
+    private lateinit var matchDetail: MatchEntity
     private lateinit var viewModel: MatchDetailsViewModel
 
     @set:Inject
@@ -71,6 +71,7 @@ class MatchDetailsActivity : AppCompatActivity() {
                     if(it.data?.teams != null) {
                         Glide.with(this)
                             .load(it.data.teams[0].strTeamBadge ?: R.drawable.image_error)
+                            .placeholder(R.drawable.spinner_animation)
                             .error(R.drawable.image_error)
                             .transform(RoundedCorners(8))
                             .into(ivTeam1Logo)
@@ -87,6 +88,7 @@ class MatchDetailsActivity : AppCompatActivity() {
                     if(it.data?.teams != null) {
                         Glide.with(this)
                             .load(it.data.teams[0].strTeamBadge ?: R.drawable.image_error)
+                            .placeholder(R.drawable.spinner_animation)
                             .error(R.drawable.image_error)
                             .transform(RoundedCorners(8))
                             .into(ivTeam2Logo)

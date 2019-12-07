@@ -1,14 +1,14 @@
-package com.indramahkota.footballmatchschedule.ui.main
+package com.indramahkota.footballmatchschedule.ui.activity.main
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.indramahkota.footballmatchschedule.R
-import com.indramahkota.footballmatchschedule.data.source.remote.model.LeagueModel
-import com.indramahkota.footballmatchschedule.ui.main.adapter.LeagueAdapter
-import com.indramahkota.footballmatchschedule.ui.match.MatchActivity
-import com.indramahkota.footballmatchschedule.ui.match.MatchActivity.Companion.PARCELABLE_LEAGUE_DATA
+import com.indramahkota.footballmatchschedule.data.source.locale.entity.LeagueEntity
+import com.indramahkota.footballmatchschedule.ui.activity.main.adapter.LeagueAdapter
+import com.indramahkota.footballmatchschedule.ui.activity.match.MatchActivity
+import com.indramahkota.footballmatchschedule.ui.activity.match.MatchActivity.Companion.PARCELABLE_LEAGUE_DATA
 import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.matchParent
 import org.jetbrains.anko.recyclerview.v7.recyclerView
@@ -31,13 +31,13 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun getData() : List<LeagueModel> {
-        val items: MutableList<LeagueModel> = mutableListOf()
+    private fun getData() : List<LeagueEntity> {
+        val items: MutableList<LeagueEntity> = mutableListOf()
         val idLeague = resources.getStringArray(R.array.league_id)
         val nameLeague = resources.getStringArray(R.array.league_name)
         val imageLeague = resources.getStringArray(R.array.league_image)
         for (i in idLeague.indices) items.add(
-            LeagueModel( idLeague[i], nameLeague[i], imageLeague[i] )
+            LeagueEntity( idLeague[i], nameLeague[i], imageLeague[i] )
         )
         return items
     }

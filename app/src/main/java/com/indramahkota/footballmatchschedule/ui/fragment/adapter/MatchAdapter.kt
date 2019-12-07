@@ -1,4 +1,4 @@
-package com.indramahkota.footballmatchschedule.ui.match.adapter
+package com.indramahkota.footballmatchschedule.ui.fragment.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,12 +7,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.indramahkota.footballmatchschedule.R
-import com.indramahkota.footballmatchschedule.data.source.remote.model.MatchModel
+import com.indramahkota.footballmatchschedule.data.source.locale.entity.MatchEntity
 import com.indramahkota.footballmatchschedule.utilities.formatDateFromString
 import kotlinx.android.synthetic.main.item_match_tab.view.*
 
-class MatchAdapter(private val matchList: List<MatchModel>,
-                   private val listener: (MatchModel) -> Unit
+class MatchAdapter(private val matchList: List<MatchEntity>,
+                   private val listener: (MatchEntity) -> Unit
 ) : RecyclerView.Adapter<MatchAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -28,7 +28,7 @@ class MatchAdapter(private val matchList: List<MatchModel>,
     }
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        fun bind(match: MatchModel) {
+        fun bind(match: MatchEntity) {
             with(itemView) {
                 tvDate.text = formatDateFromString(match.dateEvent)
                 tvTeam1.text = match.strHomeTeam

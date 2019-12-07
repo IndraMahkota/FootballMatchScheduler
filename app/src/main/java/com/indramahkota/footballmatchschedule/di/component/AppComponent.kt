@@ -14,6 +14,7 @@ import javax.inject.Singleton
         AppModule::class,
         RepositoryModule::class,
         ApiModule::class,
+        DbModule::class,
         ActivityModule::class,
         FragmentModule::class,
         ViewModelModule::class
@@ -27,6 +28,8 @@ interface AppComponent {
         fun application(application:Application): Builder
         @BindsInstance
         fun apiModule(apiModule: ApiModule): Builder
+        @BindsInstance
+        fun dbModule(dbModule: DbModule): Builder
         fun build(): AppComponent
     }
 

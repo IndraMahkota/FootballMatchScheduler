@@ -11,16 +11,16 @@ import com.indramahkota.footballmatchschedule.data.source.remote.apimodel.TeamDe
 import com.indramahkota.footballmatchschedule.data.source.remote.apiresponse.LeagueDetailsApiResponse
 import com.indramahkota.footballmatchschedule.data.source.remote.apiresponse.MatchDetailsApiResponse
 import com.indramahkota.footballmatchschedule.data.source.remote.apiresponse.TeamDetailsApiResponse
-import com.indramahkota.footballmatchschedule.data.source.remote.model.MatchModel
+import com.indramahkota.footballmatchschedule.data.source.locale.entity.MatchEntity
 import javax.inject.Inject
 
 class LeagueDetailsViewModel @Inject constructor(private val repository: FLeagueRepository) :
     ViewModel() {
 
-    private var nextHelper = arrayListOf<MatchModel>()
-    private var prevHelper = arrayListOf<MatchModel>()
-    var newNextMatchesData: MutableLiveData<List<MatchModel>> = MutableLiveData()
-    var newPrevMatchesData: MutableLiveData<List<MatchModel>> = MutableLiveData()
+    private var nextHelper = arrayListOf<MatchEntity>()
+    private var prevHelper = arrayListOf<MatchEntity>()
+    var newNextMatchesData: MutableLiveData<List<MatchEntity>> = MutableLiveData()
+    var newPrevMatchesData: MutableLiveData<List<MatchEntity>> = MutableLiveData()
 
     private val leagueId = MutableLiveData<String>()
 
@@ -50,7 +50,7 @@ class LeagueDetailsViewModel @Inject constructor(private val repository: FLeague
 
     fun setNewNextMatchesData(all: List<TeamDetailsApiModel>,
                               next: List<MatchDetailsApiModel>) {
-        val newNextMatches: MutableList<MatchModel> = mutableListOf()
+        val newNextMatches: MutableList<MatchEntity> = mutableListOf()
 
         for (i in next.indices) {
             val listHelper = all.filter {
@@ -77,7 +77,7 @@ class LeagueDetailsViewModel @Inject constructor(private val repository: FLeague
                 }
             }
 
-            newNextMatches.add(MatchModel(next[i].idEvent ?: "",
+            newNextMatches.add(MatchEntity(next[i].idEvent ?: "",
                 next[i].idHomeTeam ?: "", next[i].idAwayTeam?: "",
                 next[i].dateEvent ?: "-", next[i].strHomeTeam ?: "-",
                 next[i].strAwayTeam ?: "-", next[i].intHomeScore ?: "-",
@@ -90,7 +90,7 @@ class LeagueDetailsViewModel @Inject constructor(private val repository: FLeague
 
     fun setNewPrevMatchesData(all: List<TeamDetailsApiModel>,
                               prev: List<MatchDetailsApiModel>) {
-        val newPrevMatches: MutableList<MatchModel> = mutableListOf()
+        val newPrevMatches: MutableList<MatchEntity> = mutableListOf()
 
         for (i in prev.indices) {
             val listHelper = all.filter {
@@ -117,7 +117,7 @@ class LeagueDetailsViewModel @Inject constructor(private val repository: FLeague
                 }
             }
 
-            newPrevMatches.add(MatchModel(prev[i].idEvent ?: "",
+            newPrevMatches.add(MatchEntity(prev[i].idEvent ?: "",
                 prev[i].idHomeTeam ?: "", prev[i].idAwayTeam?: "",
                 prev[i].dateEvent ?: "-",prev[i].strHomeTeam ?: "-",
                 prev[i].strAwayTeam ?: "-",prev[i].intHomeScore ?: "-",
@@ -128,8 +128,8 @@ class LeagueDetailsViewModel @Inject constructor(private val repository: FLeague
         newPrevMatchesData.postValue(newPrevMatches)
     }
 
-    fun getAllMatchsData(): List<MatchModel>{
-        val arrayList = arrayListOf<MatchModel>()
+    fun getAllMatchsData(): List<MatchEntity>{
+        val arrayList = arrayListOf<MatchEntity>()
         arrayList.addAll(nextHelper)
         arrayList.addAll(prevHelper)
         return arrayList

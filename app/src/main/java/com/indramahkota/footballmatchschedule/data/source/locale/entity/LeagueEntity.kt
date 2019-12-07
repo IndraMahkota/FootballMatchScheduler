@@ -1,10 +1,10 @@
-package com.indramahkota.footballmatchschedule.data.source.remote.model
+package com.indramahkota.footballmatchschedule.data.source.locale.entity
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class LeagueModel(
+data class LeagueEntity(
     val idLeague: String,
     val strLeague: String,
     val imgLeague: String

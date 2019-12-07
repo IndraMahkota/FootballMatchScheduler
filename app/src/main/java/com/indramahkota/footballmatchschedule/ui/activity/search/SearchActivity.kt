@@ -1,4 +1,4 @@
-package com.indramahkota.footballmatchschedule.ui.search
+package com.indramahkota.footballmatchschedule.ui.activity.search
 
 import android.os.Bundle
 import android.view.MenuItem
@@ -6,10 +6,10 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.indramahkota.footballmatchschedule.R
-import com.indramahkota.footballmatchschedule.data.source.remote.model.MatchModel
-import com.indramahkota.footballmatchschedule.ui.detail.MatchDetailsActivity
-import com.indramahkota.footballmatchschedule.ui.detail.MatchDetailsActivity.Companion.PARCELABLE_MATCH_DATA
-import com.indramahkota.footballmatchschedule.ui.match.adapter.MatchAdapter
+import com.indramahkota.footballmatchschedule.data.source.locale.entity.MatchEntity
+import com.indramahkota.footballmatchschedule.ui.activity.detail.MatchDetailsActivity
+import com.indramahkota.footballmatchschedule.ui.activity.detail.MatchDetailsActivity.Companion.PARCELABLE_MATCH_DATA
+import com.indramahkota.footballmatchschedule.ui.fragment.adapter.MatchAdapter
 import kotlinx.android.synthetic.main.activity_search.*
 import org.jetbrains.anko.intentFor
 import java.util.*
@@ -26,7 +26,7 @@ class SearchActivity : AppCompatActivity() {
     private lateinit var matchAdapter: MatchAdapter
 
     private var query: String = ""
-    private var allData = arrayListOf<MatchModel>()
+    private var allData = arrayListOf<MatchEntity>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

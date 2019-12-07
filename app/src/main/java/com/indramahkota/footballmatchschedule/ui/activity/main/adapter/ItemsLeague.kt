@@ -1,4 +1,4 @@
-package com.indramahkota.footballmatchschedule.ui.main.adapter
+package com.indramahkota.footballmatchschedule.ui.activity.main.adapter
 
 import android.view.Gravity
 import android.view.ViewGroup

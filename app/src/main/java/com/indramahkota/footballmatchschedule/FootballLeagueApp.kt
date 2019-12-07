@@ -4,6 +4,7 @@ import android.app.Application
 import com.indramahkota.footballmatchschedule.di.component.AppComponent
 import com.indramahkota.footballmatchschedule.di.component.DaggerAppComponent
 import com.indramahkota.footballmatchschedule.di.module.ApiModule
+import com.indramahkota.footballmatchschedule.di.module.DbModule
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector
@@ -24,6 +25,7 @@ class FootballLeagueApp : Application(), HasAndroidInjector {
         component = DaggerAppComponent.builder()
             .application(this)
             .apiModule(ApiModule())
+            .dbModule(DbModule())
             .build()
         component.inject(this)
     }
