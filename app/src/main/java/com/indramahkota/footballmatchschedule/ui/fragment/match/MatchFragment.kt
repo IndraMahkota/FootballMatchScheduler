@@ -10,6 +10,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.indramahkota.footballmatchschedule.R
+import com.indramahkota.footballmatchschedule.data.source.Resource
+import com.indramahkota.footballmatchschedule.data.source.Status.*
 import com.indramahkota.footballmatchschedule.data.source.locale.entity.MatchEntity
 import com.indramahkota.footballmatchschedule.ui.activity.detail.MatchDetailsActivity
 import com.indramahkota.footballmatchschedule.ui.fragment.adapter.MatchAdapter
@@ -17,6 +19,7 @@ import com.indramahkota.footballmatchschedule.viewmodel.LeagueDetailsViewModel
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.content_match_tab.*
 import org.jetbrains.anko.support.v4.intentFor
+import org.jetbrains.anko.support.v4.toast
 import javax.inject.Inject
 
 class MatchFragment : Fragment() {
@@ -34,7 +37,7 @@ class MatchFragment : Fragment() {
         }
     }
 
-    private var matchsData = arrayListOf<MatchEntity>()
+    private var matchsData: ArrayList<MatchEntity>? = null
     private lateinit var linearLayoutManager: LinearLayoutManager
     private lateinit var matchAdapter: MatchAdapter
 
@@ -46,7 +49,7 @@ class MatchFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
         savedInstanceState?.run {
-            matchsData.addAll(savedInstanceState.getParcelableArrayList(ARG_SAVE_DATA)!!)
+            matchsData?.addAll(savedInstanceState.getParcelableArrayList(ARG_SAVE_DATA)!!)
         }
     }
 
@@ -62,8 +65,8 @@ class MatchFragment : Fragment() {
 
         val state = arguments?.getString(ARG_SECTION_FRAGMENT)
 
-        if(matchsData.isNotEmpty()){
-            initialize(view, matchsData)
+        if(matchsData != null){
+            initializeUi(view, matchsData)
         } else {
             when (state) {
                 resources.getString(R.string.prev_matches_fragment) -> getPrevListData(view)
@@ -74,33 +77,44 @@ class MatchFragment : Fragment() {
 
     private fun getPrevListData(view: View) {
         val viewModel = activity?.let { ViewModelProviders.of(it, viewModelFactory).get(LeagueDetailsViewModel::class.java) }
-        viewModel?.newPrevMatchesData?.observe(this, Observer<List<MatchEntity>> {
-            initialize(view, it)
+        viewModel?.newPrevMatchesData?.observe(this, Observer<Resource<List<MatchEntity>?>> {
+            checkState(view, it)
         })
     }
 
     private fun getNextListData(view: View) {
         val viewModel = activity?.let { ViewModelProviders.of(it, viewModelFactory).get(LeagueDetailsViewModel::class.java) }
-        viewModel?.newNextMatchesData?.observe(this, Observer<List<MatchEntity>> {
-            initialize(view, it)
+        viewModel?.newNextMatchesData?.observe(this, Observer<Resource<List<MatchEntity>?>> {
+            checkState(view, it)
         })
     }
 
-    private fun initialize(view: View, it: List<MatchEntity>) {
-        if(it.isNotEmpty()){
-            matchsData = ArrayList(it)
-
-            linearLayoutManager = LinearLayoutManager(view.context)
-            rv_category.layoutManager = linearLayoutManager
-            rv_category.setHasFixedSize(true)
-
-            matchAdapter = MatchAdapter(it){ matchModel ->
-                startActivity(intentFor<MatchDetailsActivity>(MatchDetailsActivity.PARCELABLE_MATCH_DATA to matchModel))
+    private fun checkState(view: View, it: Resource<List<MatchEntity>?>){
+        when (it.status) {
+            SUCCESS -> {
+                initializeUi(view, it.data)
             }
-            matchAdapter.notifyDataSetChanged()
-            rv_category.adapter = matchAdapter
-        } else {
-            no_data.visibility = View.VISIBLE
+            ERROR -> toast(R.string.error_load_data)
+        }
+    }
+
+    private fun initializeUi(view: View, it: List<MatchEntity>?) {
+        if (it != null) {
+            if(it.isNotEmpty()){
+                matchsData = ArrayList(it)
+
+                linearLayoutManager = LinearLayoutManager(view.context)
+                rv_category.layoutManager = linearLayoutManager
+                rv_category.setHasFixedSize(true)
+
+                matchAdapter = MatchAdapter(it) { matchModel ->
+                    startActivity(intentFor<MatchDetailsActivity>(MatchDetailsActivity.PARCELABLE_MATCH_DATA to matchModel))
+                }
+                matchAdapter.notifyDataSetChanged()
+                rv_category.adapter = matchAdapter
+            } else {
+                no_data.visibility = View.VISIBLE
+            }
         }
 
         shimmer_view_container.visibility = View.GONE

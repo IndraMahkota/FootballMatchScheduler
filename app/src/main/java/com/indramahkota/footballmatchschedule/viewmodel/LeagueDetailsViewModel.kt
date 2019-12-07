@@ -6,12 +6,13 @@ import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.indramahkota.footballmatchschedule.data.source.FLeagueRepository
 import com.indramahkota.footballmatchschedule.data.source.Resource
+import com.indramahkota.footballmatchschedule.data.source.locale.entity.MatchEntity
 import com.indramahkota.footballmatchschedule.data.source.remote.apimodel.MatchDetailsApiModel
 import com.indramahkota.footballmatchschedule.data.source.remote.apimodel.TeamDetailsApiModel
 import com.indramahkota.footballmatchschedule.data.source.remote.apiresponse.LeagueDetailsApiResponse
 import com.indramahkota.footballmatchschedule.data.source.remote.apiresponse.MatchDetailsApiResponse
 import com.indramahkota.footballmatchschedule.data.source.remote.apiresponse.TeamDetailsApiResponse
-import com.indramahkota.footballmatchschedule.data.source.locale.entity.MatchEntity
+import kotlinx.coroutines.*
 import javax.inject.Inject
 
 class LeagueDetailsViewModel @Inject constructor(private val repository: FLeagueRepository) :
@@ -19,8 +20,8 @@ class LeagueDetailsViewModel @Inject constructor(private val repository: FLeague
 
     private var nextHelper = arrayListOf<MatchEntity>()
     private var prevHelper = arrayListOf<MatchEntity>()
-    var newNextMatchesData: MutableLiveData<List<MatchEntity>> = MutableLiveData()
-    var newPrevMatchesData: MutableLiveData<List<MatchEntity>> = MutableLiveData()
+    var newNextMatchesData: MutableLiveData<Resource<List<MatchEntity>?>> = MutableLiveData()
+    var newPrevMatchesData: MutableLiveData<Resource<List<MatchEntity>?>> = MutableLiveData()
 
     private val leagueId = MutableLiveData<String>()
 
@@ -29,103 +30,83 @@ class LeagueDetailsViewModel @Inject constructor(private val repository: FLeague
             repository.loadLeagueDetailsByLeagueId( id )
         }
 
-    var allTeamInLeague: LiveData<Resource<TeamDetailsApiResponse?>> =
-        Transformations.switchMap(leagueId) { id: String ->
-            repository.loadAllTeamByLeagueId( id )
-        }
-
-    var nextMatches: LiveData<Resource<MatchDetailsApiResponse?>> =
-        Transformations.switchMap(leagueId) { id: String ->
-            repository.loadNextMatchesByLeagueId( id )
-        }
-
-    var prevMatches: LiveData<Resource<MatchDetailsApiResponse?>> =
-        Transformations.switchMap(leagueId) { id: String ->
-            repository.loadLastMatchesByLeagueId( id )
-        }
-
     fun loadAllDetails(id: String) {
         leagueId.value = id
+
+        GlobalScope.launch(Dispatchers.IO) {
+            val allTeamResource = async { repository.loadAllTeamByLeagueId(id) }
+            val nextMatchResource = async { repository.loadNextMatchesByLeagueId(id) }
+            val prevMatchResource = async { repository.loadLastMatchesByLeagueId(id) }
+
+            setNewNextMatchesData(allTeamResource.await(), nextMatchResource.await())
+            setNewPrevMatchesData(allTeamResource.await(), prevMatchResource.await())
+        }
     }
 
-    fun setNewNextMatchesData(all: List<TeamDetailsApiModel>,
-                              next: List<MatchDetailsApiModel>) {
-        val newNextMatches: MutableList<MatchEntity> = mutableListOf()
-
-        for (i in next.indices) {
-            val listHelper = all.filter {
-                it.idTeam.equals(next[i].idHomeTeam) ||
-                        it.idTeam.equals(next[i].idAwayTeam)
-            }
-
-            var srcImgHomeTeam = ""
-            var srcImgAwayTeam = ""
-
-            if(listHelper.size == 2) {
-                if(listHelper[0].idTeam.equals(next[i].idHomeTeam)){
-                    srcImgHomeTeam = listHelper[0].strTeamBadge ?: ""
-                    srcImgAwayTeam = listHelper[1].strTeamBadge ?: ""
-                } else {
-                    srcImgAwayTeam = listHelper[0].strTeamBadge ?: ""
-                    srcImgHomeTeam = listHelper[1].strTeamBadge ?: ""
-                }
-            } else if (listHelper.size == 1) {
-                if(listHelper[0].idTeam.equals(next[i].idHomeTeam)){
-                    srcImgHomeTeam = listHelper[0].strTeamBadge ?: ""
-                } else {
-                    srcImgAwayTeam = listHelper[0].strTeamBadge ?: ""
-                }
-            }
-
-            newNextMatches.add(MatchEntity(next[i].idEvent ?: "",
-                next[i].idHomeTeam ?: "", next[i].idAwayTeam?: "",
-                next[i].dateEvent ?: "-", next[i].strHomeTeam ?: "-",
-                next[i].strAwayTeam ?: "-", next[i].intHomeScore ?: "-",
-                next[i].intAwayScore ?: "-", srcImgHomeTeam, srcImgAwayTeam))
+    private fun setNewNextMatchesData(all: Resource<TeamDetailsApiResponse?>,
+                                      next: Resource<MatchDetailsApiResponse?>) {
+        var newNextMatches = arrayListOf<MatchEntity>()
+        if(all.isSuccess && next.isSuccess) {
+            newNextMatches = createNewListData(all.data?.teams, next.data?.events)
+            newNextMatchesData.postValue(Resource.success(newNextMatches))
+        } else {
+            newNextMatchesData.postValue(Resource.error(all.message, null))
         }
-
         nextHelper = ArrayList(newNextMatches)
-        newNextMatchesData.postValue(newNextMatches)
     }
 
-    fun setNewPrevMatchesData(all: List<TeamDetailsApiModel>,
-                              prev: List<MatchDetailsApiModel>) {
-        val newPrevMatches: MutableList<MatchEntity> = mutableListOf()
+    private fun setNewPrevMatchesData(all: Resource<TeamDetailsApiResponse?>,
+                                      prev: Resource<MatchDetailsApiResponse?>) {
+        var newPrevMatches = arrayListOf<MatchEntity>()
+        if(all.isSuccess && prev.isSuccess) {
+            newPrevMatches = createNewListData(all.data?.teams, prev.data?.events)
+            newPrevMatchesData.postValue(Resource.success(newPrevMatches))
+        } else {
+            newPrevMatchesData.postValue(Resource.error(all.message, null))
+        }
+        prevHelper = ArrayList(newPrevMatches)
+    }
 
-        for (i in prev.indices) {
-            val listHelper = all.filter {
-                it.idTeam.equals(prev[i].idHomeTeam) ||
-                        it.idTeam.equals(prev[i].idAwayTeam)
-            }
+    private fun createNewListData(all: List<TeamDetailsApiModel>?,
+                                  dataList: List<MatchDetailsApiModel>?):ArrayList<MatchEntity>{
+        val newMatchList = arrayListOf<MatchEntity>()
 
-            var srcImgHomeTeam = ""
-            var srcImgAwayTeam = ""
-
-            if(listHelper.size == 2) {
-                if(listHelper[0].idTeam.equals(prev[i].idHomeTeam)){
-                    srcImgHomeTeam = listHelper[0].strTeamBadge ?: ""
-                    srcImgAwayTeam = listHelper[1].strTeamBadge ?: ""
-                } else {
-                    srcImgAwayTeam = listHelper[0].strTeamBadge ?: ""
-                    srcImgHomeTeam = listHelper[1].strTeamBadge ?: ""
+        if (dataList != null) {
+            for (i in dataList.indices) {
+                val listHelper = all?.filter {
+                    it.idTeam.equals(dataList[i].idHomeTeam) ||
+                            it.idTeam.equals(dataList[i].idAwayTeam)
                 }
-            } else if (listHelper.size == 1) {
-                if(listHelper[0].idTeam.equals(prev[i].idHomeTeam)){
-                    srcImgHomeTeam = listHelper[0].strTeamBadge ?: ""
-                } else {
-                    srcImgAwayTeam = listHelper[0].strTeamBadge ?: ""
-                }
-            }
+                var srcImgHomeTeam = ""
+                var srcImgAwayTeam = ""
 
-            newPrevMatches.add(MatchEntity(prev[i].idEvent ?: "",
-                prev[i].idHomeTeam ?: "", prev[i].idAwayTeam?: "",
-                prev[i].dateEvent ?: "-",prev[i].strHomeTeam ?: "-",
-                prev[i].strAwayTeam ?: "-",prev[i].intHomeScore ?: "-",
-                prev[i].intAwayScore ?: "-", srcImgHomeTeam, srcImgAwayTeam))
+                if (listHelper != null) {
+                    if(listHelper.size == 2) {
+                        if(listHelper[0].idTeam.equals(dataList[i].idHomeTeam)){
+                            srcImgHomeTeam = listHelper[0].strTeamBadge ?: ""
+                            srcImgAwayTeam = listHelper[1].strTeamBadge ?: ""
+                        } else {
+                            srcImgAwayTeam = listHelper[0].strTeamBadge ?: ""
+                            srcImgHomeTeam = listHelper[1].strTeamBadge ?: ""
+                        }
+                    } else if (listHelper.size == 1) {
+                        if(listHelper[0].idTeam.equals(dataList[i].idHomeTeam)){
+                            srcImgHomeTeam = listHelper[0].strTeamBadge ?: ""
+                        } else {
+                            srcImgAwayTeam = listHelper[0].strTeamBadge ?: ""
+                        }
+                    }
+                }
+
+                newMatchList.add(MatchEntity(dataList[i].idEvent ?: "",
+                    dataList[i].idHomeTeam ?: "", dataList[i].idAwayTeam?: "",
+                    dataList[i].dateEvent ?: "-",dataList[i].strHomeTeam ?: "-",
+                    dataList[i].strAwayTeam ?: "-",dataList[i].intHomeScore ?: "-",
+                    dataList[i].intAwayScore ?: "-", srcImgHomeTeam, srcImgAwayTeam))
+            }
         }
 
-        prevHelper = ArrayList(newPrevMatches)
-        newPrevMatchesData.postValue(newPrevMatches)
+        return newMatchList
     }
 
     fun getAllMatchsData(): List<MatchEntity>{

@@ -7,9 +7,10 @@ import com.indramahkota.footballmatchschedule.data.source.remote.apiresponse.Tea
 
 interface FLeagueDataSource {
     fun loadLeagueDetailsByLeagueId(id: String): LiveData<Resource<LeagueDetailsApiResponse?>>
-    fun loadNextMatchesByLeagueId(id: String): LiveData<Resource<MatchDetailsApiResponse?>>
-    fun loadLastMatchesByLeagueId(id: String): LiveData<Resource<MatchDetailsApiResponse?>>
     fun loadMatchDetailById(id: String): LiveData<Resource<MatchDetailsApiResponse?>>
     fun loadTeamDetailById(id: String): LiveData<Resource<TeamDetailsApiResponse?>>
-    fun loadAllTeamByLeagueId(id: String): LiveData<Resource<TeamDetailsApiResponse?>>
+
+    suspend fun loadAllTeamByLeagueId(id: String): Resource<TeamDetailsApiResponse?>
+    suspend fun loadNextMatchesByLeagueId(id: String): Resource<MatchDetailsApiResponse?>
+    suspend fun loadLastMatchesByLeagueId(id: String): Resource<MatchDetailsApiResponse?>
 }

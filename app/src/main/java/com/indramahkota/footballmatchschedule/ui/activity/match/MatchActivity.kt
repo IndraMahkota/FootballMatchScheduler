@@ -15,13 +15,9 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.google.android.material.tabs.TabLayout
 import com.indramahkota.footballmatchschedule.R
 import com.indramahkota.footballmatchschedule.data.source.Resource
-import com.indramahkota.footballmatchschedule.data.source.Status
+import com.indramahkota.footballmatchschedule.data.source.Status.*
 import com.indramahkota.footballmatchschedule.data.source.locale.entity.LeagueEntity
-import com.indramahkota.footballmatchschedule.data.source.remote.apimodel.MatchDetailsApiModel
-import com.indramahkota.footballmatchschedule.data.source.remote.apimodel.TeamDetailsApiModel
 import com.indramahkota.footballmatchschedule.data.source.remote.apiresponse.LeagueDetailsApiResponse
-import com.indramahkota.footballmatchschedule.data.source.remote.apiresponse.MatchDetailsApiResponse
-import com.indramahkota.footballmatchschedule.data.source.remote.apiresponse.TeamDetailsApiResponse
 import com.indramahkota.footballmatchschedule.ui.activity.search.SearchActivity
 import com.indramahkota.footballmatchschedule.ui.activity.search.SearchActivity.Companion.PARCELABLE_DATA
 import com.indramahkota.footballmatchschedule.ui.activity.search.SearchActivity.Companion.STRING_DATA
@@ -43,14 +39,6 @@ class MatchActivity : AppCompatActivity() {
 
     private lateinit var league: LeagueEntity
     private lateinit var viewModel: LeagueDetailsViewModel
-
-    private var allTeamLoaded = false
-    private var nextMatchesLoaded = false
-    private var prevMatchesLoaded = false
-
-    private var allTeamData: MutableList<TeamDetailsApiModel> = mutableListOf()
-    private var nextMatchesData: MutableList<MatchDetailsApiModel> = mutableListOf()
-    private var prevMatchesData: MutableList<MatchDetailsApiModel> = mutableListOf()
 
     @set:Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -85,7 +73,7 @@ class MatchActivity : AppCompatActivity() {
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(LeagueDetailsViewModel::class.java)
         viewModel.leagueDetails.observe(this, Observer<Resource<LeagueDetailsApiResponse?>>{
             when (it.status) {
-                Status.SUCCESS -> {
+                SUCCESS -> {
                     Glide.with(this)
                         .load(it.data?.leagues?.get(0)?.strPoster ?: R.drawable.image_error)
                         .placeholder(R.drawable.spinner_animation)
@@ -97,61 +85,10 @@ class MatchActivity : AppCompatActivity() {
                     strCountryData.text = it.data?.leagues?.get(0)?.strCountry ?: ""
                     strWebsiteData.text = it.data?.leagues?.get(0)?.strWebsite ?: ""
                 }
-                Status.ERROR -> toast(R.string.error_load_data)
-                else -> {}
+                ERROR -> toast(it.message.toString())
             }
         })
-
-        viewModel.allTeamInLeague.observe(this, Observer<Resource<TeamDetailsApiResponse?>>{
-            when (it.status) {
-                Status.SUCCESS -> {
-                    if(it.data?.teams != null) {
-                        allTeamData.addAll(it.data.teams)
-                    }
-                    allTeamLoaded = true
-                    setData()
-                }
-                Status.ERROR -> toast(R.string.error_load_data)
-                else -> {}
-            }
-        })
-
-        viewModel.nextMatches.observe(this, Observer<Resource<MatchDetailsApiResponse?>>{
-            when (it.status) {
-                Status.SUCCESS -> {
-                    if(it.data?.events != null) {
-                        nextMatchesData.addAll(it.data.events)
-                    }
-                    nextMatchesLoaded = true
-                    setData()
-                }
-                Status.ERROR -> toast(R.string.error_load_data)
-                else -> {}
-            }
-        })
-
-        viewModel.prevMatches.observe(this, Observer<Resource<MatchDetailsApiResponse?>>{
-            when (it.status) {
-                Status.SUCCESS -> {
-                    if(it.data?.events != null) {
-                        prevMatchesData.addAll(it.data.events)
-                    }
-                    prevMatchesLoaded = true
-                    setData()
-                }
-                Status.ERROR -> toast(R.string.error_load_data)
-                else -> {}
-            }
-        })
-
         viewModel.loadAllDetails(league.idLeague)
-    }
-
-    private fun setData() {
-        if(allTeamLoaded && nextMatchesLoaded && prevMatchesLoaded) {
-            viewModel.setNewNextMatchesData(allTeamData, nextMatchesData)
-            viewModel.setNewPrevMatchesData(allTeamData, prevMatchesData)
-        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

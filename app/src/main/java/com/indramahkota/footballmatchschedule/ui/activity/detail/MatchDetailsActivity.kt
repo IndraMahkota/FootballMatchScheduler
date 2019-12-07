@@ -60,8 +60,7 @@ class MatchDetailsActivity : AppCompatActivity() {
                         initializeUi(it.data.events[0])
                     }
                 }
-                Status.ERROR -> toast(R.string.error_load_data)
-                else -> {}
+                Status.ERROR -> toast(it.message.toString())
             }
         })
 
@@ -77,8 +76,7 @@ class MatchDetailsActivity : AppCompatActivity() {
                             .into(ivTeam1Logo)
                     }
                 }
-                Status.ERROR -> toast(R.string.error_load_data)
-                else -> {}
+                Status.ERROR -> toast(it.message.toString())
             }
         })
 
@@ -94,8 +92,7 @@ class MatchDetailsActivity : AppCompatActivity() {
                             .into(ivTeam2Logo)
                     }
                 }
-                Status.ERROR -> toast(R.string.error_load_data)
-                else -> {}
+                Status.ERROR -> toast(it.message.toString())
             }
         })
 

@@ -16,8 +16,6 @@ import javax.inject.Singleton
 class FLeagueRepository @Inject constructor( private val api: ApiEndPoint ) : FLeagueDataSource {
     override fun loadLeagueDetailsByLeagueId(id: String): LiveData<Resource<LeagueDetailsApiResponse?>> {
         val result: MutableLiveData<Resource<LeagueDetailsApiResponse?>> = MutableLiveData()
-        result.postValue(Resource.loading(null))
-
         val call: Call<LeagueDetailsApiResponse> = api.getLeagueDetailsByLeagueId(id)
         call.enqueue(object : Callback<LeagueDetailsApiResponse?> {
             override fun onResponse(call: Call<LeagueDetailsApiResponse?>, response: Response<LeagueDetailsApiResponse?> ) {
@@ -28,49 +26,7 @@ class FLeagueRepository @Inject constructor( private val api: ApiEndPoint ) : FL
             }
 
             override fun onFailure(call: Call<LeagueDetailsApiResponse?>, t: Throwable ) {
-                result.postValue(Resource.error(LeagueDetailsApiResponse(null)))
-            }
-        })
-
-        return result
-    }
-
-    override fun loadNextMatchesByLeagueId(id: String): LiveData<Resource<MatchDetailsApiResponse?>> {
-        val result: MutableLiveData<Resource<MatchDetailsApiResponse?>> = MutableLiveData()
-        result.postValue(Resource.loading(null))
-
-        val call: Call<MatchDetailsApiResponse> = api.getNextMatchesByLeagueId(id)
-        call.enqueue(object : Callback<MatchDetailsApiResponse?> {
-            override fun onResponse(call: Call<MatchDetailsApiResponse?>, response: Response<MatchDetailsApiResponse?> ) {
-                if (response.body() != null) {
-                    val matchApiResponse = MatchDetailsApiResponse(response.body()!!.events)
-                    result.postValue(Resource.success(matchApiResponse))
-                }
-            }
-
-            override fun onFailure(call: Call<MatchDetailsApiResponse?>, t: Throwable ) {
-                result.postValue(Resource.error(MatchDetailsApiResponse(null)))
-            }
-        })
-
-        return result
-    }
-
-    override fun loadLastMatchesByLeagueId(id: String): LiveData<Resource<MatchDetailsApiResponse?>> {
-        val result: MutableLiveData<Resource<MatchDetailsApiResponse?>> = MutableLiveData()
-        result.postValue(Resource.loading(null))
-
-        val call: Call<MatchDetailsApiResponse> = api.getLastMatchesByLeagueId(id)
-        call.enqueue(object : Callback<MatchDetailsApiResponse?> {
-            override fun onResponse(call: Call<MatchDetailsApiResponse?>, response: Response<MatchDetailsApiResponse?> ) {
-                if (response.body() != null) {
-                    val matchApiResponse = MatchDetailsApiResponse(response.body()!!.events)
-                    result.postValue(Resource.success(matchApiResponse))
-                }
-            }
-
-            override fun onFailure(call: Call<MatchDetailsApiResponse?>, t: Throwable ) {
-                result.postValue(Resource.error(MatchDetailsApiResponse(null)))
+                result.postValue(Resource.error(t.message, LeagueDetailsApiResponse()))
             }
         })
 
@@ -79,8 +35,6 @@ class FLeagueRepository @Inject constructor( private val api: ApiEndPoint ) : FL
 
     override fun loadMatchDetailById(id: String): LiveData<Resource<MatchDetailsApiResponse?>> {
         val result: MutableLiveData<Resource<MatchDetailsApiResponse?>> = MutableLiveData()
-        result.postValue(Resource.loading(null))
-
         val call: Call<MatchDetailsApiResponse> = api.getMatchDetailById(id)
         call.enqueue(object : Callback<MatchDetailsApiResponse?> {
             override fun onResponse(call: Call<MatchDetailsApiResponse?>, response: Response<MatchDetailsApiResponse?> ) {
@@ -91,7 +45,7 @@ class FLeagueRepository @Inject constructor( private val api: ApiEndPoint ) : FL
             }
 
             override fun onFailure(call: Call<MatchDetailsApiResponse?>, t: Throwable ) {
-                result.postValue(Resource.error(MatchDetailsApiResponse(null)))
+                result.postValue(Resource.error(t.message, MatchDetailsApiResponse()))
             }
         })
 
@@ -100,8 +54,6 @@ class FLeagueRepository @Inject constructor( private val api: ApiEndPoint ) : FL
 
     override fun loadTeamDetailById(id: String): LiveData<Resource<TeamDetailsApiResponse?>> {
         val result: MutableLiveData<Resource<TeamDetailsApiResponse?>> = MutableLiveData()
-        result.postValue(Resource.loading(null))
-
         val call: Call<TeamDetailsApiResponse> = api.getTeamDetailById(id)
         call.enqueue(object : Callback<TeamDetailsApiResponse?> {
             override fun onResponse(call: Call<TeamDetailsApiResponse?>, response: Response<TeamDetailsApiResponse?> ) {
@@ -112,31 +64,34 @@ class FLeagueRepository @Inject constructor( private val api: ApiEndPoint ) : FL
             }
 
             override fun onFailure(call: Call<TeamDetailsApiResponse?>, t: Throwable ) {
-                result.postValue(Resource.error(TeamDetailsApiResponse(null)))
+                result.postValue(Resource.error(t.message, TeamDetailsApiResponse()))
             }
         })
 
         return result
     }
 
-    override fun loadAllTeamByLeagueId(id: String): LiveData<Resource<TeamDetailsApiResponse?>> {
-        val result: MutableLiveData<Resource<TeamDetailsApiResponse?>> = MutableLiveData()
-        result.postValue(Resource.loading(null))
+    override suspend fun loadAllTeamByLeagueId(id: String): Resource<TeamDetailsApiResponse?> {
+        return try {
+            Resource.success(api.getAllTeamByLeagueId(id))
+        } catch (e: Exception) {
+            Resource.error(e.message, TeamDetailsApiResponse())
+        }
+    }
 
-        val call: Call<TeamDetailsApiResponse> = api.getAllTeamByLeagueId(id)
-        call.enqueue(object : Callback<TeamDetailsApiResponse?> {
-            override fun onResponse(call: Call<TeamDetailsApiResponse?>, response: Response<TeamDetailsApiResponse?> ) {
-                if (response.body() != null) {
-                    val teamDetailsApiResponse = TeamDetailsApiResponse(response.body()!!.teams)
-                    result.postValue(Resource.success(teamDetailsApiResponse))
-                }
-            }
+    override suspend fun loadNextMatchesByLeagueId(id: String): Resource<MatchDetailsApiResponse?> {
+        return try {
+            Resource.success(api.getNextMatchesByLeagueId(id))
+        } catch (e: Exception) {
+            Resource.error(e.message, MatchDetailsApiResponse())
+        }
+    }
 
-            override fun onFailure(call: Call<TeamDetailsApiResponse?>, t: Throwable ) {
-                result.postValue(Resource.error(TeamDetailsApiResponse(null)))
-            }
-        })
-
-        return result
+    override suspend fun loadLastMatchesByLeagueId(id: String): Resource<MatchDetailsApiResponse?> {
+        return try {
+            Resource.success(api.getLastMatchesByLeagueId(id))
+        } catch (e: Exception) {
+            Resource.error(e.message, MatchDetailsApiResponse())
+        }
     }
 }

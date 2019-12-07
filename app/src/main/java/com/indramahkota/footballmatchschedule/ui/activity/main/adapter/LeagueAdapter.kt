@@ -12,9 +12,10 @@ import kotlinx.android.extensions.LayoutContainer
 import org.jetbrains.anko.AnkoContext
 
 class LeagueAdapter (private val items: List<LeagueEntity>,
-                     private val listener: (LeagueEntity) -> Unit ) : RecyclerView.Adapter<LeagueAdapter.ViewHolder>() {
+                     private val listener: (LeagueEntity) -> Unit
+) : RecyclerView.Adapter<LeagueAdapter.ViewHolder>() {
 
-    override fun onCreateViewHolder( parent: ViewGroup, viewType: Int
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int
     ) = ViewHolder( ItemsLeague().createView(AnkoContext.Companion.create(parent.context, parent)))
 
     override fun getItemCount(): Int = items.size
@@ -23,8 +24,7 @@ class LeagueAdapter (private val items: List<LeagueEntity>,
         holder.bind(items[position], listener)
     }
 
-    inner class ViewHolder(
-        override val containerView: View
+    inner class ViewHolder(override val containerView: View
     ) : RecyclerView.ViewHolder(containerView), LayoutContainer {
 
         private val image = itemView.findViewById<ImageView>(ItemsLeague.clubImage)
