@@ -63,6 +63,7 @@ class MatchActivity : AppCompatActivity() {
         val tabPagerAdapter = TabPagerAdapter(supportFragmentManager, listFragment, listTitle)
         tabPagerAdapter.notifyDataSetChanged()
         viewPager.adapter = tabPagerAdapter
+
         val tabs: TabLayout = findViewById(R.id.tabLayout)
         tabs.setupWithViewPager(viewPager)
 

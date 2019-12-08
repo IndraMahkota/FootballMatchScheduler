@@ -2,6 +2,7 @@
     <string name="app_name">Football Match Schedule</string>
     <string name="title_activity_main">Football Leagues</string>
     <string name="title_activity_league_details">League Details</string>
+    <string name="title_activity_favorite">Favorites</string>
     <string name="action_search">Search</string>
     <string name="league_img_details">League Image Details</string>
     <string name="logo_team_1">Logo Team 1</string>

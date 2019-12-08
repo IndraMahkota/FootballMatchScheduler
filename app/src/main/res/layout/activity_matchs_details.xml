@@ -130,7 +130,6 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?actionBarSize"
-                android:gravity="bottom"
                 app:layout_collapseMode="pin"
                 app:layout_scrollFlags="scroll|snap|enterAlways"
                 app:title="@string/title_activity_matchs_details"/>
