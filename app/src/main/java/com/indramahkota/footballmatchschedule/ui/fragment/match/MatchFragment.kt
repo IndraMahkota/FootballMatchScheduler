@@ -137,13 +137,13 @@ class MatchFragment : Fragment() {
 
     private fun initializeUi(it: List<MatchEntity>?) {
         if (it != null) {
-            if(it.isNotEmpty()){
-                matchsData = ArrayList(it)
-                matchAdapter = MatchAdapter(it) { matchModel ->
-                    startActivity(intentFor<MatchDetailsActivity>(PARCELABLE_MATCH_DATA to matchModel))
-                }
-                rv_category.adapter = matchAdapter
-            } else {
+            matchsData = ArrayList(it)
+            matchAdapter = MatchAdapter(it) { matchModel ->
+                startActivity(intentFor<MatchDetailsActivity>(PARCELABLE_MATCH_DATA to matchModel))
+            }
+            rv_category.adapter = matchAdapter
+
+            if(it.isEmpty()) {
                 no_data.visibility = View.VISIBLE
             }
         }
