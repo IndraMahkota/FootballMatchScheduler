@@ -3,8 +3,6 @@ package com.indramahkota.footballmatchschedule.ui.activity.favorite
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import androidx.viewpager.widget.ViewPager
-import com.google.android.material.tabs.TabLayout
 import com.indramahkota.footballmatchschedule.R
 import com.indramahkota.footballmatchschedule.ui.fragment.match.MatchFragment
 import com.indramahkota.footballmatchschedule.ui.fragment.match.adapter.TabPagerAdapter
@@ -27,11 +25,8 @@ class FavoriteActivity : AppCompatActivity() {
         )
 
         val tabPagerAdapter = TabPagerAdapter(supportFragmentManager, listFragment, listTitle)
-        val viewPager: ViewPager = findViewById(R.id.view_pager)
-        viewPager.adapter = tabPagerAdapter
-
-        val tabs: TabLayout = findViewById(R.id.tabs)
-        tabs.setupWithViewPager(viewPager)
+        view_pager.adapter = tabPagerAdapter
+        tabs.setupWithViewPager(view_pager)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

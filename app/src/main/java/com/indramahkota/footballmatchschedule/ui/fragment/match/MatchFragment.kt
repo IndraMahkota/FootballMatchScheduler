@@ -26,7 +26,6 @@ import org.jetbrains.anko.support.v4.intentFor
 import org.jetbrains.anko.support.v4.toast
 import javax.inject.Inject
 
-
 class MatchFragment : Fragment() {
     companion object {
         private const val ARG_SECTION_FRAGMENT = "section_fragment"
