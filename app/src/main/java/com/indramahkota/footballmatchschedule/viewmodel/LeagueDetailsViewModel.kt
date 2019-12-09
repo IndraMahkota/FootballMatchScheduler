@@ -17,8 +17,8 @@ class LeagueDetailsViewModel @Inject constructor(private val repository: FLeague
 
     private var nextHelper = arrayListOf<MatchEntity>()
     private var prevHelper = arrayListOf<MatchEntity>()
-    var newNextMatchesData: MutableLiveData<Resource<List<MatchEntity>?>> = MutableLiveData()
-    var newPrevMatchesData: MutableLiveData<Resource<List<MatchEntity>?>> = MutableLiveData()
+    var newNextMatchData: MutableLiveData<Resource<List<MatchEntity>?>> = MutableLiveData()
+    var newPrevMatchData: MutableLiveData<Resource<List<MatchEntity>?>> = MutableLiveData()
 
     private val leagueId = MutableLiveData<String>()
     var leagueDetails: LiveData<Resource<LeagueDetailsApiResponse?>> =
@@ -36,31 +36,31 @@ class LeagueDetailsViewModel @Inject constructor(private val repository: FLeague
             val nextMatchResource = async { repository.loadNextMatchesByLeagueId(id) }
             val prevMatchResource = async { repository.loadLastMatchesByLeagueId(id) }
 
-            setNewNextMatchesData(allTeamResource.await(), nextMatchResource.await())
-            setNewPrevMatchesData(allTeamResource.await(), prevMatchResource.await())
+            setNewNextMatchData(allTeamResource.await(), nextMatchResource.await())
+            setNewPrevMatchData(allTeamResource.await(), prevMatchResource.await())
         }
     }
 
-    private fun setNewNextMatchesData(all: Resource<TeamDetailsApiResponse?>,
+    private fun setNewNextMatchData(all: Resource<TeamDetailsApiResponse?>,
                                       next: Resource<MatchDetailsApiResponse?>) {
         var newNextMatches = arrayListOf<MatchEntity>()
         if(all.isSuccess && next.isSuccess) {
             newNextMatches = createNewListData(all.data?.teams, next.data?.events)
-            newNextMatchesData.postValue(Resource.success(newNextMatches))
+            newNextMatchData.postValue(Resource.success(newNextMatches))
         } else {
-            newNextMatchesData.postValue(Resource.error(all.message, null))
+            newNextMatchData.postValue(Resource.error(next.message, null))
         }
         nextHelper = ArrayList(newNextMatches)
     }
 
-    private fun setNewPrevMatchesData(all: Resource<TeamDetailsApiResponse?>,
+    private fun setNewPrevMatchData(all: Resource<TeamDetailsApiResponse?>,
                                       prev: Resource<MatchDetailsApiResponse?>) {
         var newPrevMatches = arrayListOf<MatchEntity>()
         if(all.isSuccess && prev.isSuccess) {
             newPrevMatches = createNewListData(all.data?.teams, prev.data?.events)
-            newPrevMatchesData.postValue(Resource.success(newPrevMatches))
+            newPrevMatchData.postValue(Resource.success(newPrevMatches))
         } else {
-            newPrevMatchesData.postValue(Resource.error(all.message, null))
+            newPrevMatchData.postValue(Resource.error(prev.message, null))
         }
         prevHelper = ArrayList(newPrevMatches)
     }

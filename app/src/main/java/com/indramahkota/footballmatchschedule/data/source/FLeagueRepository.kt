@@ -15,7 +15,7 @@ import javax.inject.Singleton
 
 @Singleton
 class FLeagueRepository @Inject constructor( private val api: ApiEndPoint,
-                                             private val db: MyDatabase) : FLeagueDataSource {
+                                             private val db: MyDatabase ) : FLeagueDataSource {
     override suspend fun loadLeagueDetailsByLeagueId(id: String): Resource<LeagueDetailsApiResponse?> {
         return try {
             Resource.success(api.getLeagueDetailsByLeagueId(id))
