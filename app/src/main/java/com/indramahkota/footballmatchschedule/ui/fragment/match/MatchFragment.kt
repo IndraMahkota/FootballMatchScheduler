@@ -41,6 +41,7 @@ class MatchFragment : Fragment() {
         }
     }
 
+    private var state: String? = null
     private var matchsData: ArrayList<MatchEntity>? = null
     private lateinit var linearLayoutManager: LinearLayoutManager
     private lateinit var matchAdapter: MatchAdapter
@@ -67,86 +68,80 @@ class MatchFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val state = arguments?.getString(ARG_SECTION_FRAGMENT)
+        state = arguments?.getString(ARG_SECTION_FRAGMENT)
+
+        linearLayoutManager = LinearLayoutManager(view.context)
+        rv_category.layoutManager = linearLayoutManager
+        rv_category.setHasFixedSize(true)
 
         if(matchsData != null){
-            initializeUi(view, matchsData)
+            initializeUi(matchsData)
         } else {
             when (state) {
-                resources.getString(R.string.prev_matches_fragment) -> getPrevListData(view)
-                resources.getString(R.string.next_matches_fragment) -> getNextListData(view)
-                resources.getString(R.string.prev_favorite_matches_fragment) -> getFavoritePrevListData(view)
-                resources.getString(R.string.next_favorite_matches_fragment) -> getFavoriteNextListData(view)
+                resources.getString(R.string.prev_matches_fragment) -> getPrevListData()
+                resources.getString(R.string.next_matches_fragment) -> getNextListData()
+                resources.getString(R.string.prev_favorite_matches_fragment) -> getFavoritePrevListData()
+                resources.getString(R.string.next_favorite_matches_fragment) -> getFavoriteNextListData()
             }
         }
     }
 
-    private fun getPrevListData(view: View) {
+    private fun getPrevListData() {
         val viewModel = activity?.let { ViewModelProvider(it, viewModelFactory).get(LeagueDetailsViewModel::class.java) }
         viewModel?.newPrevMatchesData?.observe(viewLifecycleOwner, Observer<Resource<List<MatchEntity>?>> {
-            checkState(view, it)
+            checkState(it)
         })
     }
 
-    private fun getNextListData(view: View) {
+    private fun getNextListData() {
         val viewModel = activity?.let { ViewModelProvider(it, viewModelFactory).get(LeagueDetailsViewModel::class.java) }
         viewModel?.newNextMatchesData?.observe(viewLifecycleOwner, Observer<Resource<List<MatchEntity>?>> {
-            checkState(view, it)
+            checkState(it)
         })
     }
 
-    private fun getFavoritePrevListData(view: View) {
+    private fun getFavoritePrevListData() {
         val viewModel = ViewModelProvider(this, viewModelFactory).get(FavoriteMatchViewModel::class.java)
         viewModel.getAllFavorite().observe(viewLifecycleOwner, Observer<List<MatchEntity>> {
-
-            val newList = mutableListOf<MatchEntity>()
+            val newList = ArrayList<MatchEntity>()
             for (item in it) {
                 if(compareDateBeforeAndEqual(item.dateEvent)){
                     newList.add(item)
                 }
             }
-
-            initializeUi(view, newList)
+            initializeUi(newList)
         })
     }
 
-    private fun getFavoriteNextListData(view: View) {
+    private fun getFavoriteNextListData() {
         val viewModel = ViewModelProvider(this, viewModelFactory).get(FavoriteMatchViewModel::class.java)
         viewModel.getAllFavorite().observe(viewLifecycleOwner, Observer<List<MatchEntity>> {
-
-            val newList = mutableListOf<MatchEntity>()
+            val newList = ArrayList<MatchEntity>()
             for (item in it) {
                 if(compareDateAfter(item.dateEvent)){
                     newList.add(item)
                 }
             }
-
-            initializeUi(view, newList)
+            initializeUi(newList)
         })
     }
 
-    private fun checkState(view: View, it: Resource<List<MatchEntity>?>){
+    private fun checkState(it: Resource<List<MatchEntity>?>){
         when (it.status) {
             SUCCESS -> {
-                initializeUi(view, it.data)
+                initializeUi(it.data)
             }
             ERROR -> toast(it.message.toString())
         }
     }
 
-    private fun initializeUi(view: View, it: List<MatchEntity>?) {
+    private fun initializeUi(it: List<MatchEntity>?) {
         if (it != null) {
             if(it.isNotEmpty()){
                 matchsData = ArrayList(it)
-
-                linearLayoutManager = LinearLayoutManager(view.context)
-                rv_category.layoutManager = linearLayoutManager
-                rv_category.setHasFixedSize(true)
-
                 matchAdapter = MatchAdapter(it) { matchModel ->
                     startActivity(intentFor<MatchDetailsActivity>(PARCELABLE_MATCH_DATA to matchModel))
                 }
-                matchAdapter.notifyDataSetChanged()
                 rv_category.adapter = matchAdapter
             } else {
                 no_data.visibility = View.VISIBLE
@@ -159,5 +154,14 @@ class MatchFragment : Fragment() {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putParcelableArrayList(ARG_SAVE_DATA, matchsData)
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        when (state) {
+            resources.getString(R.string.prev_favorite_matches_fragment) -> getFavoritePrevListData()
+            resources.getString(R.string.next_favorite_matches_fragment) -> getFavoriteNextListData()
+        }
     }
 }
