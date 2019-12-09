@@ -1,6 +1,7 @@
 package com.indramahkota.footballmatchschedule.ui.fragment.match
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,12 +15,19 @@ import com.indramahkota.footballmatchschedule.data.source.Status.*
 import com.indramahkota.footballmatchschedule.data.source.locale.entity.MatchEntity
 import com.indramahkota.footballmatchschedule.ui.activity.detail.MatchDetailsActivity
 import com.indramahkota.footballmatchschedule.ui.fragment.match.adapter.MatchAdapter
+import com.indramahkota.footballmatchschedule.utilities.Utilities.compareDateAfter
+import com.indramahkota.footballmatchschedule.utilities.Utilities.compareDateBeforeAndEqual
+import com.indramahkota.footballmatchschedule.viewmodel.FavoriteMatchViewModel
 import com.indramahkota.footballmatchschedule.viewmodel.LeagueDetailsViewModel
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.content_match_tab.*
 import org.jetbrains.anko.support.v4.intentFor
 import org.jetbrains.anko.support.v4.toast
+import java.text.ParseException
+import java.text.SimpleDateFormat
+import java.util.*
 import javax.inject.Inject
+import kotlin.collections.ArrayList
 
 class MatchFragment : Fragment() {
     companion object {
@@ -70,6 +78,8 @@ class MatchFragment : Fragment() {
             when (state) {
                 resources.getString(R.string.prev_matches_fragment) -> getPrevListData(view)
                 resources.getString(R.string.next_matches_fragment) -> getNextListData(view)
+                resources.getString(R.string.prev_favorite_matches_fragment) -> getFavoritePrevListData(view)
+                resources.getString(R.string.next_favorite_matches_fragment) -> getFavoriteNextListData(view)
             }
         }
     }
@@ -88,12 +98,42 @@ class MatchFragment : Fragment() {
         })
     }
 
+    private fun getFavoritePrevListData(view: View) {
+        val viewModel = ViewModelProvider(this, viewModelFactory).get(FavoriteMatchViewModel::class.java)
+        viewModel.getAllFavorite().observe(viewLifecycleOwner, Observer<List<MatchEntity>> {
+
+            val newList = mutableListOf<MatchEntity>()
+            for (item in it) {
+                if(compareDateBeforeAndEqual(item.dateEvent)){
+                    newList.add(item)
+                }
+            }
+
+            initializeUi(view, newList)
+        })
+    }
+
+    private fun getFavoriteNextListData(view: View) {
+        val viewModel = ViewModelProvider(this, viewModelFactory).get(FavoriteMatchViewModel::class.java)
+        viewModel.getAllFavorite().observe(viewLifecycleOwner, Observer<List<MatchEntity>> {
+
+            val newList = mutableListOf<MatchEntity>()
+            for (item in it) {
+                if(compareDateAfter(item.dateEvent)){
+                    newList.add(item)
+                }
+            }
+
+            initializeUi(view, newList)
+        })
+    }
+
     private fun checkState(view: View, it: Resource<List<MatchEntity>?>){
         when (it.status) {
             SUCCESS -> {
                 initializeUi(view, it.data)
             }
-            ERROR -> toast(R.string.error_load_data)
+            ERROR -> toast(it.message.toString())
         }
     }
 

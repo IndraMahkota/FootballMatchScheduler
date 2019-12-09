@@ -18,7 +18,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/action/ic_favorite_border_black_24dp.xml" />
+                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/toggle/ic_star_border_black_24dp.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -29,8 +29,8 @@
                         <option name="values">
                           <map>
                             <entry key="color" value="ffffff" />
-                            <entry key="outputName" value="ic_favorite_border_white" />
-                            <entry key="sourceFile" value="C:\Users\Indra Mahkota" />
+                            <entry key="outputName" value="ic_star_white_border" />
+                            <entry key="sourceFile" value="C:\Users\Indra Mahkota\Desktop\tag.svg" />
                           </map>
                         </option>
                       </PersistentState>

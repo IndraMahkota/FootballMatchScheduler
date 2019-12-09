@@ -1,11 +1,14 @@
 package com.indramahkota.footballmatchschedule.ui.activity.main
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.indramahkota.footballmatchschedule.R
 import com.indramahkota.footballmatchschedule.data.source.locale.entity.LeagueEntity
+import com.indramahkota.footballmatchschedule.ui.activity.favorite.FavoriteActivity
 import com.indramahkota.footballmatchschedule.ui.activity.main.adapter.LeagueAdapter
 import com.indramahkota.footballmatchschedule.ui.activity.match.MatchActivity
 import com.indramahkota.footballmatchschedule.ui.activity.match.MatchActivity.Companion.PARCELABLE_LEAGUE_DATA
@@ -31,14 +34,30 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun getData() : List<LeagueEntity> {
+    private fun getData(): List<LeagueEntity> {
         val items: MutableList<LeagueEntity> = mutableListOf()
         val idLeague = resources.getStringArray(R.array.league_id)
         val nameLeague = resources.getStringArray(R.array.league_name)
         val imageLeague = resources.getStringArray(R.array.league_image)
         for (i in idLeague.indices) items.add(
-            LeagueEntity( idLeague[i], nameLeague[i], imageLeague[i] )
+            LeagueEntity(idLeague[i], nameLeague[i], imageLeague[i])
         )
         return items
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflater = menuInflater
+        inflater.inflate(R.menu.menu_favorite, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.favorite_menu -> {
+                startActivity(intentFor<FavoriteActivity>())
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 }

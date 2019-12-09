@@ -21,4 +21,28 @@ object Utilities {
         }
         return outputDate
     }
+
+    fun compareDateAfter(inputDate: String): Boolean{
+        val parsed: Date?
+        val dfInput = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        try {
+            parsed = dfInput.parse(inputDate)
+            return parsed.after(Date())
+        } catch (e: ParseException) {
+            Log.d("Date Error", "ParseException - dateFormat")
+        }
+        return false
+    }
+
+    fun compareDateBeforeAndEqual(inputDate: String): Boolean{
+        val parsed: Date?
+        val dfInput = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        try {
+            parsed = dfInput.parse(inputDate)
+            return (parsed.before(Date()) || parsed == Date())
+        } catch (e: ParseException) {
+            Log.d("Date Error", "ParseException - dateFormat")
+        }
+        return false
+    }
 }

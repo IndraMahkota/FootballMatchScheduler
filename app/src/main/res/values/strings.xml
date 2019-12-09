@@ -4,6 +4,7 @@
     <string name="title_activity_league_details">League Details</string>
     <string name="title_activity_favorite">Favorites</string>
     <string name="action_search">Search</string>
+    <string name="action_favorite">Favorites</string>
     <string name="league_img_details">League Image Details</string>
     <string name="logo_team_1">Logo Team 1</string>
     <string name="logo_team_2">Logo Team 2</string>
@@ -36,6 +37,8 @@
     <string name="search_hint">Type this to search</string>
     <string name="prev_matches_fragment">Previous Matchs Fragment</string>
     <string name="next_matches_fragment">Next Matchs Fragment</string>
+    <string name="prev_favorite_matches_fragment">Previous Favorite Matchs Fragment</string>
+    <string name="next_favorite_matches_fragment">Next Favorite Matchs Fragment</string>
 
     <string-array name="league_id">
         <item>4328</item>

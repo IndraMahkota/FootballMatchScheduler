@@ -12,11 +12,13 @@ import com.google.android.material.snackbar.Snackbar
 import com.indramahkota.footballmatchschedule.R
 import com.indramahkota.footballmatchschedule.data.source.Resource
 import com.indramahkota.footballmatchschedule.data.source.Status
+import com.indramahkota.footballmatchschedule.data.source.locale.entity.MatchEntity
 import com.indramahkota.footballmatchschedule.data.source.remote.apimodel.MatchDetailsApiModel
+import com.indramahkota.footballmatchschedule.data.source.remote.apimodel.TeamDetailsApiModel
 import com.indramahkota.footballmatchschedule.data.source.remote.apiresponse.MatchDetailsApiResponse
 import com.indramahkota.footballmatchschedule.data.source.remote.apiresponse.TeamDetailsApiResponse
-import com.indramahkota.footballmatchschedule.data.source.locale.entity.MatchEntity
 import com.indramahkota.footballmatchschedule.utilities.Utilities.formatDateFromString
+import com.indramahkota.footballmatchschedule.viewmodel.FavoriteMatchViewModel
 import com.indramahkota.footballmatchschedule.viewmodel.MatchDetailsViewModel
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_matchs_details.*
@@ -30,8 +32,14 @@ class MatchDetailsActivity : AppCompatActivity() {
         const val PARCELABLE_MATCH_DATA = "parcelable_match_data"
     }
 
+    private var favMatch: MatchEntity? = null
+    private var matchDetailsData: MatchDetailsApiModel? = null
+    private var homeTeamDetailsData: TeamDetailsApiModel? = null
+    private var awayTeamDetailsData: TeamDetailsApiModel? = null
+
     private lateinit var matchDetail: MatchEntity
     private lateinit var viewModel: MatchDetailsViewModel
+    private lateinit var favViewModel: FavoriteMatchViewModel
 
     @set:Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -46,17 +54,15 @@ class MatchDetailsActivity : AppCompatActivity() {
 
         matchDetail = intent.getParcelableExtra(PARCELABLE_MATCH_DATA)!!
 
-        fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
-        }
-
         viewModel = ViewModelProvider(this, viewModelFactory).get(MatchDetailsViewModel::class.java)
         viewModel.matchDetails.observe(this, Observer<Resource<MatchDetailsApiResponse?>>{
             when (it.status) {
                 Status.SUCCESS -> {
                     if(it.data?.events != null) {
                         initializeUi(it.data.events[0])
+
+                        matchDetailsData = it.data.events[0]
+                        updateFavorite(matchDetailsData, homeTeamDetailsData, awayTeamDetailsData)
                     }
                 }
                 Status.ERROR -> toast(it.message.toString())
@@ -73,6 +79,9 @@ class MatchDetailsActivity : AppCompatActivity() {
                             .error(R.drawable.image_error)
                             .transform(RoundedCorners(8))
                             .into(ivTeam1Logo)
+
+                        homeTeamDetailsData = it.data.teams[0]
+                        updateFavorite(matchDetailsData, homeTeamDetailsData, awayTeamDetailsData)
                     }
                 }
                 Status.ERROR -> toast(it.message.toString())
@@ -89,12 +98,24 @@ class MatchDetailsActivity : AppCompatActivity() {
                             .error(R.drawable.image_error)
                             .transform(RoundedCorners(8))
                             .into(ivTeam2Logo)
+
+                        awayTeamDetailsData = it.data.teams[0]
+                        updateFavorite(matchDetailsData, homeTeamDetailsData, awayTeamDetailsData)
                     }
                 }
                 Status.ERROR -> toast(it.message.toString())
             }
         })
 
+        favViewModel = ViewModelProvider(this, viewModelFactory).get(FavoriteMatchViewModel::class.java)
+        favViewModel.favoriteById.observe(this, Observer<MatchEntity>{
+            if(it != null){
+                favMatch = it
+                fab.setImageResource(R.drawable.ic_star_pink)
+            }
+        })
+
+        matchDetail.idEvent.let { favViewModel.getFavoriteById(it) }
         matchDetail.idEvent.let { viewModel.loadMatchDetails(it) }
         matchDetail.idHomeTeam.let { viewModel.loadHomeTeamDetails(it) }
         matchDetail.idAwayTeam.let { viewModel.loadAwayTeamDetails(it) }
@@ -109,7 +130,54 @@ class MatchDetailsActivity : AppCompatActivity() {
         }
     }
 
+    private fun updateFavorite(match: MatchDetailsApiModel?,
+                               homeTeam: TeamDetailsApiModel?,
+                               awayTeam: TeamDetailsApiModel?){
+        if(favMatch != null){
+            val newData = createNewFavoriteData(match, homeTeam, awayTeam)
+            favViewModel.updateFavorite(newData)
+        }
+    }
+
+    private fun createNewFavoriteData(match: MatchDetailsApiModel?,
+                                      homeTeam: TeamDetailsApiModel?,
+                                      awayTeam: TeamDetailsApiModel?):MatchEntity {
+        return MatchEntity(
+            match?.idEvent ?: "",
+            match?.idHomeTeam ?: "",
+            match?.idAwayTeam ?: "",
+            match?.dateEvent ?: "",
+            match?.strHomeTeam ?: "",
+            match?.strAwayTeam ?: "",
+            match?.intHomeScore ?: "-",
+            match?.intAwayScore ?: "-",
+            homeTeam?.strTeamBadge ?: "",
+            awayTeam?.strTeamBadge ?: ""
+        )
+    }
+
     private fun initializeUi(data: MatchDetailsApiModel) {
+        fab.setOnClickListener { view ->
+            run {
+                val message: String
+                if(favMatch != null){
+                    favViewModel.deleteFavorite(favMatch!!)
+                    favMatch = null
+                    fab.setImageResource(R.drawable.ic_star_white_border)
+                    message = "Delete favorite"
+                } else{
+                    val newData = createNewFavoriteData(data, homeTeamDetailsData, awayTeamDetailsData)
+                    favViewModel.insertFavorite(newData)
+                    favMatch = newData
+                    fab.setImageResource(R.drawable.ic_star_pink)
+                    message = "Insert to favorite"
+                }
+
+                Snackbar.make(view, message, Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show()
+            }
+        }
+
         tvDate.text = formatDateFromString(data.dateEvent ?: "")
         tvSkorTeam1.text = data.intHomeScore ?: "-"
         tvSkorTeam2.text = data.intAwayScore ?: "-"
