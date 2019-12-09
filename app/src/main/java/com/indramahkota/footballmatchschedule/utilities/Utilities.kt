@@ -22,7 +22,7 @@ object Utilities {
         return outputDate
     }
 
-    fun compareDateAfter(inputDate: String): Boolean{
+    fun compareDateAfter(inputDate: String): Boolean {
         val parsed: Date?
         val dfInput = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
         try {
@@ -34,7 +34,7 @@ object Utilities {
         return false
     }
 
-    fun compareDateBeforeAndEqual(inputDate: String): Boolean{
+    fun compareDateBeforeAndEqual(inputDate: String): Boolean {
         val parsed: Date?
         val dfInput = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
         try {

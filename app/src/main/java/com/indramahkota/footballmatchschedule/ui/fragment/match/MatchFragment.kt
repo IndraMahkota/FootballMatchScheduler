@@ -88,14 +88,14 @@ class MatchFragment : Fragment() {
 
     private fun getPrevListData() {
         val viewModel = activity?.let { ViewModelProvider(it, viewModelFactory).get(LeagueDetailsViewModel::class.java) }
-        viewModel?.newPrevMatchesData?.observe(viewLifecycleOwner, Observer<Resource<List<MatchEntity>?>> {
+        viewModel?.newPrevMatchData?.observe(viewLifecycleOwner, Observer<Resource<List<MatchEntity>?>> {
             checkState(it)
         })
     }
 
     private fun getNextListData() {
         val viewModel = activity?.let { ViewModelProvider(it, viewModelFactory).get(LeagueDetailsViewModel::class.java) }
-        viewModel?.newNextMatchesData?.observe(viewLifecycleOwner, Observer<Resource<List<MatchEntity>?>> {
+        viewModel?.newNextMatchData?.observe(viewLifecycleOwner, Observer<Resource<List<MatchEntity>?>> {
             checkState(it)
         })
     }

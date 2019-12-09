@@ -26,6 +26,11 @@ android {
     androidExtensions {
         experimental = true
     }
+    testOptions {
+        unitTests.all {
+            useJUnitPlatform()
+        }
+    }
 }
 
 dependencies {
@@ -81,8 +86,9 @@ dependencies {
     //Dagger Instrumentation Test
     androidTestAnnotationProcessor 'com.google.dagger:dagger-compiler:2.25.2'
 
-    //Unit Test
+    //Unit Test & Instrument Test
     testImplementation 'junit:junit:4.12'
+    testImplementation 'org.mockito:mockito-core:3.0.0'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
