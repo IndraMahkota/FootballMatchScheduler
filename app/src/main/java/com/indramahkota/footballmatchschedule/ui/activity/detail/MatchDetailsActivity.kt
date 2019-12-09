@@ -1,5 +1,6 @@
 package com.indramahkota.footballmatchschedule.ui.activity.detail
 
+import android.graphics.Matrix
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
@@ -159,24 +160,24 @@ class MatchDetailsActivity : AppCompatActivity() {
 
     private fun initializeUi(data: MatchDetailsApiModel) {
         fab.setOnClickListener { view ->
-            run {
-                val message: String
-                if(favMatch != null){
-                    favViewModel.deleteFavorite(favMatch!!)
-                    favMatch = null
-                    fab.setImageResource(R.drawable.ic_star_white_border)
-                    message = "Delete favorite"
-                } else{
-                    val newData = createNewFavoriteData(data, homeTeamDetailsData, awayTeamDetailsData)
-                    favViewModel.insertFavorite(newData)
-                    favMatch = newData
-                    fab.setImageResource(R.drawable.ic_star_pink)
-                    message = "Insert to favorite"
-                }
-
-                Snackbar.make(view, message, Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
+            val message: String
+            if(favMatch != null){
+                favViewModel.deleteFavorite(favMatch!!)
+                favMatch = null
+                fab.setImageResource(R.drawable.ic_star_white_border)
+                fab.imageMatrix = Matrix()
+                message = "Delete favorite"
+            } else{
+                val newData = createNewFavoriteData(data, homeTeamDetailsData, awayTeamDetailsData)
+                favViewModel.insertFavorite(newData)
+                favMatch = newData
+                fab.setImageResource(R.drawable.ic_star_pink)
+                fab.imageMatrix = Matrix()
+                message = "Insert to favorite"
             }
+
+            Snackbar.make(view, message, Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show()
         }
 
         tvDate.text = formatDateFromString(data.dateEvent ?: "")
