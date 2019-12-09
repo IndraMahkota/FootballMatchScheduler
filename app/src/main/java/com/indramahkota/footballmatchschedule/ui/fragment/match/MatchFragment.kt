@@ -1,7 +1,6 @@
 package com.indramahkota.footballmatchschedule.ui.fragment.match
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,9 +10,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.indramahkota.footballmatchschedule.R
 import com.indramahkota.footballmatchschedule.data.source.Resource
-import com.indramahkota.footballmatchschedule.data.source.Status.*
+import com.indramahkota.footballmatchschedule.data.source.Status.ERROR
+import com.indramahkota.footballmatchschedule.data.source.Status.SUCCESS
 import com.indramahkota.footballmatchschedule.data.source.locale.entity.MatchEntity
 import com.indramahkota.footballmatchschedule.ui.activity.detail.MatchDetailsActivity
+import com.indramahkota.footballmatchschedule.ui.activity.detail.MatchDetailsActivity.Companion.PARCELABLE_MATCH_DATA
 import com.indramahkota.footballmatchschedule.ui.fragment.match.adapter.MatchAdapter
 import com.indramahkota.footballmatchschedule.utilities.Utilities.compareDateAfter
 import com.indramahkota.footballmatchschedule.utilities.Utilities.compareDateBeforeAndEqual
@@ -23,11 +24,8 @@ import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.content_match_tab.*
 import org.jetbrains.anko.support.v4.intentFor
 import org.jetbrains.anko.support.v4.toast
-import java.text.ParseException
-import java.text.SimpleDateFormat
-import java.util.*
 import javax.inject.Inject
-import kotlin.collections.ArrayList
+
 
 class MatchFragment : Fragment() {
     companion object {
@@ -147,7 +145,7 @@ class MatchFragment : Fragment() {
                 rv_category.setHasFixedSize(true)
 
                 matchAdapter = MatchAdapter(it) { matchModel ->
-                    startActivity(intentFor<MatchDetailsActivity>(MatchDetailsActivity.PARCELABLE_MATCH_DATA to matchModel))
+                    startActivity(intentFor<MatchDetailsActivity>(PARCELABLE_MATCH_DATA to matchModel))
                 }
                 matchAdapter.notifyDataSetChanged()
                 rv_category.adapter = matchAdapter
