@@ -90,5 +90,4 @@ object FakeData {
             generateTeamDetailsApiModel("this_id_away_team_test")
         )
     }
-
 }

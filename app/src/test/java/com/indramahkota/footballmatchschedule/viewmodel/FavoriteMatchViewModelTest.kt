@@ -8,6 +8,7 @@ import com.indramahkota.footballmatchschedule.FakeData.generateListMatchEntity
 import com.indramahkota.footballmatchschedule.data.source.FLeagueRepository
 import com.indramahkota.footballmatchschedule.data.source.locale.entity.MatchEntity
 import com.indramahkota.footballmatchschedule.mock
+import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -46,6 +47,7 @@ class FavoriteMatchViewModelTest {
         viewModel.getFavoriteById(id)
 
         Mockito.verify(observerDataById).onChanged(data)
+        Assert.assertEquals(viewModel.favoriteById.value, data)
     }
 
     @Test
@@ -63,5 +65,6 @@ class FavoriteMatchViewModelTest {
         viewModel.getAllFavorite()
 
         Mockito.verify(observerAllData).onChanged(data)
+        Assert.assertEquals(viewModel.getAllFavorite().value, data)
     }
 }
