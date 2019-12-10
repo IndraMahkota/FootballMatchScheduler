@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.indramahkota.footballmatchschedule.EspressoIdlingResource
 import com.indramahkota.footballmatchschedule.R
 import com.indramahkota.footballmatchschedule.data.source.Resource
 import com.indramahkota.footballmatchschedule.data.source.Status.ERROR
