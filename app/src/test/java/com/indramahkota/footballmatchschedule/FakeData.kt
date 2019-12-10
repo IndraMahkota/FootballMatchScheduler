@@ -8,20 +8,21 @@ import com.indramahkota.footballmatchschedule.data.source.remote.apimodel.TeamDe
 object FakeData {
     fun generateMatchEntity(id: String):MatchEntity{
         return MatchEntity(id,
-            "123", "234",
-            "2019-12-12","Liverpool",
-            "Barcelona","2",
-            "1", "https://www.picture.com/pict1",
-            "https://www.picture.com/pict2")
+            "this_id_home_team_test", "this_id_away_team_test",
+            "this_date_event_test","this_home_team_test",
+            "this_away_team_test","this_home_score_test",
+            "this_away_score_test", "this_image_test",
+            "this_image_test")
     }
 
     fun generateListMatchEntity(id: String):List<MatchEntity>{
         return mutableListOf(
+            generateMatchEntity(id),
             generateMatchEntity(id)
         )
     }
 
-    fun generateLeagueDetailsApiModel(): LeagueDetailsApiModel {
+    private fun generateLeagueDetailsApiModel(): LeagueDetailsApiModel {
         return LeagueDetailsApiModel("2019-12-12", "123",
             "456", "789", "2019", "",
             "", "", "", "",
@@ -42,7 +43,7 @@ object FakeData {
         )
     }
 
-    fun generateMatchDetailsApiModel(): MatchDetailsApiModel {
+    private fun generateMatchDetailsApiModel(): MatchDetailsApiModel {
         return MatchDetailsApiModel("this_date_event_test", "2019-12-13",
             "this_id_away_team_test", "this_id_event_test",
             "this_id_home_team_test", "", "",
@@ -67,7 +68,7 @@ object FakeData {
         )
     }
 
-    fun generateTeamDetailsApiModel(id: String): TeamDetailsApiModel {
+    private fun generateTeamDetailsApiModel(id: String): TeamDetailsApiModel {
         return TeamDetailsApiModel("123", "456",
             id, "2019", "222", "",
             "", "", "", "",
@@ -83,9 +84,10 @@ object FakeData {
             "", "", "")
     }
 
-    fun generateListTeamDetailsApiModel(id: String): List<TeamDetailsApiModel> {
+    fun generateListTeamDetailsApiModel(): List<TeamDetailsApiModel> {
         return mutableListOf(
-            generateTeamDetailsApiModel(id)
+            generateTeamDetailsApiModel("this_id_home_team_test"),
+            generateTeamDetailsApiModel("this_id_away_team_test")
         )
     }
 

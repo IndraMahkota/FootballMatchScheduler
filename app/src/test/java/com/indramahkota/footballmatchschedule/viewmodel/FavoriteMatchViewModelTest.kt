@@ -7,7 +7,7 @@ import com.indramahkota.footballmatchschedule.FakeData
 import com.indramahkota.footballmatchschedule.FakeData.generateListMatchEntity
 import com.indramahkota.footballmatchschedule.data.source.FLeagueRepository
 import com.indramahkota.footballmatchschedule.data.source.locale.entity.MatchEntity
-import com.indramahkota.footballmatchschedule.mockito.mock
+import com.indramahkota.footballmatchschedule.mock
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test

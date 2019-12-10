@@ -1,4 +1,4 @@
-package com.indramahkota.footballmatchschedule.mockito
+package com.indramahkota.footballmatchschedule
 
 import org.mockito.Mockito
 
