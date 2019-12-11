@@ -42,6 +42,13 @@ class SearchActivity : AppCompatActivity() {
         linearLayoutManager = LinearLayoutManager(this)
         rv_category.layoutManager = linearLayoutManager
         rv_category.setHasFixedSize(true)
+
+        val listData = mutableListOf<MatchEntity>()
+        matchAdapter = MatchAdapter(listData){ matchModel ->
+            startActivity(intentFor<MatchDetailsActivity>(PARCELABLE_MATCH_DATA to matchModel))
+        }
+        rv_category.adapter = matchAdapter
+
         setRecycleView()
     }
 
@@ -58,7 +65,6 @@ class SearchActivity : AppCompatActivity() {
         matchAdapter = MatchAdapter(newData){ matchModel ->
             startActivity(intentFor<MatchDetailsActivity>(PARCELABLE_MATCH_DATA to matchModel))
         }
-        matchAdapter.notifyDataSetChanged()
         rv_category.adapter = matchAdapter
 
         if(newData.isEmpty()) {
@@ -70,11 +76,17 @@ class SearchActivity : AppCompatActivity() {
         val inflater = menuInflater
         inflater.inflate(R.menu.menu_search, menu)
 
+        val searchItem = menu?.findItem(R.id.search_menu)
         val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
-        val searchView = menu?.findItem(R.id.search_menu)?.actionView as SearchView
+        val searchView = searchItem?.actionView as SearchView
 
         searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName))
         searchView.queryHint = resources.getString(R.string.search_hint)
+        searchView.isFocusable = true
+        searchView.isIconified = false
+        searchView.requestFocusFromTouch()
+
+
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {

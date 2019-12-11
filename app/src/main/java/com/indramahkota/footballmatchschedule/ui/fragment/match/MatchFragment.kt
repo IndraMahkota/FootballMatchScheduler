@@ -74,6 +74,12 @@ class MatchFragment : Fragment() {
         rv_category.layoutManager = linearLayoutManager
         rv_category.setHasFixedSize(true)
 
+        val listData = mutableListOf<MatchEntity>()
+        matchAdapter = MatchAdapter(listData){ matchModel ->
+            startActivity(intentFor<MatchDetailsActivity>(PARCELABLE_MATCH_DATA to matchModel))
+        }
+        rv_category.adapter = matchAdapter
+
         if(matchsData != null){
             initializeUi(matchsData)
         } else {
@@ -147,7 +153,6 @@ class MatchFragment : Fragment() {
                 no_data.visibility = View.VISIBLE
             }
         }
-
         shimmer_view_container.visibility = View.GONE
     }
 

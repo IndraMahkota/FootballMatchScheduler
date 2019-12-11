@@ -10,7 +10,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.google.android.material.snackbar.Snackbar
-import com.indramahkota.footballmatchschedule.EspressoIdlingResource
 import com.indramahkota.footballmatchschedule.R
 import com.indramahkota.footballmatchschedule.data.source.Resource
 import com.indramahkota.footballmatchschedule.data.source.Status
@@ -118,7 +117,6 @@ class MatchDetailsActivity : AppCompatActivity() {
             }
         })
 
-        EspressoIdlingResource.increment()
         matchDetail.idEvent.let { favViewModel.getFavoriteById(it) }
         matchDetail.idEvent.let { viewModel.loadMatchDetails(it) }
         matchDetail.idHomeTeam.let { viewModel.loadHomeTeamDetails(it) }
@@ -161,8 +159,6 @@ class MatchDetailsActivity : AppCompatActivity() {
     }
 
     private fun initializeUi(data: MatchDetailsApiModel) {
-        EspressoIdlingResource.decrement()
-
         fab.setOnClickListener { view ->
             val message: String
             if(favMatch != null){
