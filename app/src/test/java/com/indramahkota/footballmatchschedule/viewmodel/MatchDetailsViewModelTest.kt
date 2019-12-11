@@ -11,7 +11,7 @@ import com.indramahkota.footballmatchschedule.data.source.remote.apiresponse.Tea
 import com.indramahkota.footballmatchschedule.getOrAwaitValue
 import com.indramahkota.footballmatchschedule.mock
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
@@ -39,7 +39,7 @@ class MatchDetailsViewModelTest {
     }
 
     @Test
-    fun getMatchDetailsTest() = runBlocking {
+    fun getMatchDetailsTest() = mainCoroutineRule.runBlockingTest {
         val id = "1234"
         val data = MatchDetailsApiResponse(generateListMatchDetailsApiModel())
         val resourceData: Resource<MatchDetailsApiResponse?> = Resource.success(data)
@@ -57,7 +57,7 @@ class MatchDetailsViewModelTest {
     }
 
     @Test
-    fun getAwayTeamDetails() = runBlocking {
+    fun getAwayTeamDetails() = mainCoroutineRule.runBlockingTest {
         val id = "1234"
         val data = TeamDetailsApiResponse(generateListTeamDetailsApiModel())
         val resourceData: Resource<TeamDetailsApiResponse?> = Resource.success(data)
@@ -75,7 +75,7 @@ class MatchDetailsViewModelTest {
     }
 
     @Test
-    fun getHomeTeamDetails() = runBlocking {
+    fun getHomeTeamDetails() = mainCoroutineRule.runBlockingTest {
         val id = "1234"
         val data = TeamDetailsApiResponse(generateListTeamDetailsApiModel())
         val resourceData: Resource<TeamDetailsApiResponse?> = Resource.success(data)

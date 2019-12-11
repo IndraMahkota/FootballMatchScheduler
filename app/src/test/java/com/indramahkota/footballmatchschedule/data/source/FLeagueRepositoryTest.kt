@@ -12,7 +12,7 @@ import com.indramahkota.footballmatchschedule.data.source.remote.apiresponse.Mat
 import com.indramahkota.footballmatchschedule.data.source.remote.apiresponse.TeamDetailsApiResponse
 import com.indramahkota.footballmatchschedule.mock
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Assert
 import org.junit.Rule
 import org.junit.Test
@@ -32,7 +32,7 @@ class FLeagueRepositoryTest {
     private val repository: FakeFLeagueRepository = FakeFLeagueRepository(api, db)
 
     @Test
-    fun loadLeagueDetailsByLeagueId() = runBlocking {
+    fun loadLeagueDetailsByLeagueId() = mainCoroutineRule.runBlockingTest {
         val id = "123"
         val leagueDetails = LeagueDetailsApiResponse(generateListLeagueDetailsApiModel())
         val leagueDetailsResource: Resource<LeagueDetailsApiResponse?> = Resource.success(leagueDetails)
@@ -44,7 +44,7 @@ class FLeagueRepositoryTest {
     }
 
     @Test
-    fun loadMatchDetailById() = runBlocking {
+    fun loadMatchDetailById() = mainCoroutineRule.runBlockingTest {
         val id = "123"
         val matchDetail = MatchDetailsApiResponse(generateListMatchDetailsApiModel())
         val matchDetailResource: Resource<MatchDetailsApiResponse?> = Resource.success(matchDetail)
@@ -56,7 +56,7 @@ class FLeagueRepositoryTest {
     }
 
     @Test
-    fun loadTeamDetailById() = runBlocking {
+    fun loadTeamDetailById() = mainCoroutineRule.runBlockingTest {
         val id = "123"
         val teamDetail = TeamDetailsApiResponse(generateListTeamDetailsApiModel())
         val teamDetailResource: Resource<TeamDetailsApiResponse?> = Resource.success(teamDetail)
@@ -68,7 +68,7 @@ class FLeagueRepositoryTest {
     }
 
     @Test
-    fun loadAllTeamByLeagueId() = runBlocking {
+    fun loadAllTeamByLeagueId() = mainCoroutineRule.runBlockingTest {
         val id = "123"
         val teamDetail = TeamDetailsApiResponse(generateListTeamDetailsApiModel())
         val teamDetailResource: Resource<TeamDetailsApiResponse?> = Resource.success(teamDetail)
@@ -80,7 +80,7 @@ class FLeagueRepositoryTest {
     }
 
     @Test
-    fun loadNextMatchesByLeagueId() = runBlocking {
+    fun loadNextMatchesByLeagueId() = mainCoroutineRule.runBlockingTest {
         val id = "123"
         val matchDetail = MatchDetailsApiResponse(generateListMatchDetailsApiModel())
         val matchDetailResource: Resource<MatchDetailsApiResponse?> = Resource.success(matchDetail)
@@ -92,7 +92,7 @@ class FLeagueRepositoryTest {
     }
 
     @Test
-    fun loadLastMatchesByLeagueId() = runBlocking {
+    fun loadLastMatchesByLeagueId() = mainCoroutineRule.runBlockingTest {
         val id = "123"
         val matchDetail = MatchDetailsApiResponse(generateListMatchDetailsApiModel())
         val matchDetailResource: Resource<MatchDetailsApiResponse?> = Resource.success(matchDetail)

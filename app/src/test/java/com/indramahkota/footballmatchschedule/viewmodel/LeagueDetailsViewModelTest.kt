@@ -15,7 +15,7 @@ import com.indramahkota.footballmatchschedule.data.source.remote.apiresponse.Tea
 import com.indramahkota.footballmatchschedule.getOrAwaitValue
 import com.indramahkota.footballmatchschedule.mock
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
@@ -43,7 +43,7 @@ class LeagueDetailsViewModelTest {
     }
 
     @Test
-    fun getNewNextMatchData() = runBlocking {
+    fun getNewNextMatchData() = mainCoroutineRule.runBlockingTest {
         val id = "this_id_event_test"
         val data = generateListMatchEntity(id)
         val matchList: Resource<List<MatchEntity>?> = Resource.success(data)
@@ -76,7 +76,7 @@ class LeagueDetailsViewModelTest {
     }
 
     @Test
-    fun getNewPrevMatchData() = runBlocking {
+    fun getNewPrevMatchData() = mainCoroutineRule.runBlockingTest {
         val id = "this_id_event_test"
         val data = generateListMatchEntity(id)
         val matchList: Resource<List<MatchEntity>?> = Resource.success(data)
@@ -109,7 +109,7 @@ class LeagueDetailsViewModelTest {
     }
 
     @Test
-    fun getLeagueDetails() = runBlocking {
+    fun getLeagueDetails() = mainCoroutineRule.runBlockingTest {
         val id = "this_id_event_test"
         val data = LeagueDetailsApiResponse(generateListLeagueDetailsApiModel())
         val resourceData: Resource<LeagueDetailsApiResponse?> = Resource.success(data)
@@ -145,7 +145,7 @@ class LeagueDetailsViewModelTest {
     }
 
     @Test
-    fun getAllMatchsData() = runBlocking {
+    fun getAllMatchsData() = mainCoroutineRule.runBlockingTest {
         val id = "this_id_event_test"
         val data = LeagueDetailsApiResponse(generateListLeagueDetailsApiModel())
         val resourceData: Resource<LeagueDetailsApiResponse?> = Resource.success(data)
