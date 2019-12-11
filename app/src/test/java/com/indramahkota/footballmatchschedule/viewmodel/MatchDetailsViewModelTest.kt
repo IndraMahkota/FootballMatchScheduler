@@ -39,7 +39,7 @@ class MatchDetailsViewModelTest {
     }
 
     @Test
-    fun getMatchDetailsTest() = mainCoroutineRule.runBlockingTest {
+    fun `Check success value when get Match Details by Event Id`() = mainCoroutineRule.runBlockingTest {
         val id = "1234"
         val data = MatchDetailsApiResponse(generateListMatchDetailsApiModel())
         val resourceData: Resource<MatchDetailsApiResponse?> = Resource.success(data)
@@ -57,7 +57,7 @@ class MatchDetailsViewModelTest {
     }
 
     @Test
-    fun getAwayTeamDetails() = mainCoroutineRule.runBlockingTest {
+    fun `Check success value when get Away Team by Away Team Id`() = mainCoroutineRule.runBlockingTest {
         val id = "1234"
         val data = TeamDetailsApiResponse(generateListTeamDetailsApiModel())
         val resourceData: Resource<TeamDetailsApiResponse?> = Resource.success(data)
@@ -75,7 +75,7 @@ class MatchDetailsViewModelTest {
     }
 
     @Test
-    fun getHomeTeamDetails() = mainCoroutineRule.runBlockingTest {
+    fun `Check success value when get Home Team by Home Team Id`() = mainCoroutineRule.runBlockingTest {
         val id = "1234"
         val data = TeamDetailsApiResponse(generateListTeamDetailsApiModel())
         val resourceData: Resource<TeamDetailsApiResponse?> = Resource.success(data)

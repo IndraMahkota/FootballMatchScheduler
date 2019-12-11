@@ -24,7 +24,7 @@ class FakeFLeagueRepository constructor(
 
     override suspend fun loadMatchDetailById(id: String): Resource<MatchDetailsApiResponse?> {
         return try {
-            Resource.success(api.getMatchDetailById(id))
+            Resource.success(api.getMatchDetailsById(id))
         } catch(e: Exception) {
             Resource.error(e.message, MatchDetailsApiResponse())
         }
@@ -32,7 +32,7 @@ class FakeFLeagueRepository constructor(
 
     override suspend fun loadTeamDetailById(id: String): Resource<TeamDetailsApiResponse?> {
         return try {
-            Resource.success(api.getTeamDetailById(id))
+            Resource.success(api.getTeamDetailsById(id))
         } catch(e: Exception) {
             Resource.error(e.message, TeamDetailsApiResponse())
         }
@@ -48,7 +48,7 @@ class FakeFLeagueRepository constructor(
 
     override suspend fun loadNextMatchesByLeagueId(id: String): Resource<MatchDetailsApiResponse?> {
         return try {
-            Resource.success(api.getNextMatchesByLeagueId(id))
+            Resource.success(api.getNextMatchByLeagueId(id))
         } catch (e: Exception) {
             Resource.error(e.message, MatchDetailsApiResponse())
         }
@@ -56,7 +56,7 @@ class FakeFLeagueRepository constructor(
 
     override suspend fun loadLastMatchesByLeagueId(id: String): Resource<MatchDetailsApiResponse?> {
         return try {
-            Resource.success(api.getLastMatchesByLeagueId(id))
+            Resource.success(api.getLastMatchByLeagueId(id))
         } catch (e: Exception) {
             Resource.error(e.message, MatchDetailsApiResponse())
         }

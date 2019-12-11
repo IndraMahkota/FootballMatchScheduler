@@ -13,12 +13,12 @@ interface ApiEndPoint {
     ) : LeagueDetailsApiResponse
 
     @GET("lookupteam.php")
-    suspend fun getTeamDetailById(
+    suspend fun getTeamDetailsById(
         @Query("id") matchId : String
     ) : TeamDetailsApiResponse
 
     @GET("lookupevent.php")
-    suspend fun getMatchDetailById(
+    suspend fun getMatchDetailsById(
         @Query("id") matchId : String
     ) : MatchDetailsApiResponse
 
@@ -28,12 +28,12 @@ interface ApiEndPoint {
     ) : TeamDetailsApiResponse
 
     @GET("eventsnextleague.php")
-    suspend fun getNextMatchesByLeagueId(
+    suspend fun getNextMatchByLeagueId(
         @Query("id") leagueId : String
     ) : MatchDetailsApiResponse
 
     @GET("eventspastleague.php")
-    suspend fun getLastMatchesByLeagueId(
+    suspend fun getLastMatchByLeagueId(
         @Query("id") leagueId : String
     ) : MatchDetailsApiResponse
 }

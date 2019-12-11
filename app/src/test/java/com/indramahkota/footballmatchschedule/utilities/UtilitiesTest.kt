@@ -9,17 +9,17 @@ import org.junit.Test
 class UtilitiesTest {
 
     @Test
-    fun testFormatDateFromString() {
+    fun `Check value Date from String with specific Date Format`() {
         assertEquals("Thursday, 12 Dec 2019", formatDateFromString("2019-12-12"))
     }
 
     @Test
-    fun testCompareDateAfter() {
+    fun `Check value compare date is After Date Input`() {
         assertEquals(true, compareDateAfter("2030-12-12"))
     }
 
     @Test
-    fun testCompareDateBeforeAndEqual() {
+    fun `Check value compare date is Before or Equal Date Input`() {
         assertEquals(true, compareDateBeforeAndEqual("2000-12-12"))
     }
 }

@@ -33,7 +33,7 @@ class FavoriteMatchViewModelTest {
     }
 
     @Test
-    fun getFavoriteById() {
+    fun `Check value when get favorite by Id`() {
         val id = "1234"
         val data = FakeData.generateMatchEntity(id)
         val liveData: MutableLiveData<MatchEntity> = MutableLiveData()
@@ -51,7 +51,7 @@ class FavoriteMatchViewModelTest {
     }
 
     @Test
-    fun getAllFavorite() {
+    fun `Check value when get list all favorite`() {
         val id = "1234"
         val data = generateListMatchEntity(id)
         val liveData: MutableLiveData<List<MatchEntity>> = MutableLiveData()

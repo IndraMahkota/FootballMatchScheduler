@@ -32,7 +32,7 @@ class FLeagueRepositoryTest {
     private val repository: FakeFLeagueRepository = FakeFLeagueRepository(api, db)
 
     @Test
-    fun loadLeagueDetailsByLeagueId() = mainCoroutineRule.runBlockingTest {
+    fun `Check success value when get League Details By League Id`() = mainCoroutineRule.runBlockingTest {
         val id = "123"
         val leagueDetails = LeagueDetailsApiResponse(generateListLeagueDetailsApiModel())
         val leagueDetailsResource: Resource<LeagueDetailsApiResponse?> = Resource.success(leagueDetails)
@@ -44,31 +44,31 @@ class FLeagueRepositoryTest {
     }
 
     @Test
-    fun loadMatchDetailById() = mainCoroutineRule.runBlockingTest {
+    fun `Check success value when get Match Details By Event Id`() = mainCoroutineRule.runBlockingTest {
         val id = "123"
         val matchDetail = MatchDetailsApiResponse(generateListMatchDetailsApiModel())
         val matchDetailResource: Resource<MatchDetailsApiResponse?> = Resource.success(matchDetail)
 
-        Mockito.`when`(api.getMatchDetailById(id))
+        Mockito.`when`(api.getMatchDetailsById(id))
             .thenReturn(matchDetail)
 
         Assert.assertEquals(matchDetailResource.data?.events, repository.loadMatchDetailById(id).data?.events)
     }
 
     @Test
-    fun loadTeamDetailById() = mainCoroutineRule.runBlockingTest {
+    fun `Check success value when get Team Details By Team Id`() = mainCoroutineRule.runBlockingTest {
         val id = "123"
         val teamDetail = TeamDetailsApiResponse(generateListTeamDetailsApiModel())
         val teamDetailResource: Resource<TeamDetailsApiResponse?> = Resource.success(teamDetail)
 
-        Mockito.`when`(api.getTeamDetailById(id))
+        Mockito.`when`(api.getTeamDetailsById(id))
             .thenReturn(teamDetail)
 
         Assert.assertEquals(teamDetailResource.data?.teams, repository.loadTeamDetailById(id).data?.teams)
     }
 
     @Test
-    fun loadAllTeamByLeagueId() = mainCoroutineRule.runBlockingTest {
+    fun `Check success value when get All Team By League Id`() = mainCoroutineRule.runBlockingTest {
         val id = "123"
         val teamDetail = TeamDetailsApiResponse(generateListTeamDetailsApiModel())
         val teamDetailResource: Resource<TeamDetailsApiResponse?> = Resource.success(teamDetail)
@@ -80,24 +80,24 @@ class FLeagueRepositoryTest {
     }
 
     @Test
-    fun loadNextMatchesByLeagueId() = mainCoroutineRule.runBlockingTest {
+    fun `Check success value when get Next Match By League Id`() = mainCoroutineRule.runBlockingTest {
         val id = "123"
         val matchDetail = MatchDetailsApiResponse(generateListMatchDetailsApiModel())
         val matchDetailResource: Resource<MatchDetailsApiResponse?> = Resource.success(matchDetail)
 
-        Mockito.`when`(api.getNextMatchesByLeagueId(id))
+        Mockito.`when`(api.getNextMatchByLeagueId(id))
             .thenReturn(matchDetail)
 
         Assert.assertEquals(matchDetailResource.data?.events, repository.loadNextMatchesByLeagueId(id).data?.events)
     }
 
     @Test
-    fun loadLastMatchesByLeagueId() = mainCoroutineRule.runBlockingTest {
+    fun `Check success value when get Last Match By League Id`() = mainCoroutineRule.runBlockingTest {
         val id = "123"
         val matchDetail = MatchDetailsApiResponse(generateListMatchDetailsApiModel())
         val matchDetailResource: Resource<MatchDetailsApiResponse?> = Resource.success(matchDetail)
 
-        Mockito.`when`(api.getLastMatchesByLeagueId(id))
+        Mockito.`when`(api.getLastMatchByLeagueId(id))
             .thenReturn(matchDetail)
 
         Assert.assertEquals(matchDetailResource.data?.events, repository.loadLastMatchesByLeagueId(id).data?.events)

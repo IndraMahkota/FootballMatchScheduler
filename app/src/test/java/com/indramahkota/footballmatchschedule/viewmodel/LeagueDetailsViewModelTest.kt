@@ -43,7 +43,7 @@ class LeagueDetailsViewModelTest {
     }
 
     @Test
-    fun getNewNextMatchData() = mainCoroutineRule.runBlockingTest {
+    fun `Check success value when get Next Match Data by League Id`() = mainCoroutineRule.runBlockingTest {
         val id = "this_id_event_test"
         val data = generateListMatchEntity(id)
         val matchList: Resource<List<MatchEntity>?> = Resource.success(data)
@@ -76,7 +76,7 @@ class LeagueDetailsViewModelTest {
     }
 
     @Test
-    fun getNewPrevMatchData() = mainCoroutineRule.runBlockingTest {
+    fun `Check success value when get Prev Match Data by League Id`() = mainCoroutineRule.runBlockingTest {
         val id = "this_id_event_test"
         val data = generateListMatchEntity(id)
         val matchList: Resource<List<MatchEntity>?> = Resource.success(data)
@@ -109,7 +109,7 @@ class LeagueDetailsViewModelTest {
     }
 
     @Test
-    fun getLeagueDetails() = mainCoroutineRule.runBlockingTest {
+    fun `Check success value when get League Details by League Id`() = mainCoroutineRule.runBlockingTest {
         val id = "this_id_event_test"
         val data = LeagueDetailsApiResponse(generateListLeagueDetailsApiModel())
         val resourceData: Resource<LeagueDetailsApiResponse?> = Resource.success(data)
@@ -145,7 +145,7 @@ class LeagueDetailsViewModelTest {
     }
 
     @Test
-    fun getAllMatchsData() = mainCoroutineRule.runBlockingTest {
+    fun `Check value when get All Match Data`() = mainCoroutineRule.runBlockingTest {
         val id = "this_id_event_test"
         val data = LeagueDetailsApiResponse(generateListLeagueDetailsApiModel())
         val resourceData: Resource<LeagueDetailsApiResponse?> = Resource.success(data)
