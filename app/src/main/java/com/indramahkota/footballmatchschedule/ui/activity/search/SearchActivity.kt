@@ -86,8 +86,6 @@ class SearchActivity : AppCompatActivity() {
         searchView.isIconified = false
         searchView.requestFocusFromTouch()
 
-
-
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
                 setRecycleView(query)

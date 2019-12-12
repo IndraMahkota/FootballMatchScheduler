@@ -27,7 +27,6 @@ import kotlinx.android.synthetic.main.layout_text_views.view.*
 import org.jetbrains.anko.toast
 import javax.inject.Inject
 
-
 class MatchDetailsActivity : AppCompatActivity() {
 
     companion object {
