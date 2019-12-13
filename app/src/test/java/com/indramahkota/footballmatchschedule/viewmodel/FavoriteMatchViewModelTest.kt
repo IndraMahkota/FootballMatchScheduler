@@ -3,8 +3,8 @@ package com.indramahkota.footballmatchschedule.viewmodel
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
-import com.indramahkota.footballmatchschedule.FakeData
-import com.indramahkota.footballmatchschedule.FakeData.generateListMatchEntity
+import com.indramahkota.footballmatchschedule.UnitTestFakeData
+import com.indramahkota.footballmatchschedule.UnitTestFakeData.generateListMatchEntity
 import com.indramahkota.footballmatchschedule.data.source.FLeagueRepository
 import com.indramahkota.footballmatchschedule.data.source.locale.entity.MatchEntity
 import com.indramahkota.footballmatchschedule.mock
@@ -35,7 +35,7 @@ class FavoriteMatchViewModelTest {
     @Test
     fun `Check value when get favorite by Id`() {
         val id = "1234"
-        val data = FakeData.generateMatchEntity(id)
+        val data = UnitTestFakeData.generateMatchEntity(id)
         val liveData: MutableLiveData<MatchEntity> = MutableLiveData()
         liveData.value = data
 

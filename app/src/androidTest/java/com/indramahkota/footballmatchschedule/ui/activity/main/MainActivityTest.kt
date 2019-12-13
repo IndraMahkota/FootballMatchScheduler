@@ -1,28 +1,53 @@
 package com.indramahkota.footballmatchschedule.ui.activity.main
 
-import org.junit.After
-import org.junit.Before
+import androidx.recyclerview.widget.RecyclerView
+import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.contrib.RecyclerViewActions
+import androidx.test.espresso.intent.Intents.intended
+import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
+import androidx.test.espresso.intent.rule.IntentsTestRule
+import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
+import androidx.test.espresso.matcher.ViewMatchers.withId
+import com.indramahkota.footballmatchschedule.R
+import com.indramahkota.footballmatchschedule.countRecyclerViewItem
+import com.indramahkota.footballmatchschedule.ui.activity.favorite.FavoriteActivity
+import com.indramahkota.footballmatchschedule.ui.activity.match.MatchActivity
+import org.junit.Rule
 import org.junit.Test
 
 class MainActivityTest {
 
-    @Before
-    fun setUp() {
-    }
+    @Rule
+    @JvmField
+    val intentsTestRule = IntentsTestRule(MainActivity::class.java)
 
-    @After
-    fun tearDown() {
+    @Test
+    fun toActivityTestRecycleView() {
+        onView(withId(R.id.main_rv))
+            .check(matches(isDisplayed()))
+
+        onView(withId(R.id.main_rv))
+            .check(countRecyclerViewItem(10))
+
+        onView(withId(R.id.main_rv)).perform(
+            RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(10))
+
+        onView(withId(R.id.main_rv)).perform(
+            RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(5, click()))
+
+        intended(hasComponent(MatchActivity::class.java.name))
     }
 
     @Test
-    fun onCreate() {
-    }
+    fun toActivityTestFavoriteButton() {
+        onView(withId(R.id.favorite_menu))
+            .check(matches(isDisplayed()))
 
-    @Test
-    fun onCreateOptionsMenu() {
-    }
+        onView(withId(R.id.favorite_menu))
+            .perform(click())
 
-    @Test
-    fun onOptionsItemSelected() {
+        intended(hasComponent(FavoriteActivity::class.java.name))
     }
 }

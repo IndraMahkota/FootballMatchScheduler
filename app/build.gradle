@@ -31,6 +31,10 @@ android {
             useJUnitPlatform()
         }
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
@@ -64,8 +68,8 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.10.0'
 
     //Retrofit
-    implementation 'com.squareup.retrofit2:retrofit:2.6.2'
-    implementation 'com.squareup.retrofit2:converter-gson:2.6.2'
+    implementation 'com.squareup.retrofit2:retrofit:2.7.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.7.0'
 
     //Okhttp
     implementation 'com.squareup.okhttp3:okhttp:4.2.2'
@@ -86,19 +90,28 @@ dependencies {
     //Dagger Instrumentation Test
     androidTestAnnotationProcessor 'com.google.dagger:dagger-compiler:2.25.2'
 
-    //Unit Test & Instrument Test
+    //Unit Test
     testImplementation 'junit:junit:4.12'
     testImplementation 'org.mockito:mockito-core:3.0.0'
     testImplementation "org.mockito:mockito-inline:3.0.0"
-    testImplementation "android.arch.core:core-testing:1.1.1"
+    testImplementation 'android.arch.core:core-testing:1.1.1'
     testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.3.2'
+
+    //Instrument Test
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test:rules:1.0.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-intents:3.2.0'
+    androidTestImplementation('com.android.support.test.espresso:espresso-contrib:3.0.2') {
+        exclude group: 'com.android.support', module: 'appcompat-v7'
+        exclude group: 'com.android.support', module: 'support-v4'
+        exclude group: 'com.android.support', module: 'design'
+        exclude group: 'com.android.support', module: 'recyclerview-v7'
+    }
 
     // Dependencies for Idle Resource
-    implementation "androidx.test.espresso:espresso-idling-resource:3.2.0"
+    implementation 'androidx.test.espresso:espresso-idling-resource:3.2.0'
 
     //Facebook Shimmer
     implementation 'com.facebook.shimmer:shimmer:0.5.0'

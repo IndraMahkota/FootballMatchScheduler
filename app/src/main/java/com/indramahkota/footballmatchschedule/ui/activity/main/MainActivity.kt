@@ -25,6 +25,7 @@ class MainActivity : AppCompatActivity() {
         verticalLayout {
             lparams(width = matchParent, height = wrapContent)
             recyclerView {
+                id = R.id.main_rv
                 layoutManager = LinearLayoutManager(context)
                 addItemDecoration(DividerItemDecoration(context, 1))
                 adapter = LeagueAdapter(getData()) {

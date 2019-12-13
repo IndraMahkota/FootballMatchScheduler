@@ -5,8 +5,8 @@ import com.indramahkota.footballmatchschedule.data.source.remote.apimodel.League
 import com.indramahkota.footballmatchschedule.data.source.remote.apimodel.MatchDetailsApiModel
 import com.indramahkota.footballmatchschedule.data.source.remote.apimodel.TeamDetailsApiModel
 
-object FakeData {
-    fun generateMatchEntity(id: String):MatchEntity{
+object UnitTestFakeData {
+    fun generateMatchEntity(id: String): MatchEntity{
         return MatchEntity(id,
             "this_id_home_team_test", "this_id_away_team_test",
             "this_date_event_test","this_home_team_test",
@@ -15,7 +15,7 @@ object FakeData {
             "this_image_test")
     }
 
-    fun generateListMatchEntity(id: String):List<MatchEntity>{
+    fun generateListMatchEntity(id: String): List<MatchEntity>{
         return mutableListOf(
             generateMatchEntity(id),
             generateMatchEntity(id)

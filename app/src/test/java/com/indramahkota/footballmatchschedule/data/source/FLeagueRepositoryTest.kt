@@ -1,9 +1,9 @@
 package com.indramahkota.footballmatchschedule.data.source
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.indramahkota.footballmatchschedule.FakeData.generateListLeagueDetailsApiModel
-import com.indramahkota.footballmatchschedule.FakeData.generateListMatchDetailsApiModel
-import com.indramahkota.footballmatchschedule.FakeData.generateListTeamDetailsApiModel
+import com.indramahkota.footballmatchschedule.UnitTestFakeData.generateListLeagueDetailsApiModel
+import com.indramahkota.footballmatchschedule.UnitTestFakeData.generateListMatchDetailsApiModel
+import com.indramahkota.footballmatchschedule.UnitTestFakeData.generateListTeamDetailsApiModel
 import com.indramahkota.footballmatchschedule.MainCoroutineRule
 import com.indramahkota.footballmatchschedule.data.source.locale.database.MyDatabase
 import com.indramahkota.footballmatchschedule.data.source.remote.api.ApiEndPoint
