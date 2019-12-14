@@ -3,7 +3,7 @@ package com.indramahkota.footballmatchschedule
 import com.indramahkota.footballmatchschedule.data.source.locale.entity.MatchEntity
 
 object AndroidTestFakeData {
-    private fun generateMatchEntity(home: String, away: String): MatchEntity{
+    fun generateMatchEntity(home: String, away: String): MatchEntity{
         return MatchEntity("4328",
             "this_id_home_team_test", "this_id_away_team_test",
             "this_date_event_test",home, away,"this_home_score_test",
