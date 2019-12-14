@@ -19,7 +19,7 @@ class MatchDetailsActivityTest {
 
     @Test
     fun toMatchDetailsActivityTest() {
-        val data = generateMatchEntity("Southampton", "West Ham")
+        val data = generateMatchEntity("Southampton", "West Ham", "2", "3")
 
         val activityRule = ActivityTestRule(MatchDetailsActivity::class.java)
         val intent = Intent().putExtra(PARCELABLE_MATCH_DATA, data)

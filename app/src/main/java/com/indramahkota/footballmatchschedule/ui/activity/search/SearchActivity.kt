@@ -43,8 +43,8 @@ class SearchActivity : AppCompatActivity() {
         rv_category.layoutManager = linearLayoutManager
         rv_category.setHasFixedSize(true)
 
-        val listData = mutableListOf<MatchEntity>()
-        matchAdapter = MatchAdapter(listData){ matchModel ->
+        val rvData = mutableListOf<MatchEntity>()
+        matchAdapter = MatchAdapter(rvData){ matchModel ->
             startActivity(intentFor<MatchDetailsActivity>(PARCELABLE_MATCH_DATA to matchModel))
         }
         rv_category.adapter = matchAdapter
@@ -62,14 +62,14 @@ class SearchActivity : AppCompatActivity() {
             }
         }
 
-        matchAdapter = MatchAdapter(newData){ matchModel ->
-            startActivity(intentFor<MatchDetailsActivity>(PARCELABLE_MATCH_DATA to matchModel))
-        }
-        rv_category.adapter = matchAdapter
-
         if(newData.isEmpty()) {
             no_data.visibility = View.VISIBLE
+        } else {
+            no_data.visibility = View.INVISIBLE
         }
+
+        matchAdapter.clear()
+        matchAdapter.addAll(newData)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -88,12 +88,12 @@ class SearchActivity : AppCompatActivity() {
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
-                setRecycleView(query)
+                setRecycleView(query.toLowerCase(Locale.getDefault()))
                 return true
             }
 
             override fun onQueryTextChange(query: String): Boolean {
-                setRecycleView(query)
+                setRecycleView(query.toLowerCase(Locale.getDefault()))
                 return false
             }
         })

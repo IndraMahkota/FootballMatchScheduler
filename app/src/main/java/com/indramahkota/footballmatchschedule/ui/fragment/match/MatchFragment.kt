@@ -144,14 +144,15 @@ class MatchFragment : Fragment() {
     private fun initializeUi(it: List<MatchEntity>?) {
         if (it != null) {
             matchsData = ArrayList(it)
-            matchAdapter = MatchAdapter(it) { matchModel ->
-                startActivity(intentFor<MatchDetailsActivity>(PARCELABLE_MATCH_DATA to matchModel))
-            }
-            rv_category.adapter = matchAdapter
 
             if(it.isEmpty()) {
                 no_data.visibility = View.VISIBLE
+            } else {
+                no_data.visibility = View.INVISIBLE
             }
+
+            matchAdapter.clear()
+            matchAdapter.addAll(it)
         }
         shimmer_view_container.visibility = View.GONE
     }

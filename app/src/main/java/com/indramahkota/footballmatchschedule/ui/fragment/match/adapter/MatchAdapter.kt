@@ -11,7 +11,7 @@ import com.indramahkota.footballmatchschedule.data.source.locale.entity.MatchEnt
 import com.indramahkota.footballmatchschedule.utilities.Utilities.formatDateFromString
 import kotlinx.android.synthetic.main.item_match_tab.view.*
 
-class MatchAdapter(private val matchList: List<MatchEntity>,
+class MatchAdapter(private val matchList: MutableList<MatchEntity>,
                    private val listener: (MatchEntity) -> Unit
 ) : RecyclerView.Adapter<MatchAdapter.ViewHolder>() {
 
@@ -19,6 +19,35 @@ class MatchAdapter(private val matchList: List<MatchEntity>,
         val layoutInflater = LayoutInflater.from(parent.context)
         val view = layoutInflater.inflate( R.layout.item_match_tab, parent, false )
         return ViewHolder(view)
+    }
+
+    private fun add(response: MatchEntity) {
+        matchList.add(response)
+        notifyItemInserted(matchList.size - 1)
+    }
+
+    fun addAll(postItems: List<MatchEntity>) {
+        for (response in postItems) {
+            add(response)
+        }
+    }
+
+    private fun remove(postItems: MatchEntity) {
+        val position: Int = matchList.indexOf(postItems)
+        if (position > -1) {
+            matchList.removeAt(position)
+            notifyItemRemoved(position)
+        }
+    }
+
+    fun clear() {
+        while (itemCount > 0) {
+            remove(getItem())
+        }
+    }
+
+    private fun getItem(): MatchEntity {
+        return matchList[0]
     }
 
     override fun getItemCount(): Int =  matchList.size
