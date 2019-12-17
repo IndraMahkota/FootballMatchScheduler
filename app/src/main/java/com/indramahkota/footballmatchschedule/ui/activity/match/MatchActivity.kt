@@ -19,7 +19,7 @@ import com.indramahkota.footballmatchschedule.data.source.remote.apiresponse.Lea
 import com.indramahkota.footballmatchschedule.ui.activity.search.SearchActivity
 import com.indramahkota.footballmatchschedule.ui.activity.search.SearchActivity.Companion.PARCELABLE_DATA
 import com.indramahkota.footballmatchschedule.ui.fragment.match.MatchFragment
-import com.indramahkota.footballmatchschedule.ui.fragment.match.adapter.TabPagerAdapter
+import com.indramahkota.footballmatchschedule.ui.pager.tab.TabPagerAdapter
 import com.indramahkota.footballmatchschedule.viewmodel.LeagueDetailsViewModel
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_league_details.*
@@ -50,14 +50,19 @@ class MatchActivity : AppCompatActivity() {
         supportActionBar?.title = league?.strLeague
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        val listTitle = arrayOf( resources.getString(R.string.prev_matches), resources.getString(R.string.next_matches) )
+        val listTitle = arrayOf( resources.getString(R.string.match), resources.getString(R.string.next_match) )
 
         val listFragment = mutableListOf(
-            MatchFragment.newInstance(resources.getString(R.string.prev_matches_fragment)),
-            MatchFragment.newInstance(resources.getString(R.string.next_matches_fragment))
+            MatchFragment.newInstance(resources.getString(R.string.prev_match_fragment)),
+            MatchFragment.newInstance(resources.getString(R.string.next_match_fragment))
         )
 
-        val tabPagerAdapter = TabPagerAdapter(supportFragmentManager, listFragment, listTitle)
+        val tabPagerAdapter =
+            TabPagerAdapter(
+                supportFragmentManager,
+                listFragment,
+                listTitle
+            )
         tabPagerAdapter.notifyDataSetChanged()
         viewPager.adapter = tabPagerAdapter
 

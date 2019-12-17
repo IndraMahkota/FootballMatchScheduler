@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.indramahkota.footballmatchschedule.R
 import com.indramahkota.footballmatchschedule.data.source.locale.entity.LeagueEntity
 import com.indramahkota.footballmatchschedule.ui.activity.favorite.FavoriteActivity
-import com.indramahkota.footballmatchschedule.ui.activity.main.adapter.LeagueAdapter
+import com.indramahkota.footballmatchschedule.ui.adapter.main.LeagueAdapter
 import com.indramahkota.footballmatchschedule.ui.activity.match.MatchActivity
 import com.indramahkota.footballmatchschedule.ui.activity.match.MatchActivity.Companion.PARCELABLE_LEAGUE_DATA
 import kotlinx.android.synthetic.main.activity_main.*
@@ -30,9 +30,12 @@ class MainActivity : AppCompatActivity() {
         rv_league.layoutManager = linearLayoutManager
         rv_league.setHasFixedSize(true)
 
-        leagueAdapter = LeagueAdapter(getData()){ leagueModel ->
-            startActivity(intentFor<MatchActivity>(PARCELABLE_LEAGUE_DATA to leagueModel))
-        }
+        leagueAdapter =
+            LeagueAdapter(
+                getData()
+            ) { leagueModel ->
+                startActivity(intentFor<MatchActivity>(PARCELABLE_LEAGUE_DATA to leagueModel))
+            }
         rv_league.adapter = leagueAdapter
     }
 

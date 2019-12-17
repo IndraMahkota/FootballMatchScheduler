@@ -9,8 +9,8 @@
     <string name="logo_team_1">Logo Team 1</string>
     <string name="logo_team_2">Logo Team 2</string>
     <string name="vs">Vs</string>
-    <string name="prev_matches">Prev Matches</string>
-    <string name="next_matches">Next Matches</string>
+    <string name="prev_match">Last Match</string>
+    <string name="next_match">Next Match</string>
     <string name="tanggal">Minggu, 25 April 2019</string>
     <string name="team1">Team 1</string>
     <string name="team2">Team 2</string>
@@ -21,7 +21,7 @@
     <string name="textKiri">Text Kiri</string>
     <string name="textTengah">Text Tengah</string>
     <string name="textKanan">Text Kanan</string>
-    <string name="title_activity_matchs_details">Match Details</string>
+    <string name="title_activity_match_details">Match Details</string>
     <string name="no_data">Data not Found.</string>
     <string name="formation">Formation</string>
     <string name="goal">Goal</string>
@@ -34,10 +34,13 @@
     <string name="yellow_cards">Yellow Cards</string>
     <string name="title_activity_search">Search</string>
     <string name="search_hint">Type this to search</string>
-    <string name="prev_matches_fragment">Previous Matchs Fragment</string>
-    <string name="next_matches_fragment">Next Matchs Fragment</string>
-    <string name="prev_favorite_matches_fragment">Previous Favorite Matchs Fragment</string>
-    <string name="next_favorite_matches_fragment">Next Favorite Matchs Fragment</string>
+    <string name="prev_match_fragment">Previous Match Fragment</string>
+    <string name="next_match_fragment">Next Match Fragment</string>
+    <string name="prev_favorite_match_fragment">Previous Favorite Match Fragment</string>
+    <string name="next_favorite_match_fragment">Next Favorite Match Fragment</string>
+    <string name="favorite_team">Team</string>
+    <string name="favorite_team_fragment">Favorite Team Fragment</string>
+    <string name="match">Match</string>
 
     <string-array name="league_id">
         <item>4328</item>

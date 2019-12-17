@@ -34,7 +34,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.activity.detail.MatchDetailsActivity"
-            android:label="@string/title_activity_matchs_details"
+            android:label="@string/title_activity_match_details"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.activity.search.SearchActivity"

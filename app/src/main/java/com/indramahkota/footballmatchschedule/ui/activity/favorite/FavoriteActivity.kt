@@ -4,8 +4,8 @@ import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.indramahkota.footballmatchschedule.R
-import com.indramahkota.footballmatchschedule.ui.fragment.match.MatchFragment
-import com.indramahkota.footballmatchschedule.ui.fragment.match.adapter.TabPagerAdapter
+import com.indramahkota.footballmatchschedule.ui.fragment.match.FavoriteFragment
+import com.indramahkota.footballmatchschedule.ui.pager.tab.TabPagerAdapter
 import kotlinx.android.synthetic.main.activity_favorite.*
 
 class FavoriteActivity : AppCompatActivity() {
@@ -17,14 +17,23 @@ class FavoriteActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        val listTitle = arrayOf( resources.getString(R.string.prev_matches), resources.getString(R.string.next_matches) )
+        val listTitle = arrayOf(
+            resources.getString(R.string.prev_match),
+            resources.getString(R.string.next_match),
+            resources.getString(R.string.favorite_team) )
 
         val listFragment = mutableListOf(
-            MatchFragment.newInstance(resources.getString(R.string.prev_favorite_matches_fragment)),
-            MatchFragment.newInstance(resources.getString(R.string.next_favorite_matches_fragment))
+            FavoriteFragment.newInstance(resources.getString(R.string.prev_favorite_match_fragment)),
+            FavoriteFragment.newInstance(resources.getString(R.string.next_favorite_match_fragment)),
+            FavoriteFragment.newInstance(resources.getString(R.string.favorite_team_fragment))
         )
 
-        val tabPagerAdapter = TabPagerAdapter(supportFragmentManager, listFragment, listTitle)
+        val tabPagerAdapter =
+            TabPagerAdapter(
+                supportFragmentManager,
+                listFragment,
+                listTitle
+            )
         view_pager.adapter = tabPagerAdapter
         tabs.setupWithViewPager(view_pager)
     }

@@ -1,4 +1,4 @@
-package com.indramahkota.footballmatchschedule.ui.fragment.match.adapter
+package com.indramahkota.footballmatchschedule.ui.pager.tab
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
