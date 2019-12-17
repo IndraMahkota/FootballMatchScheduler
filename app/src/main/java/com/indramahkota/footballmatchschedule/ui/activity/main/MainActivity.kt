@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.indramahkota.footballmatchschedule.R
 import com.indramahkota.footballmatchschedule.data.source.locale.entity.LeagueEntity
@@ -12,27 +12,28 @@ import com.indramahkota.footballmatchschedule.ui.activity.favorite.FavoriteActiv
 import com.indramahkota.footballmatchschedule.ui.activity.main.adapter.LeagueAdapter
 import com.indramahkota.footballmatchschedule.ui.activity.match.MatchActivity
 import com.indramahkota.footballmatchschedule.ui.activity.match.MatchActivity.Companion.PARCELABLE_LEAGUE_DATA
+import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.intentFor
-import org.jetbrains.anko.matchParent
-import org.jetbrains.anko.recyclerview.v7.recyclerView
-import org.jetbrains.anko.verticalLayout
-import org.jetbrains.anko.wrapContent
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var linearLayoutManager: LinearLayoutManager
+    private lateinit var leagueAdapter: LeagueAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
 
-        verticalLayout {
-            lparams(width = matchParent, height = wrapContent)
-            recyclerView {
-                id = R.id.main_rv
-                layoutManager = LinearLayoutManager(context)
-                addItemDecoration(DividerItemDecoration(context, 1))
-                adapter = LeagueAdapter(getData()) {
-                    startActivity(intentFor<MatchActivity>(PARCELABLE_LEAGUE_DATA to it))
-                }
-            }
+        setSupportActionBar(toolbar)
+
+        linearLayoutManager = GridLayoutManager(this, 2)
+        rv_league.layoutManager = linearLayoutManager
+        rv_league.setHasFixedSize(true)
+
+        leagueAdapter = LeagueAdapter(getData()){ leagueModel ->
+            startActivity(intentFor<MatchActivity>(PARCELABLE_LEAGUE_DATA to leagueModel))
         }
+        rv_league.adapter = leagueAdapter
     }
 
     private fun getData(): List<LeagueEntity> {

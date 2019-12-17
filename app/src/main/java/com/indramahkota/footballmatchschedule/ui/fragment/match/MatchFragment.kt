@@ -142,17 +142,15 @@ class MatchFragment : Fragment() {
     }
 
     private fun initializeUi(it: List<MatchEntity>?) {
-        if (it != null) {
-            matchsData = ArrayList(it)
-
-            if(it.isEmpty()) {
-                no_data.visibility = View.VISIBLE
-            } else {
-                no_data.visibility = View.INVISIBLE
-            }
-
-            matchAdapter.replace(it)
+        if(it.isNullOrEmpty()) {
+            no_data.visibility = View.VISIBLE
+        } else {
+            no_data.visibility = View.INVISIBLE
         }
+
+        matchsData = it?.let { ArrayList(it) }
+        it?.let { matchAdapter.replace(it) }
+
         shimmer_view_container.visibility = View.GONE
     }
 

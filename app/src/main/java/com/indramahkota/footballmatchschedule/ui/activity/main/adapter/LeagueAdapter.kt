@@ -1,43 +1,42 @@
 package com.indramahkota.footballmatchschedule.ui.activity.main.adapter
 
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.indramahkota.footballmatchschedule.R
 import com.indramahkota.footballmatchschedule.data.source.locale.entity.LeagueEntity
-import kotlinx.android.extensions.LayoutContainer
-import org.jetbrains.anko.AnkoContext
+import kotlinx.android.synthetic.main.item_league.view.*
 
-class LeagueAdapter (private val items: List<LeagueEntity>,
-                     private val listener: (LeagueEntity) -> Unit
+class LeagueAdapter(private val matchList: List<LeagueEntity>,
+                   private val listener: (LeagueEntity) -> Unit
 ) : RecyclerView.Adapter<LeagueAdapter.ViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int
-    ) = ViewHolder( ItemsLeague().createView(AnkoContext.Companion.create(parent.context, parent)))
-
-    override fun getItemCount(): Int = items.size
-
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(items[position], listener)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val layoutInflater = LayoutInflater.from(parent.context)
+        val view = layoutInflater.inflate( R.layout.item_league, parent, false )
+        return ViewHolder(view)
     }
 
-    inner class ViewHolder(override val containerView: View
-    ) : RecyclerView.ViewHolder(containerView), LayoutContainer {
+    override fun getItemCount(): Int =  matchList.size
 
-        private val image = itemView.findViewById<ImageView>(ItemsLeague.clubImage)
-        private val name = itemView.findViewById<TextView>(ItemsLeague.clubName)
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.bind(matchList[position])
+    }
 
-        fun bind(item: LeagueEntity, listener: (LeagueEntity) -> Unit) {
-            Glide.with(itemView.context)
-                .load(item.imgLeague)
-                .placeholder(R.drawable.spinner_animation)
-                .error(R.drawable.image_error)
-                .into(image)
-            name.text = item.strLeague
-            itemView.setOnClickListener { listener(item) }
+    inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        fun bind(match: LeagueEntity) {
+            with(itemView) {
+                Glide.with(this)
+                    .load(match.imgLeague)
+                    .placeholder(R.drawable.spinner_animation)
+                    .error(R.drawable.image_error)
+                    .into(img_league)
+
+                txt_league.text = match.strLeague
+            }
+            itemView.setOnClickListener { listener(match) }
         }
     }
 }
