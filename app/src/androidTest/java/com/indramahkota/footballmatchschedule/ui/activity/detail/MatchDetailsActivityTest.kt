@@ -10,7 +10,8 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.rule.ActivityTestRule
 import com.indramahkota.footballmatchschedule.AndroidTestFakeData.generateMatchEntity
 import com.indramahkota.footballmatchschedule.R
-import com.indramahkota.footballmatchschedule.ui.activity.detail.MatchDetailsActivity.Companion.PARCELABLE_MATCH_DATA
+import com.indramahkota.footballmatchschedule.ui.activity.detail.match.MatchDetailsActivity
+import com.indramahkota.footballmatchschedule.ui.activity.detail.match.MatchDetailsActivity.Companion.PARCELABLE_MATCH_DATA
 import org.junit.Test
 import org.junit.runner.RunWith
 

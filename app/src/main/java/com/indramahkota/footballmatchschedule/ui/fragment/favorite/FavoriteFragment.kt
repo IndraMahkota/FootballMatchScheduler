@@ -13,8 +13,8 @@ import com.indramahkota.footballmatchschedule.data.source.Resource
 import com.indramahkota.footballmatchschedule.data.source.Status.ERROR
 import com.indramahkota.footballmatchschedule.data.source.Status.SUCCESS
 import com.indramahkota.footballmatchschedule.data.source.locale.entity.MatchEntity
-import com.indramahkota.footballmatchschedule.ui.activity.detail.MatchDetailsActivity
-import com.indramahkota.footballmatchschedule.ui.activity.detail.MatchDetailsActivity.Companion.PARCELABLE_MATCH_DATA
+import com.indramahkota.footballmatchschedule.ui.activity.detail.match.MatchDetailsActivity
+import com.indramahkota.footballmatchschedule.ui.activity.detail.match.MatchDetailsActivity.Companion.PARCELABLE_MATCH_DATA
 import com.indramahkota.footballmatchschedule.ui.adapter.match.MatchAdapter
 import com.indramahkota.footballmatchschedule.utilities.Utilities.compareDateAfter
 import com.indramahkota.footballmatchschedule.utilities.Utilities.compareDateBeforeAndEqual

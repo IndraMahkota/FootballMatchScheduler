@@ -13,8 +13,8 @@ import com.indramahkota.footballmatchschedule.data.source.Resource
 import com.indramahkota.footballmatchschedule.data.source.Status.ERROR
 import com.indramahkota.footballmatchschedule.data.source.Status.SUCCESS
 import com.indramahkota.footballmatchschedule.data.source.locale.entity.MatchEntity
-import com.indramahkota.footballmatchschedule.ui.activity.detail.MatchDetailsActivity
-import com.indramahkota.footballmatchschedule.ui.activity.detail.MatchDetailsActivity.Companion.PARCELABLE_MATCH_DATA
+import com.indramahkota.footballmatchschedule.ui.activity.detail.match.MatchDetailsActivity
+import com.indramahkota.footballmatchschedule.ui.activity.detail.match.MatchDetailsActivity.Companion.PARCELABLE_MATCH_DATA
 import com.indramahkota.footballmatchschedule.ui.adapter.match.MatchAdapter
 import com.indramahkota.footballmatchschedule.utilities.Utilities.compareDateAfter
 import com.indramahkota.footballmatchschedule.utilities.Utilities.compareDateBeforeAndEqual
@@ -32,11 +32,9 @@ class MatchFragment : Fragment() {
         private const val ARG_SAVE_DATA = "save_data"
 
         @JvmStatic
-        fun newInstance(fragment: String): MatchFragment {
-            return MatchFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_SECTION_FRAGMENT, fragment)
-                }
+        fun newInstance(fragment: String) = MatchFragment().apply {
+            arguments = Bundle().apply {
+                putString(ARG_SECTION_FRAGMENT, fragment)
             }
         }
     }
@@ -75,12 +73,9 @@ class MatchFragment : Fragment() {
         rv_category.setHasFixedSize(true)
 
         val listData = mutableListOf<MatchEntity>()
-        matchAdapter =
-            MatchAdapter(
-                listData
-            ) { matchModel ->
+        matchAdapter = MatchAdapter(listData) { matchModel ->
                 startActivity(intentFor<MatchDetailsActivity>(PARCELABLE_MATCH_DATA to matchModel))
-            }
+        }
         rv_category.adapter = matchAdapter
 
         if(matchsData != null){

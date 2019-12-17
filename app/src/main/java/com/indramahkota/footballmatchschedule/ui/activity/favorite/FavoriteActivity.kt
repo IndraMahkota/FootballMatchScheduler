@@ -5,6 +5,7 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.indramahkota.footballmatchschedule.R
 import com.indramahkota.footballmatchschedule.ui.fragment.match.FavoriteFragment
+import com.indramahkota.footballmatchschedule.ui.fragment.team.TeamFragment
 import com.indramahkota.footballmatchschedule.ui.pager.tab.TabPagerAdapter
 import kotlinx.android.synthetic.main.activity_favorite.*
 
@@ -20,12 +21,12 @@ class FavoriteActivity : AppCompatActivity() {
         val listTitle = arrayOf(
             resources.getString(R.string.prev_match),
             resources.getString(R.string.next_match),
-            resources.getString(R.string.favorite_team) )
+            resources.getString(R.string.team) )
 
         val listFragment = mutableListOf(
             FavoriteFragment.newInstance(resources.getString(R.string.prev_favorite_match_fragment)),
             FavoriteFragment.newInstance(resources.getString(R.string.next_favorite_match_fragment)),
-            FavoriteFragment.newInstance(resources.getString(R.string.favorite_team_fragment))
+            TeamFragment.newInstance(resources.getString(R.string.favorite_team_fragment))
         )
 
         val tabPagerAdapter =

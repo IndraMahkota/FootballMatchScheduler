@@ -11,8 +11,8 @@ import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.indramahkota.footballmatchschedule.R
 import com.indramahkota.footballmatchschedule.data.source.locale.entity.MatchEntity
-import com.indramahkota.footballmatchschedule.ui.activity.detail.MatchDetailsActivity
-import com.indramahkota.footballmatchschedule.ui.activity.detail.MatchDetailsActivity.Companion.PARCELABLE_MATCH_DATA
+import com.indramahkota.footballmatchschedule.ui.activity.detail.match.MatchDetailsActivity
+import com.indramahkota.footballmatchschedule.ui.activity.detail.match.MatchDetailsActivity.Companion.PARCELABLE_MATCH_DATA
 import com.indramahkota.footballmatchschedule.ui.adapter.match.MatchAdapter
 import kotlinx.android.synthetic.main.activity_search.*
 import org.jetbrains.anko.intentFor
@@ -43,12 +43,9 @@ class SearchActivity : AppCompatActivity() {
         rv_category.setHasFixedSize(true)
 
         val rvData = mutableListOf<MatchEntity>()
-        matchAdapter =
-            MatchAdapter(
-                rvData
-            ) { matchModel ->
+        matchAdapter = MatchAdapter(rvData) { matchModel ->
                 startActivity(intentFor<MatchDetailsActivity>(PARCELABLE_MATCH_DATA to matchModel))
-            }
+        }
         rv_category.adapter = matchAdapter
 
         setRecycleView()

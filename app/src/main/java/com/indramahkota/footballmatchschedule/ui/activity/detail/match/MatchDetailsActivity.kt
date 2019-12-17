@@ -1,4 +1,4 @@
-package com.indramahkota.footballmatchschedule.ui.activity.detail
+package com.indramahkota.footballmatchschedule.ui.activity.detail.match
 
 import android.graphics.Matrix
 import android.os.Bundle
@@ -22,7 +22,7 @@ import com.indramahkota.footballmatchschedule.utilities.Utilities.formatDateFrom
 import com.indramahkota.footballmatchschedule.viewmodel.FavoriteMatchViewModel
 import com.indramahkota.footballmatchschedule.viewmodel.MatchDetailsViewModel
 import dagger.android.AndroidInjection
-import kotlinx.android.synthetic.main.activity_matchs_details.*
+import kotlinx.android.synthetic.main.activity_match_details.*
 import kotlinx.android.synthetic.main.layout_text_views.view.*
 import org.jetbrains.anko.toast
 import javax.inject.Inject
@@ -48,7 +48,7 @@ class MatchDetailsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_matchs_details)
+        setContentView(R.layout.activity_match_details)
 
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)

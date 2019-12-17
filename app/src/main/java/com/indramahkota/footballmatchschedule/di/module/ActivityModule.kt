@@ -1,6 +1,7 @@
 package com.indramahkota.footballmatchschedule.di.module
 
-import com.indramahkota.footballmatchschedule.ui.activity.detail.MatchDetailsActivity
+import com.indramahkota.footballmatchschedule.ui.activity.detail.match.MatchDetailsActivity
+import com.indramahkota.footballmatchschedule.ui.activity.detail.team.TeamDetailsActivity
 import com.indramahkota.footballmatchschedule.ui.activity.match.MatchActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
@@ -12,4 +13,7 @@ abstract class ActivityModule {
 
     @ContributesAndroidInjector
     abstract fun bindMatchDetailsActivity (): MatchDetailsActivity
+
+    @ContributesAndroidInjector
+    abstract fun bindTeamDetailsActivity (): TeamDetailsActivity
 }

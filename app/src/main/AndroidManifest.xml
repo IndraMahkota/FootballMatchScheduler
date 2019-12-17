@@ -33,8 +33,12 @@
             android:label="@string/title_activity_league_details"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ui.activity.detail.MatchDetailsActivity"
+            android:name=".ui.activity.detail.match.MatchDetailsActivity"
             android:label="@string/title_activity_match_details"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ui.activity.detail.team.TeamDetailsActivity"
+            android:label="@string/title_activity_team_details"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.activity.search.SearchActivity"
