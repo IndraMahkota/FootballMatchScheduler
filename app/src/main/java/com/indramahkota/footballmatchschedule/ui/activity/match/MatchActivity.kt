@@ -58,6 +58,7 @@ class MatchActivity : AppCompatActivity() {
 
         val listFragment = mutableListOf(
             MatchFragment.newInstance(resources.getString(R.string.prev_match_fragment)),
+            MatchFragment.newInstance(resources.getString(R.string.next_match_fragment)),
             MatchFragment.newInstance(resources.getString(R.string.next_match_fragment))
         )
 
