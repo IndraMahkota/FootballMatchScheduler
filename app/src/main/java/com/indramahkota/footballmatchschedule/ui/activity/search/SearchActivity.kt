@@ -17,7 +17,6 @@ import com.indramahkota.footballmatchschedule.ui.fragment.match.adapter.MatchAda
 import kotlinx.android.synthetic.main.activity_search.*
 import org.jetbrains.anko.intentFor
 import java.util.*
-import kotlin.collections.ArrayList
 
 class SearchActivity : AppCompatActivity() {
 
@@ -28,7 +27,7 @@ class SearchActivity : AppCompatActivity() {
     private lateinit var linearLayoutManager: LinearLayoutManager
     private lateinit var matchAdapter: MatchAdapter
 
-    private var listData = arrayListOf<MatchEntity>()
+    private var listData: List<MatchEntity>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,7 +36,7 @@ class SearchActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         shimmer_view_container.visibility = View.GONE
 
-        listData = ArrayList(intent.getParcelableArrayListExtra(PARCELABLE_DATA)!!)
+        listData = intent?.getParcelableArrayListExtra(PARCELABLE_DATA)
 
         linearLayoutManager = LinearLayoutManager(this)
         rv_category.layoutManager = linearLayoutManager
@@ -53,22 +52,22 @@ class SearchActivity : AppCompatActivity() {
     }
 
     private fun setRecycleView(query:String? = null){
-        var newData:List<MatchEntity> = mutableListOf()
+        var newData:List<MatchEntity>? = null
 
         if(query != null && query.isNotEmpty()) {
-            newData = listData.filter {
+            newData = listData?.filter {
                 it.strHomeTeam.toLowerCase(Locale.getDefault()).contains(query) ||
                         it.strAwayTeam.toLowerCase(Locale.getDefault()).contains(query)
             }
         }
 
-        if(newData.isEmpty()) {
+        if(newData.isNullOrEmpty()) {
             no_data.visibility = View.VISIBLE
         } else {
             no_data.visibility = View.INVISIBLE
         }
 
-        matchAdapter.replace(newData)
+        newData?.let { matchAdapter.replace(it) }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

@@ -33,7 +33,7 @@ class MatchActivity : AppCompatActivity() {
         const val PARCELABLE_LEAGUE_DATA = "parcelable_league_data"
     }
 
-    private lateinit var league: LeagueEntity
+    private var league: LeagueEntity? = null
     private lateinit var viewModel: LeagueDetailsViewModel
 
     @set:Inject
@@ -44,10 +44,10 @@ class MatchActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_league_details)
 
-        league = intent.getParcelableExtra(PARCELABLE_LEAGUE_DATA)!!
+        league = intent?.getParcelableExtra(PARCELABLE_LEAGUE_DATA)
 
         setSupportActionBar(toolbar)
-        supportActionBar?.title = league.strLeague
+        supportActionBar?.title = league?.strLeague
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         val listTitle = arrayOf( resources.getString(R.string.prev_matches), resources.getString(R.string.next_matches) )
@@ -86,7 +86,8 @@ class MatchActivity : AppCompatActivity() {
                 ERROR -> toast(it.message.toString())
             }
         })
-        viewModel.loadAllDetails(league.idLeague)
+
+        league?.idLeague?.let { viewModel.loadAllDetails(it) }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

@@ -34,11 +34,11 @@ class MatchDetailsActivity : AppCompatActivity() {
     }
 
     private var favMatch: MatchEntity? = null
+    private var matchDetail: MatchEntity? = null
     private var matchDetailsData: MatchDetailsApiModel? = null
     private var homeTeamDetailsData: TeamDetailsApiModel? = null
     private var awayTeamDetailsData: TeamDetailsApiModel? = null
 
-    private lateinit var matchDetail: MatchEntity
     private lateinit var viewModel: MatchDetailsViewModel
     private lateinit var favViewModel: FavoriteMatchViewModel
 
@@ -53,7 +53,7 @@ class MatchDetailsActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        matchDetail = intent.getParcelableExtra(PARCELABLE_MATCH_DATA)!!
+        matchDetail = intent?.getParcelableExtra(PARCELABLE_MATCH_DATA)
 
         viewModel = ViewModelProvider(this, viewModelFactory).get(MatchDetailsViewModel::class.java)
         viewModel.matchDetails.observe(this, Observer<Resource<MatchDetailsApiResponse?>>{
@@ -116,10 +116,10 @@ class MatchDetailsActivity : AppCompatActivity() {
             }
         })
 
-        matchDetail.idEvent.let { favViewModel.getFavoriteById(it) }
-        matchDetail.idEvent.let { viewModel.loadMatchDetails(it) }
-        matchDetail.idHomeTeam.let { viewModel.loadHomeTeamDetails(it) }
-        matchDetail.idAwayTeam.let { viewModel.loadAwayTeamDetails(it) }
+        matchDetail?.idEvent?.let {favViewModel.getFavoriteById(it)}
+        matchDetail?.idEvent?.let {viewModel.loadMatchDetails(it)}
+        matchDetail?.idHomeTeam?.let {viewModel.loadHomeTeamDetails(it)}
+        matchDetail?.idAwayTeam?.let {viewModel.loadAwayTeamDetails(it)}
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
