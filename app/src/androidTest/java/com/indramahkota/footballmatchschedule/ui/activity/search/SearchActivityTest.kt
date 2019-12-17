@@ -39,5 +39,27 @@ class SearchActivityTest {
             )
         onView(withId(R.id.rv_category))
             .check(countRecyclerViewItem(1))
+        onView(withId(R.id.search_src_text))
+            .perform(clearText())
+
+        onView(withId(R.id.search_src_text))
+            .perform(
+                typeText("Southampton"),
+                pressKey(KeyEvent.KEYCODE_ENTER)
+            )
+        onView(withId(R.id.rv_category))
+            .check(countRecyclerViewItem(1))
+        onView(withId(R.id.search_src_text))
+            .perform(clearText())
+
+        onView(withId(R.id.search_src_text))
+            .perform(
+                typeText("Leicester"),
+                pressKey(KeyEvent.KEYCODE_ENTER)
+            )
+        onView(withId(R.id.rv_category))
+            .check(countRecyclerViewItem(2))
+        onView(withId(R.id.search_src_text))
+            .perform(clearText())
     }
 }
