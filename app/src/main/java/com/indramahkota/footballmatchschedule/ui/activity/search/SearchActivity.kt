@@ -68,8 +68,7 @@ class SearchActivity : AppCompatActivity() {
             no_data.visibility = View.INVISIBLE
         }
 
-        matchAdapter.clear()
-        matchAdapter.addAll(newData)
+        matchAdapter.replace(newData)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

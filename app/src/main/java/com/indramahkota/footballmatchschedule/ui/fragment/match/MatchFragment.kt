@@ -151,8 +151,7 @@ class MatchFragment : Fragment() {
                 no_data.visibility = View.INVISIBLE
             }
 
-            matchAdapter.clear()
-            matchAdapter.addAll(it)
+            matchAdapter.replace(it)
         }
         shimmer_view_container.visibility = View.GONE
     }

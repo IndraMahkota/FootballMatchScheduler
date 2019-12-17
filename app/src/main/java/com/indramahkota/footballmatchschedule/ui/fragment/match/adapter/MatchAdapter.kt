@@ -21,33 +21,10 @@ class MatchAdapter(private val matchList: MutableList<MatchEntity>,
         return ViewHolder(view)
     }
 
-    private fun add(response: MatchEntity) {
-        matchList.add(response)
-        notifyItemInserted(matchList.size - 1)
-    }
-
-    fun addAll(postItems: List<MatchEntity>) {
-        for (response in postItems) {
-            add(response)
-        }
-    }
-
-    private fun remove(postItems: MatchEntity) {
-        val position: Int = matchList.indexOf(postItems)
-        if (position > -1) {
-            matchList.removeAt(position)
-            notifyItemRemoved(position)
-        }
-    }
-
-    fun clear() {
-        while (itemCount > 0) {
-            remove(getItem())
-        }
-    }
-
-    private fun getItem(): MatchEntity {
-        return matchList[0]
+    fun replace(items: List<MatchEntity>){
+        matchList.clear()
+        matchList.addAll(items)
+        notifyDataSetChanged()
     }
 
     override fun getItemCount(): Int =  matchList.size
