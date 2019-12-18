@@ -21,7 +21,7 @@ import com.indramahkota.footballmatchschedule.utilities.Utilities.compareDateBef
 import com.indramahkota.footballmatchschedule.viewmodel.FavoriteMatchViewModel
 import com.indramahkota.footballmatchschedule.viewmodel.LeagueDetailsViewModel
 import dagger.android.support.AndroidSupportInjection
-import kotlinx.android.synthetic.main.content_match_tab.*
+import kotlinx.android.synthetic.main.fragment_favorite.*
 import org.jetbrains.anko.support.v4.intentFor
 import org.jetbrains.anko.support.v4.toast
 import javax.inject.Inject
@@ -32,8 +32,8 @@ class FavoriteFragment : Fragment() {
         private const val ARG_SAVE_DATA = "save_data"
 
         @JvmStatic
-        fun newInstance(fragment: String): MatchFragment {
-            return MatchFragment().apply {
+        fun newInstance(fragment: String): FavoriteFragment {
+            return FavoriteFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_SECTION_FRAGMENT, fragment)
                 }
@@ -62,7 +62,7 @@ class FavoriteFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.content_match_tab, container, false)
+        return inflater.inflate(R.layout.fragment_favorite, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

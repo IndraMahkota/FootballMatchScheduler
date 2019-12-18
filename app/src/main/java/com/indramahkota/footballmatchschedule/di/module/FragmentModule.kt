@@ -1,5 +1,6 @@
 package com.indramahkota.footballmatchschedule.di.module
 
+import com.indramahkota.footballmatchschedule.ui.fragment.match.FavoriteFragment
 import com.indramahkota.footballmatchschedule.ui.fragment.match.MatchFragment
 import com.indramahkota.footballmatchschedule.ui.fragment.standing.StandingFragment
 import com.indramahkota.footballmatchschedule.ui.fragment.team.TeamFragment
@@ -16,4 +17,7 @@ abstract class FragmentModule {
 
     @ContributesAndroidInjector
     abstract fun teamFragmentInjector(): TeamFragment?
+
+    @ContributesAndroidInjector
+    abstract fun favoriteFragmentInjector(): FavoriteFragment?
 }

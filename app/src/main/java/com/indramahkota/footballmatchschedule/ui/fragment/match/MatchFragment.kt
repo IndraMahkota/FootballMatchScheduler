@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.indramahkota.footballmatchschedule.R
 import com.indramahkota.footballmatchschedule.data.source.Resource
 import com.indramahkota.footballmatchschedule.data.source.Status.ERROR
@@ -21,7 +20,8 @@ import com.indramahkota.footballmatchschedule.utilities.Utilities.compareDateBef
 import com.indramahkota.footballmatchschedule.viewmodel.FavoriteMatchViewModel
 import com.indramahkota.footballmatchschedule.viewmodel.LeagueDetailsViewModel
 import dagger.android.support.AndroidSupportInjection
-import kotlinx.android.synthetic.main.content_match_tab.*
+import kotlinx.android.synthetic.main.fragment_match.*
+import kotlinx.android.synthetic.main.fragment_match.view.*
 import org.jetbrains.anko.support.v4.intentFor
 import org.jetbrains.anko.support.v4.toast
 import javax.inject.Inject
@@ -41,7 +41,6 @@ class MatchFragment : Fragment() {
 
     private var state: String? = null
     private var matchsData: ArrayList<MatchEntity>? = null
-    private lateinit var linearLayoutManager: LinearLayoutManager
     private lateinit var matchAdapter: MatchAdapter
 
     @set:Inject
@@ -60,7 +59,7 @@ class MatchFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.content_match_tab, container, false)
+        return inflater.inflate(R.layout.fragment_match, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -68,15 +67,13 @@ class MatchFragment : Fragment() {
 
         state = arguments?.getString(ARG_SECTION_FRAGMENT)
 
-        linearLayoutManager = LinearLayoutManager(view.context)
-        rv_category.layoutManager = linearLayoutManager
-        rv_category.setHasFixedSize(true)
+        frame_prev.rv_prev_match.setHasFixedSize(true)
 
         val listData = mutableListOf<MatchEntity>()
         matchAdapter = MatchAdapter(listData) { matchModel ->
                 startActivity(intentFor<MatchDetailsActivity>(PARCELABLE_MATCH_DATA to matchModel))
         }
-        rv_category.adapter = matchAdapter
+        frame_prev.rv_prev_match.adapter = matchAdapter
 
         if(matchsData != null){
             initializeUi(matchsData)
@@ -149,7 +146,7 @@ class MatchFragment : Fragment() {
         matchsData = it?.let { ArrayList(it) }
         it?.let { matchAdapter.replace(it) }
 
-        shimmer_view_container.visibility = View.GONE
+        frame_prev.prev_shimmer_view_container.visibility = View.GONE
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
