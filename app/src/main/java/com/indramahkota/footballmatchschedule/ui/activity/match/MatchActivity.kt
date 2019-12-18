@@ -19,6 +19,8 @@ import com.indramahkota.footballmatchschedule.data.source.remote.apiresponse.Lea
 import com.indramahkota.footballmatchschedule.ui.activity.search.SearchActivity
 import com.indramahkota.footballmatchschedule.ui.activity.search.SearchActivity.Companion.PARCELABLE_DATA
 import com.indramahkota.footballmatchschedule.ui.fragment.match.MatchFragment
+import com.indramahkota.footballmatchschedule.ui.fragment.standing.StandingFragment
+import com.indramahkota.footballmatchschedule.ui.fragment.team.TeamFragment
 import com.indramahkota.footballmatchschedule.ui.pager.tab.TabPagerAdapter
 import com.indramahkota.footballmatchschedule.viewmodel.LeagueDetailsViewModel
 import dagger.android.AndroidInjection
@@ -58,8 +60,8 @@ class MatchActivity : AppCompatActivity() {
 
         val listFragment = mutableListOf(
             MatchFragment.newInstance(resources.getString(R.string.prev_match_fragment)),
-            MatchFragment.newInstance(resources.getString(R.string.next_match_fragment)),
-            MatchFragment.newInstance(resources.getString(R.string.next_match_fragment))
+            StandingFragment.newInstance(resources.getString(R.string.next_match_fragment)),
+            TeamFragment.newInstance(resources.getString(R.string.next_match_fragment))
         )
 
         val tabPagerAdapter =
