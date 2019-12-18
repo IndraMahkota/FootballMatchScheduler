@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.indramahkota.footballmatchschedule">
+    package="com.indramahkota.footballapp">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name=".FootballLeagueApp"
+        android:name="com.indramahkota.footballapp.FootballApp"
         android:allowBackup="true"
         android:fullBackupContent="true"
         android:icon="@mipmap/ic_launcher"

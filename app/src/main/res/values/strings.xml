@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Football Match Schedule</string>
+    <string name="app_name">Football App</string>
     <string name="title_activity_main">Football Leagues</string>
     <string name="title_activity_league_details">League Details</string>
     <string name="title_activity_team_details">Team Details</string>
