@@ -3,12 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingTop="8dp"
-    android:paddingBottom="16dp"
-    android:paddingStart="5dp"
-    android:paddingEnd="5dp"
+    android:layout_marginEnd="10dp"
     android:layout_marginBottom="10dp"
-    android:background="@drawable/item_match_background">
+    android:background="@drawable/item_match_background"
+    android:paddingStart="5dp"
+    android:paddingTop="8dp"
+    android:paddingEnd="5dp"
+    android:paddingBottom="16dp">
 
     <TextView
         android:id="@+id/tvDate"
@@ -17,7 +18,7 @@
         android:text="@string/tanggal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tvVs"
@@ -28,7 +29,7 @@
         android:text="@string/vs"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvDate"/>
+        app:layout_constraintTop_toBottomOf="@+id/tvDate" />
 
     <TextView
         android:id="@+id/tvTeam1"

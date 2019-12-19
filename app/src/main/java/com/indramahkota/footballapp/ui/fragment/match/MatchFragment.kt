@@ -15,13 +15,9 @@ import com.indramahkota.footballapp.data.source.locale.entity.MatchEntity
 import com.indramahkota.footballapp.ui.activity.detail.match.MatchDetailsActivity
 import com.indramahkota.footballapp.ui.activity.detail.match.MatchDetailsActivity.Companion.PARCELABLE_MATCH_DATA
 import com.indramahkota.footballapp.ui.adapter.match.MatchAdapter
-import com.indramahkota.footballapp.utilities.Utilities.compareDateAfter
-import com.indramahkota.footballapp.utilities.Utilities.compareDateBeforeAndEqual
-import com.indramahkota.footballapp.viewmodel.FavoriteMatchViewModel
 import com.indramahkota.footballapp.viewmodel.LeagueDetailsViewModel
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_match.*
-import kotlinx.android.synthetic.main.fragment_match.view.*
 import org.jetbrains.anko.support.v4.intentFor
 import org.jetbrains.anko.support.v4.toast
 import javax.inject.Inject
@@ -67,13 +63,13 @@ class MatchFragment : Fragment() {
 
         state = arguments?.getString(ARG_SECTION_FRAGMENT)
 
-        frame_prev.rv_prev_match.setHasFixedSize(true)
+        rv_prev_match.setHasFixedSize(true)
 
         val listData = mutableListOf<MatchEntity>()
         matchAdapter = MatchAdapter(listData) { matchModel ->
                 startActivity(intentFor<MatchDetailsActivity>(PARCELABLE_MATCH_DATA to matchModel))
         }
-        frame_prev.rv_prev_match.adapter = matchAdapter
+        rv_prev_match.adapter = matchAdapter
 
         if(matchsData != null){
             initializeUi(matchsData)
@@ -81,8 +77,6 @@ class MatchFragment : Fragment() {
             when (state) {
                 resources.getString(R.string.prev_match_fragment) -> getPrevListData()
                 resources.getString(R.string.next_match_fragment) -> getNextListData()
-                resources.getString(R.string.prev_favorite_match_fragment) -> getFavoritePrevListData()
-                resources.getString(R.string.next_favorite_match_fragment) -> getFavoriteNextListData()
             }
         }
     }
@@ -101,32 +95,6 @@ class MatchFragment : Fragment() {
         })
     }
 
-    private fun getFavoritePrevListData() {
-        val viewModel = ViewModelProvider(this, viewModelFactory).get(FavoriteMatchViewModel::class.java)
-        viewModel.getAllFavorite().observe(viewLifecycleOwner, Observer<List<MatchEntity>> {
-            val newList = ArrayList<MatchEntity>()
-            for (item in it) {
-                if(compareDateBeforeAndEqual(item.dateEvent)){
-                    newList.add(item)
-                }
-            }
-            initializeUi(newList)
-        })
-    }
-
-    private fun getFavoriteNextListData() {
-        val viewModel = ViewModelProvider(this, viewModelFactory).get(FavoriteMatchViewModel::class.java)
-        viewModel.getAllFavorite().observe(viewLifecycleOwner, Observer<List<MatchEntity>> {
-            val newList = ArrayList<MatchEntity>()
-            for (item in it) {
-                if(compareDateAfter(item.dateEvent)){
-                    newList.add(item)
-                }
-            }
-            initializeUi(newList)
-        })
-    }
-
     private fun checkState(it: Resource<List<MatchEntity>?>){
         when (it.status) {
             SUCCESS -> {
@@ -138,28 +106,19 @@ class MatchFragment : Fragment() {
 
     private fun initializeUi(it: List<MatchEntity>?) {
         if(it.isNullOrEmpty()) {
-            no_data.visibility = View.VISIBLE
+            prev_no_data.visibility = View.VISIBLE
         } else {
-            no_data.visibility = View.INVISIBLE
+            prev_no_data.visibility = View.INVISIBLE
         }
 
         matchsData = it?.let { ArrayList(it) }
         it?.let { matchAdapter.replace(it) }
 
-        frame_prev.prev_shimmer_view_container.visibility = View.GONE
+        prev_shimmer_view_container.visibility = View.GONE
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putParcelableArrayList(ARG_SAVE_DATA, matchsData)
-    }
-
-    override fun onResume() {
-        super.onResume()
-
-        when (state) {
-            resources.getString(R.string.prev_favorite_match_fragment) -> getFavoritePrevListData()
-            resources.getString(R.string.next_favorite_match_fragment) -> getFavoriteNextListData()
-        }
     }
 }
