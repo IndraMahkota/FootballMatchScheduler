@@ -19,7 +19,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_prev_match"
+        android:id="@+id/rv_next_match"
         android:layout_width="match_parent"
         android:layout_height="130dp"
         android:layout_marginTop="50dp"
@@ -33,7 +33,7 @@
         tools:listitem="@layout/item_match_tab" />
 
     <TextView
-        android:id="@+id/prev_no_data"
+        android:id="@+id/next_no_data"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginStart="10dp"
@@ -48,7 +48,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.facebook.shimmer.ShimmerFrameLayout
-        android:id="@+id/prev_shimmer_view_container"
+        android:id="@+id/next_shimmer_view_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -67,7 +67,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="200dp"
+        android:layout_marginTop="185dp"
         android:text="@string/prev_match"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -75,10 +75,10 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_next_match"
+        android:id="@+id/rv_prev_match"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="240dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="220dp"
         android:clipToPadding="false"
         android:orientation="horizontal"
         android:padding="10dp"
@@ -89,11 +89,11 @@
         tools:listitem="@layout/item_match_tab" />
 
     <TextView
-        android:id="@+id/next_no_data"
+        android:id="@+id/prev_no_data"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="250dp"
+        android:layout_marginTop="230dp"
         android:layout_marginEnd="10dp"
         android:background="@drawable/item_match_background"
         android:gravity="center"
@@ -104,11 +104,11 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.facebook.shimmer.ShimmerFrameLayout
-        android:id="@+id/next_shimmer_view_container"
+        android:id="@+id/prev_shimmer_view_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="250dp"
+        android:layout_marginTop="230dp"
         android:layout_marginEnd="10dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"

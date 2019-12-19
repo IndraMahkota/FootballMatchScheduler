@@ -25,7 +25,8 @@ import javax.inject.Inject
 class MatchFragment : Fragment() {
     companion object {
         private const val ARG_SECTION_FRAGMENT = "section_fragment"
-        private const val ARG_SAVE_DATA = "save_data"
+        private const val ARG_SAVE_NEXT_DATA = "save_next_data"
+        private const val ARG_SAVE_PREV_DATA = "save_prev_data"
 
         @JvmStatic
         fun newInstance(fragment: String) = MatchFragment().apply {
@@ -35,9 +36,11 @@ class MatchFragment : Fragment() {
         }
     }
 
-    private var state: String? = null
-    private var matchsData: ArrayList<MatchEntity>? = null
-    private lateinit var matchAdapter: MatchAdapter
+    private var nextMatchsData: ArrayList<MatchEntity>? = null
+    private var prevMatchsData: ArrayList<MatchEntity>? = null
+
+    private lateinit var nextMatchAdapter: MatchAdapter
+    private lateinit var prevMatchAdapter: MatchAdapter
 
     @set:Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -46,9 +49,8 @@ class MatchFragment : Fragment() {
         AndroidSupportInjection.inject(this)
         super.onCreate(savedInstanceState)
 
-        savedInstanceState?.run {
-            matchsData?.addAll(savedInstanceState.getParcelableArrayList(ARG_SAVE_DATA)!!)
-        }
+        nextMatchsData = savedInstanceState?.getParcelableArrayList(ARG_SAVE_NEXT_DATA)
+        prevMatchsData = savedInstanceState?.getParcelableArrayList(ARG_SAVE_PREV_DATA)
     }
 
     override fun onCreateView(
@@ -61,64 +63,89 @@ class MatchFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        state = arguments?.getString(ARG_SECTION_FRAGMENT)
-
+        rv_next_match.setHasFixedSize(true)
         rv_prev_match.setHasFixedSize(true)
 
-        val listData = mutableListOf<MatchEntity>()
-        matchAdapter = MatchAdapter(listData) { matchModel ->
+        val listNextData = mutableListOf<MatchEntity>()
+        nextMatchAdapter = MatchAdapter(listNextData) { matchModel ->
                 startActivity(intentFor<MatchDetailsActivity>(PARCELABLE_MATCH_DATA to matchModel))
         }
-        rv_prev_match.adapter = matchAdapter
+        rv_next_match.adapter = nextMatchAdapter
 
-        if(matchsData != null){
-            initializeUi(matchsData)
-        } else {
-            when (state) {
-                resources.getString(R.string.prev_match_fragment) -> getPrevListData()
-                resources.getString(R.string.next_match_fragment) -> getNextListData()
-            }
+        val listPrevData = mutableListOf<MatchEntity>()
+        prevMatchAdapter = MatchAdapter(listPrevData) { matchModel ->
+            startActivity(intentFor<MatchDetailsActivity>(PARCELABLE_MATCH_DATA to matchModel))
         }
-    }
+        rv_prev_match.adapter = prevMatchAdapter
 
-    private fun getPrevListData() {
-        val viewModel = activity?.let { ViewModelProvider(it, viewModelFactory).get(LeagueDetailsViewModel::class.java) }
-        viewModel?.newPrevMatchData?.observe(viewLifecycleOwner, Observer<Resource<List<MatchEntity>?>> {
-            checkState(it)
-        })
+        if(nextMatchsData != null) {
+            initializeNext(nextMatchsData)
+        } else {
+            getNextListData()
+        }
+
+        if(prevMatchsData != null) {
+            initializePrev(prevMatchsData)
+        } else {
+            getPrevListData()
+        }
     }
 
     private fun getNextListData() {
         val viewModel = activity?.let { ViewModelProvider(it, viewModelFactory).get(LeagueDetailsViewModel::class.java) }
         viewModel?.newNextMatchData?.observe(viewLifecycleOwner, Observer<Resource<List<MatchEntity>?>> {
-            checkState(it)
+            checkState(it, 0)
         })
     }
 
-    private fun checkState(it: Resource<List<MatchEntity>?>){
+    private fun getPrevListData() {
+        val viewModel = activity?.let { ViewModelProvider(it, viewModelFactory).get(LeagueDetailsViewModel::class.java) }
+        viewModel?.newPrevMatchData?.observe(viewLifecycleOwner, Observer<Resource<List<MatchEntity>?>> {
+            checkState(it, 1)
+        })
+    }
+
+    private fun checkState(it: Resource<List<MatchEntity>?>, int: Int){
         when (it.status) {
             SUCCESS -> {
-                initializeUi(it.data)
+                if(int == 0)
+                    initializeNext(it.data)
+                else
+                    initializePrev(it.data)
             }
             ERROR -> toast(it.message.toString())
         }
     }
 
-    private fun initializeUi(it: List<MatchEntity>?) {
+    private fun initializeNext(it: List<MatchEntity>?) {
+        if(it.isNullOrEmpty()) {
+            next_no_data.visibility = View.VISIBLE
+        } else {
+            next_no_data.visibility = View.INVISIBLE
+        }
+
+        nextMatchsData = it?.let { ArrayList(it) }
+        it?.let { nextMatchAdapter.replace(it) }
+
+        next_shimmer_view_container.visibility = View.GONE
+    }
+
+    private fun initializePrev(it: List<MatchEntity>?) {
         if(it.isNullOrEmpty()) {
             prev_no_data.visibility = View.VISIBLE
         } else {
             prev_no_data.visibility = View.INVISIBLE
         }
 
-        matchsData = it?.let { ArrayList(it) }
-        it?.let { matchAdapter.replace(it) }
+        prevMatchsData = it?.let { ArrayList(it) }
+        it?.let { prevMatchAdapter.replace(it) }
 
         prev_shimmer_view_container.visibility = View.GONE
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putParcelableArrayList(ARG_SAVE_DATA, matchsData)
+        outState.putParcelableArrayList(ARG_SAVE_NEXT_DATA, nextMatchsData)
+        outState.putParcelableArrayList(ARG_SAVE_PREV_DATA, prevMatchsData)
     }
 }
