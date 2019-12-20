@@ -1,48 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <FrameLayout
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_category"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:padding="10dp"
+        tools:listitem="@layout/item_match"/>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_category"
+    <include
+        android:id="@+id/no_data"
+        layout="@layout/item_no_data"
+        android:visibility="gone" />
+
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/shimmer_view_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="10dp"
+        android:orientation="vertical">
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clipToPadding="false"
-            android:padding="10dp"
-            tools:listitem="@layout/item_match_tab"/>
-
-        <include
-            android:id="@+id/no_data"
-            layout="@layout/item_no_data"
-            android:visibility="gone" />
-
-        <com.facebook.shimmer.ShimmerFrameLayout
-            android:id="@+id/shimmer_view_container"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="10dp"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
+            <include layout="@layout/item_match_loading"/>
+            <include layout="@layout/item_match_loading"/>
+            <include layout="@layout/item_match_loading"/>
+            <include layout="@layout/item_match_loading"/>
+            <include layout="@layout/item_match_loading"/>
+            <include layout="@layout/item_match_loading"/>
+            <include layout="@layout/item_match_loading"/>
+        </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <include layout="@layout/item_match_tab_loading"/>
-                <include layout="@layout/item_match_tab_loading"/>
-                <include layout="@layout/item_match_tab_loading"/>
-                <include layout="@layout/item_match_tab_loading"/>
-                <include layout="@layout/item_match_tab_loading"/>
-                <include layout="@layout/item_match_tab_loading"/>
-                <include layout="@layout/item_match_tab_loading"/>
-            </LinearLayout>
-
-        </com.facebook.shimmer.ShimmerFrameLayout>
-
-    </FrameLayout>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </com.facebook.shimmer.ShimmerFrameLayout>
+</FrameLayout>

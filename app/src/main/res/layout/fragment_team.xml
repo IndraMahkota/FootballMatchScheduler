@@ -1,8 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.fragment.team.TeamFragment">
+    android:layout_height="match_parent">
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_all_team"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:padding="10dp"
+        android:orientation="vertical"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/item_team"/>
+
+    <include
+        android:id="@+id/no_data"
+        layout="@layout/item_no_data"
+        android:visibility="gone" />
+
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/shimmer_view_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="10dp"
+        android:visibility="gone"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <include layout="@layout/item_team_loading"/>
+            <include layout="@layout/item_team_loading"/>
+            <include layout="@layout/item_team_loading"/>
+            <include layout="@layout/item_team_loading"/>
+            <include layout="@layout/item_team_loading"/>
+            <include layout="@layout/item_team_loading"/>
+            <include layout="@layout/item_team_loading"/>
+        </LinearLayout>
+
+    </com.facebook.shimmer.ShimmerFrameLayout>
 </FrameLayout>

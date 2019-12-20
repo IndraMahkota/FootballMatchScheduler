@@ -1,6 +1,8 @@
 package com.indramahkota.footballapp.utilities
 
 import android.util.Log
+import com.indramahkota.footballapp.data.source.locale.entity.TeamEntity
+import com.indramahkota.footballapp.data.source.remote.apimodel.TeamDetailsApiModel
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -45,4 +47,26 @@ object Utilities {
         }
         return false
     }
+}
+
+fun List<TeamDetailsApiModel>?.toListTeamEntity(): List<TeamEntity> {
+    val teamList = mutableListOf<TeamEntity>()
+    if(this != null) {
+        for (matchNetworkModel in this) {
+            teamList.add(matchNetworkModel.toTeamEntity())
+        }
+    }
+
+    Log.d("Test", teamList.size.toString() + " sasa19")
+    return teamList
+}
+
+fun TeamDetailsApiModel.toTeamEntity(): TeamEntity {
+    Log.d("Test", idTeam+strTeam+strTeamBadge+strCountry)
+
+    return TeamEntity(idTeam ?: "",
+        strTeam ?: "",
+        strTeamBadge ?: "",
+        strDescriptionEN ?: ""
+    )
 }

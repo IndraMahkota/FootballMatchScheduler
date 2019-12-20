@@ -30,7 +30,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:listitem="@layout/item_match_tab" />
+        tools:listitem="@layout/item_match" />
 
     <TextView
         android:id="@+id/next_no_data"
@@ -59,7 +59,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <include layout="@layout/item_match_tab_loading" />
+        <include layout="@layout/item_match_loading" />
     </com.facebook.shimmer.ShimmerFrameLayout>
 
 
@@ -86,7 +86,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:listitem="@layout/item_match_tab" />
+        tools:listitem="@layout/item_match" />
 
     <TextView
         android:id="@+id/prev_no_data"
@@ -114,7 +114,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-        <include layout="@layout/item_match_tab_loading" />
+        <include layout="@layout/item_match_loading" />
     </com.facebook.shimmer.ShimmerFrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

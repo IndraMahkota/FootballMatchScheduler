@@ -61,11 +61,10 @@ class MatchActivity : AppCompatActivity() {
         val listFragment = mutableListOf(
             MatchFragment.newInstance(resources.getString(R.string.prev_match_fragment)),
             StandingFragment.newInstance(resources.getString(R.string.next_match_fragment)),
-            TeamFragment.newInstance(resources.getString(R.string.next_match_fragment))
+            TeamFragment.newInstance(resources.getString(R.string.team_fragment))
         )
 
-        val tabPagerAdapter =
-            TabPagerAdapter(
+        val tabPagerAdapter = TabPagerAdapter(
                 supportFragmentManager,
                 listFragment,
                 listTitle

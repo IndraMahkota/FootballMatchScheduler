@@ -3,6 +3,7 @@ package com.indramahkota.footballapp.data.source.locale.database
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import com.indramahkota.footballapp.data.source.locale.entity.MatchEntity
+import com.indramahkota.footballapp.data.source.locale.entity.TeamEntity
 import org.jetbrains.anko.db.*
 
 class MyDatabase(ctx: Context) : ManagedSQLiteOpenHelper(ctx, "FavoriteMatch.db", null, 1) {
@@ -32,9 +33,18 @@ class MyDatabase(ctx: Context) : ManagedSQLiteOpenHelper(ctx, "FavoriteMatch.db"
             MatchEntity.Column.HOME_IMAGE to TEXT,
             MatchEntity.Column.AWAY_IMAGE to TEXT
         )
+
+        db.createTable(
+            TeamEntity.TABLE_NAME, true,
+            TeamEntity.Column.ID_TEAM to TEXT + PRIMARY_KEY,
+            TeamEntity.Column.TEAM_NAME to TEXT,
+            TeamEntity.Column.TEAM_BADGE to TEXT,
+            TeamEntity.Column.TEAM_DESCRIPTION to TEXT
+        )
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
         db.dropTable(MatchEntity.TABLE_NAME, true)
+        db.dropTable(TeamEntity.TABLE_NAME, true)
     }
 }

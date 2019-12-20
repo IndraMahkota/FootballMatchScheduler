@@ -1,14 +1,17 @@
 package com.indramahkota.footballapp.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.*
 import com.indramahkota.footballapp.data.source.FootballAppRepository
 import com.indramahkota.footballapp.data.source.Resource
 import com.indramahkota.footballapp.data.source.locale.entity.MatchEntity
+import com.indramahkota.footballapp.data.source.locale.entity.TeamEntity
 import com.indramahkota.footballapp.data.source.remote.apimodel.MatchDetailsApiModel
 import com.indramahkota.footballapp.data.source.remote.apimodel.TeamDetailsApiModel
 import com.indramahkota.footballapp.data.source.remote.apiresponse.LeagueDetailsApiResponse
 import com.indramahkota.footballapp.data.source.remote.apiresponse.MatchDetailsApiResponse
 import com.indramahkota.footballapp.data.source.remote.apiresponse.TeamDetailsApiResponse
+import com.indramahkota.footballapp.utilities.toListTeamEntity
 import kotlinx.coroutines.*
 import javax.inject.Inject
 
@@ -17,6 +20,8 @@ class LeagueDetailsViewModel @Inject constructor(private val repository: Footbal
 
     private var nextHelper = arrayListOf<MatchEntity>()
     private var prevHelper = arrayListOf<MatchEntity>()
+
+    var allTeamData: MutableLiveData<Resource<List<TeamEntity>?>> = MutableLiveData()
     var newNextMatchData: MutableLiveData<Resource<List<MatchEntity>?>> = MutableLiveData()
     var newPrevMatchData: MutableLiveData<Resource<List<MatchEntity>?>> = MutableLiveData()
 
@@ -36,8 +41,21 @@ class LeagueDetailsViewModel @Inject constructor(private val repository: Footbal
             val nextMatchResource = async { repository.loadNextMatchesByLeagueId(id) }
             val prevMatchResource = async { repository.loadLastMatchesByLeagueId(id) }
 
-            setNewNextMatchData(allTeamResource.await(), nextMatchResource.await())
-            setNewPrevMatchData(allTeamResource.await(), prevMatchResource.await())
+            val allTeam = allTeamResource.await()
+
+            setAllTeamData(allTeam)
+            setNewNextMatchData(allTeam, nextMatchResource.await())
+            setNewPrevMatchData(allTeam, prevMatchResource.await())
+        }
+    }
+
+    private fun setAllTeamData(all: Resource<TeamDetailsApiResponse?>) {
+        if(all.isSuccess) {
+            val listAllTeam = all.data?.teams.toListTeamEntity()
+            Log.d("Test", listAllTeam.size.toString())
+            allTeamData.postValue(Resource.success(listAllTeam))
+        } else {
+            allTeamData.postValue(Resource.error(all.message, null))
         }
     }
 

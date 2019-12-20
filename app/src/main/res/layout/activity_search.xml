@@ -20,7 +20,7 @@
             android:layout_height="match_parent"
             android:clipToPadding="false"
             android:padding="10dp"
-            tools:listitem="@layout/item_match_tab"/>
+            tools:listitem="@layout/item_match"/>
 
 
         <com.facebook.shimmer.ShimmerFrameLayout
@@ -34,13 +34,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
-                <include layout="@layout/item_match_tab_loading"/>
-                <include layout="@layout/item_match_tab_loading"/>
-                <include layout="@layout/item_match_tab_loading"/>
-                <include layout="@layout/item_match_tab_loading"/>
-                <include layout="@layout/item_match_tab_loading"/>
-                <include layout="@layout/item_match_tab_loading"/>
-                <include layout="@layout/item_match_tab_loading"/>
+                <include layout="@layout/item_match_loading"/>
+                <include layout="@layout/item_match_loading"/>
+                <include layout="@layout/item_match_loading"/>
+                <include layout="@layout/item_match_loading"/>
+                <include layout="@layout/item_match_loading"/>
+                <include layout="@layout/item_match_loading"/>
+                <include layout="@layout/item_match_loading"/>
             </LinearLayout>
 
         </com.facebook.shimmer.ShimmerFrameLayout>

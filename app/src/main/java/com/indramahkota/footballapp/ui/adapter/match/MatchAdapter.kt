@@ -9,7 +9,7 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.indramahkota.footballapp.R
 import com.indramahkota.footballapp.data.source.locale.entity.MatchEntity
 import com.indramahkota.footballapp.utilities.Utilities.formatDateFromString
-import kotlinx.android.synthetic.main.item_match_tab.view.*
+import kotlinx.android.synthetic.main.item_match.view.*
 
 class MatchAdapter(private val matchList: MutableList<MatchEntity>,
                    private val listener: (MatchEntity) -> Unit
@@ -17,7 +17,7 @@ class MatchAdapter(private val matchList: MutableList<MatchEntity>,
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        val view = layoutInflater.inflate( R.layout.item_match_tab, parent, false )
+        val view = layoutInflater.inflate( R.layout.item_match, parent, false )
         return ViewHolder(view)
     }
 
