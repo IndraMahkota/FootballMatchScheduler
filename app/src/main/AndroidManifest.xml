@@ -15,7 +15,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".ui.activity.splash.SplashActivity"
+            android:name=".ui.activity.SplashActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -25,26 +25,26 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.activity.main.MainActivity"
+            android:name=".ui.activity.MainActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/MainTheme" />
         <activity
-            android:name=".ui.activity.match.MatchActivity"
+            android:name=".ui.activity.MatchActivity"
             android:label="@string/title_activity_league_details"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ui.activity.detail.match.MatchDetailsActivity"
+            android:name=".ui.activity.DetailsMatchActivity"
             android:label="@string/title_activity_match_details"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ui.activity.detail.team.TeamDetailsActivity"
+            android:name=".ui.activity.DetailsTeamActivity"
             android:label="@string/title_activity_team_details"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ui.activity.search.SearchActivity"
+            android:name=".ui.activity.SearchActivity"
             android:label="@string/title_activity_search" />
         <activity
-            android:name=".ui.activity.favorite.FavoriteActivity"
+            android:name=".ui.activity.FavoriteActivity"
             android:label="@string/title_activity_favorite"
             android:theme="@style/AppTheme.NoActionBar" />
     </application>

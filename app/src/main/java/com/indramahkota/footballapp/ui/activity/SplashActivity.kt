@@ -1,8 +1,8 @@
-package com.indramahkota.footballapp.ui.activity.splash
+package com.indramahkota.footballapp.ui.activity
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.indramahkota.footballapp.ui.activity.main.MainActivity
+import com.indramahkota.footballapp.ui.activity.MainActivity
 import org.jetbrains.anko.intentFor
 
 class SplashActivity : AppCompatActivity() {

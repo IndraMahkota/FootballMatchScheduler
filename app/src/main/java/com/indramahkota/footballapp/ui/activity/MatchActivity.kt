@@ -1,4 +1,4 @@
-package com.indramahkota.footballapp.ui.activity.match
+package com.indramahkota.footballapp.ui.activity
 
 import android.os.Bundle
 import android.view.Menu
@@ -16,12 +16,11 @@ import com.indramahkota.footballapp.data.source.Status.ERROR
 import com.indramahkota.footballapp.data.source.Status.SUCCESS
 import com.indramahkota.footballapp.data.source.locale.entity.LeagueEntity
 import com.indramahkota.footballapp.data.source.remote.apiresponse.LeagueDetailsApiResponse
-import com.indramahkota.footballapp.ui.activity.search.SearchActivity
-import com.indramahkota.footballapp.ui.activity.search.SearchActivity.Companion.PARCELABLE_DATA
-import com.indramahkota.footballapp.ui.fragment.match.MatchFragment
-import com.indramahkota.footballapp.ui.fragment.standing.StandingFragment
-import com.indramahkota.footballapp.ui.fragment.team.TeamFragment
-import com.indramahkota.footballapp.ui.pager.tab.TabPagerAdapter
+import com.indramahkota.footballapp.ui.activity.SearchActivity.Companion.PARCELABLE_DATA
+import com.indramahkota.footballapp.ui.fragment.MatchFragment
+import com.indramahkota.footballapp.ui.fragment.StandingFragment
+import com.indramahkota.footballapp.ui.fragment.TeamFragment
+import com.indramahkota.footballapp.ui.pager.TabPagerAdapter
 import com.indramahkota.footballapp.viewmodel.LeagueDetailsViewModel
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_league_details.*
@@ -64,7 +63,8 @@ class MatchActivity : AppCompatActivity() {
             TeamFragment.newInstance(resources.getString(R.string.team_fragment))
         )
 
-        val tabPagerAdapter = TabPagerAdapter(
+        val tabPagerAdapter =
+            TabPagerAdapter(
                 supportFragmentManager,
                 listFragment,
                 listTitle

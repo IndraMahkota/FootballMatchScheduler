@@ -1,4 +1,4 @@
-package com.indramahkota.footballapp.ui.pager.tab
+package com.indramahkota.footballapp.ui.pager
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager

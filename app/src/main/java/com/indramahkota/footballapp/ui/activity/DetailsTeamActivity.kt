@@ -1,4 +1,4 @@
-package com.indramahkota.footballapp.ui.activity.detail.team
+package com.indramahkota.footballapp.ui.activity
 
 import android.os.Bundle
 import android.view.MenuItem
@@ -7,7 +7,7 @@ import com.indramahkota.footballapp.R
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_match_details.*
 
-class TeamDetailsActivity : AppCompatActivity() {
+class DetailsTeamActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)

@@ -1,4 +1,4 @@
-package com.indramahkota.footballapp.ui.activity.detail.match
+package com.indramahkota.footballapp.ui.activity
 
 import android.graphics.Matrix
 import android.os.Bundle
@@ -27,7 +27,7 @@ import kotlinx.android.synthetic.main.layout_text_views.view.*
 import org.jetbrains.anko.toast
 import javax.inject.Inject
 
-class MatchDetailsActivity : AppCompatActivity() {
+class DetailsMatchActivity : AppCompatActivity() {
 
     companion object {
         const val PARCELABLE_MATCH_DATA = "parcelable_match_data"

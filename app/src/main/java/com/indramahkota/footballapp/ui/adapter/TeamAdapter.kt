@@ -1,4 +1,4 @@
-package com.indramahkota.footballapp.ui.adapter.team
+package com.indramahkota.footballapp.ui.adapter
 
 import android.util.Log
 import android.view.LayoutInflater

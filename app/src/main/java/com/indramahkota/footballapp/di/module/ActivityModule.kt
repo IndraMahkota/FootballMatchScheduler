@@ -1,8 +1,8 @@
 package com.indramahkota.footballapp.di.module
 
-import com.indramahkota.footballapp.ui.activity.detail.match.MatchDetailsActivity
-import com.indramahkota.footballapp.ui.activity.detail.team.TeamDetailsActivity
-import com.indramahkota.footballapp.ui.activity.match.MatchActivity
+import com.indramahkota.footballapp.ui.activity.DetailsMatchActivity
+import com.indramahkota.footballapp.ui.activity.DetailsTeamActivity
+import com.indramahkota.footballapp.ui.activity.MatchActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -12,8 +12,8 @@ abstract class ActivityModule {
     abstract fun bindMatchActivity (): MatchActivity
 
     @ContributesAndroidInjector
-    abstract fun bindMatchDetailsActivity (): MatchDetailsActivity
+    abstract fun bindMatchDetailsActivity (): DetailsMatchActivity
 
     @ContributesAndroidInjector
-    abstract fun bindTeamDetailsActivity (): TeamDetailsActivity
+    abstract fun bindTeamDetailsActivity (): DetailsTeamActivity
 }

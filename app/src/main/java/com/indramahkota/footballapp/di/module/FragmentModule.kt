@@ -1,9 +1,9 @@
 package com.indramahkota.footballapp.di.module
 
-import com.indramahkota.footballapp.ui.fragment.favorite.FavoriteFragment
-import com.indramahkota.footballapp.ui.fragment.match.MatchFragment
-import com.indramahkota.footballapp.ui.fragment.standing.StandingFragment
-import com.indramahkota.footballapp.ui.fragment.team.TeamFragment
+import com.indramahkota.footballapp.ui.fragment.FavoriteFragment
+import com.indramahkota.footballapp.ui.fragment.MatchFragment
+import com.indramahkota.footballapp.ui.fragment.StandingFragment
+import com.indramahkota.footballapp.ui.fragment.TeamFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 

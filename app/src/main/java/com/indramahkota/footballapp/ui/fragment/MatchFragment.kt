@@ -1,4 +1,4 @@
-package com.indramahkota.footballapp.ui.fragment.match
+package com.indramahkota.footballapp.ui.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,9 +12,9 @@ import com.indramahkota.footballapp.data.source.Resource
 import com.indramahkota.footballapp.data.source.Status.ERROR
 import com.indramahkota.footballapp.data.source.Status.SUCCESS
 import com.indramahkota.footballapp.data.source.locale.entity.MatchEntity
-import com.indramahkota.footballapp.ui.activity.detail.match.MatchDetailsActivity
-import com.indramahkota.footballapp.ui.activity.detail.match.MatchDetailsActivity.Companion.PARCELABLE_MATCH_DATA
-import com.indramahkota.footballapp.ui.adapter.match.MatchAdapter
+import com.indramahkota.footballapp.ui.activity.DetailsMatchActivity
+import com.indramahkota.footballapp.ui.activity.DetailsMatchActivity.Companion.PARCELABLE_MATCH_DATA
+import com.indramahkota.footballapp.ui.adapter.MatchHorizontalAdapter
 import com.indramahkota.footballapp.viewmodel.LeagueDetailsViewModel
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_match.*
@@ -39,8 +39,8 @@ class MatchFragment : Fragment() {
     private var nextMatchsData: ArrayList<MatchEntity>? = null
     private var prevMatchsData: ArrayList<MatchEntity>? = null
 
-    private lateinit var nextMatchAdapter: MatchAdapter
-    private lateinit var prevMatchAdapter: MatchAdapter
+    private lateinit var nextMatchAdapter: MatchHorizontalAdapter
+    private lateinit var prevMatchAdapter: MatchHorizontalAdapter
 
     @set:Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -67,15 +67,21 @@ class MatchFragment : Fragment() {
         rv_prev_match.setHasFixedSize(true)
 
         val listNextData = mutableListOf<MatchEntity>()
-        nextMatchAdapter = MatchAdapter(listNextData) { matchModel ->
-                startActivity(intentFor<MatchDetailsActivity>(PARCELABLE_MATCH_DATA to matchModel))
-        }
+        nextMatchAdapter =
+            MatchHorizontalAdapter(
+                listNextData
+            ) { matchModel ->
+                startActivity(intentFor<DetailsMatchActivity>(PARCELABLE_MATCH_DATA to matchModel))
+            }
         rv_next_match.adapter = nextMatchAdapter
 
         val listPrevData = mutableListOf<MatchEntity>()
-        prevMatchAdapter = MatchAdapter(listPrevData) { matchModel ->
-            startActivity(intentFor<MatchDetailsActivity>(PARCELABLE_MATCH_DATA to matchModel))
-        }
+        prevMatchAdapter =
+            MatchHorizontalAdapter(
+                listPrevData
+            ) { matchModel ->
+                startActivity(intentFor<DetailsMatchActivity>(PARCELABLE_MATCH_DATA to matchModel))
+            }
         rv_prev_match.adapter = prevMatchAdapter
 
         if(nextMatchsData != null) {

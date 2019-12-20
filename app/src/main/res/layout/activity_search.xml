@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.activity.search.SearchActivity">
+    tools:context=".ui.activity.SearchActivity">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -20,7 +20,7 @@
             android:layout_height="match_parent"
             android:clipToPadding="false"
             android:padding="10dp"
-            tools:listitem="@layout/item_match"/>
+            tools:listitem="@layout/item_match_vertical"/>
 
 
         <com.facebook.shimmer.ShimmerFrameLayout

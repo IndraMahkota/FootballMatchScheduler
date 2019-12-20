@@ -11,7 +11,8 @@ import com.indramahkota.footballapp.EspressoIdlingResource
 import com.indramahkota.footballapp.R
 import com.indramahkota.footballapp.data.source.locale.entity.LeagueEntity
 import com.indramahkota.footballapp.selectTabAtPosition
-import com.indramahkota.footballapp.ui.activity.match.MatchActivity.Companion.PARCELABLE_LEAGUE_DATA
+import com.indramahkota.footballapp.ui.activity.MatchActivity
+import com.indramahkota.footballapp.ui.activity.MatchActivity.Companion.PARCELABLE_LEAGUE_DATA
 import org.junit.After
 import org.junit.Before
 import org.junit.Test

@@ -1,4 +1,4 @@
-package com.indramahkota.footballapp.ui.fragment.team
+package com.indramahkota.footballapp.ui.fragment
 
 import android.os.Bundle
 import android.util.Log
@@ -13,7 +13,7 @@ import com.indramahkota.footballapp.data.source.Resource
 import com.indramahkota.footballapp.data.source.Status.ERROR
 import com.indramahkota.footballapp.data.source.Status.SUCCESS
 import com.indramahkota.footballapp.data.source.locale.entity.TeamEntity
-import com.indramahkota.footballapp.ui.adapter.team.TeamAdapter
+import com.indramahkota.footballapp.ui.adapter.TeamAdapter
 import com.indramahkota.footballapp.viewmodel.LeagueDetailsViewModel
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_team.*
@@ -60,7 +60,8 @@ class TeamFragment : Fragment() {
         rv_all_team.setHasFixedSize(true)
 
         val listTeamData = mutableListOf<TeamEntity>()
-        allTeamAdapter = TeamAdapter(listTeamData) {}
+        allTeamAdapter =
+            TeamAdapter(listTeamData) {}
         rv_all_team.adapter = allTeamAdapter
 
         if(allTeamData != null) {

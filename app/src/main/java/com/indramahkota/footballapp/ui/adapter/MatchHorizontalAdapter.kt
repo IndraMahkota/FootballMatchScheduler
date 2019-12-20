@@ -1,4 +1,4 @@
-package com.indramahkota.footballapp.ui.adapter.match
+package com.indramahkota.footballapp.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -9,15 +9,15 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.indramahkota.footballapp.R
 import com.indramahkota.footballapp.data.source.locale.entity.MatchEntity
 import com.indramahkota.footballapp.utilities.Utilities.formatDateFromString
-import kotlinx.android.synthetic.main.item_match.view.*
+import kotlinx.android.synthetic.main.item_match_horizontal.view.*
 
-class MatchAdapter(private val matchList: MutableList<MatchEntity>,
-                   private val listener: (MatchEntity) -> Unit
-) : RecyclerView.Adapter<MatchAdapter.ViewHolder>() {
+class MatchHorizontalAdapter(private val matchList: MutableList<MatchEntity>,
+                             private val listener: (MatchEntity) -> Unit
+) : RecyclerView.Adapter<MatchHorizontalAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        val view = layoutInflater.inflate( R.layout.item_match, parent, false )
+        val view = layoutInflater.inflate( R.layout.item_match_horizontal, parent, false )
         return ViewHolder(view)
     }
 
@@ -41,6 +41,7 @@ class MatchAdapter(private val matchList: MutableList<MatchEntity>,
                 tvTeam2.text = match.strAwayTeam
                 tvSkorTeam1.text = match.intHomeScore
                 tvSkorTeam2.text = match.intAwayScore
+
 
                 Glide.with(this)
                     .load(match.sourceHomeImage)

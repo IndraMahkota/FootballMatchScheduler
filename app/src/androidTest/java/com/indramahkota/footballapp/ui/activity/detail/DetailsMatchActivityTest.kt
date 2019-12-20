@@ -10,19 +10,19 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.rule.ActivityTestRule
 import com.indramahkota.footballapp.AndroidTestFakeData.generateMatchEntity
 import com.indramahkota.footballapp.R
-import com.indramahkota.footballapp.ui.activity.detail.match.MatchDetailsActivity
-import com.indramahkota.footballapp.ui.activity.detail.match.MatchDetailsActivity.Companion.PARCELABLE_MATCH_DATA
+import com.indramahkota.footballapp.ui.activity.DetailsMatchActivity
+import com.indramahkota.footballapp.ui.activity.DetailsMatchActivity.Companion.PARCELABLE_MATCH_DATA
 import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
-class MatchDetailsActivityTest {
+class DetailsMatchActivityTest {
 
     @Test
     fun toMatchDetailsActivityTest() {
         val data = generateMatchEntity("Southampton", "West Ham", "2", "3")
 
-        val activityRule = ActivityTestRule(MatchDetailsActivity::class.java)
+        val activityRule = ActivityTestRule(DetailsMatchActivity::class.java)
         val intent = Intent().putExtra(PARCELABLE_MATCH_DATA, data)
         activityRule.launchActivity(intent)
 

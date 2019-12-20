@@ -1,12 +1,12 @@
-package com.indramahkota.footballapp.ui.activity.favorite
+package com.indramahkota.footballapp.ui.activity
 
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.indramahkota.footballapp.R
-import com.indramahkota.footballapp.ui.fragment.favorite.FavoriteFragment
-import com.indramahkota.footballapp.ui.fragment.team.TeamFragment
-import com.indramahkota.footballapp.ui.pager.tab.TabPagerAdapter
+import com.indramahkota.footballapp.ui.fragment.FavoriteFragment
+import com.indramahkota.footballapp.ui.fragment.TeamFragment
+import com.indramahkota.footballapp.ui.pager.TabPagerAdapter
 import kotlinx.android.synthetic.main.activity_favorite.*
 
 class FavoriteActivity : AppCompatActivity() {

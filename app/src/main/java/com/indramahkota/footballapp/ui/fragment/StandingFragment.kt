@@ -1,4 +1,4 @@
-package com.indramahkota.footballapp.ui.fragment.standing
+package com.indramahkota.footballapp.ui.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater

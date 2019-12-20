@@ -1,4 +1,4 @@
-package com.indramahkota.footballapp.ui.activity.main
+package com.indramahkota.footballapp.ui.activity
 
 import android.os.Bundle
 import android.view.Menu
@@ -8,10 +8,8 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.indramahkota.footballapp.R
 import com.indramahkota.footballapp.data.source.locale.entity.LeagueEntity
-import com.indramahkota.footballapp.ui.activity.favorite.FavoriteActivity
-import com.indramahkota.footballapp.ui.adapter.main.LeagueAdapter
-import com.indramahkota.footballapp.ui.activity.match.MatchActivity
-import com.indramahkota.footballapp.ui.activity.match.MatchActivity.Companion.PARCELABLE_LEAGUE_DATA
+import com.indramahkota.footballapp.ui.adapter.LeagueAdapter
+import com.indramahkota.footballapp.ui.activity.MatchActivity.Companion.PARCELABLE_LEAGUE_DATA
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.intentFor
 

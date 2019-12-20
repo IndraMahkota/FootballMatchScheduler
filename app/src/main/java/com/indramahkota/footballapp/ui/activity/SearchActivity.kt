@@ -1,4 +1,4 @@
-package com.indramahkota.footballapp.ui.activity.search
+package com.indramahkota.footballapp.ui.activity
 
 import android.app.SearchManager
 import android.content.Context
@@ -11,9 +11,8 @@ import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.indramahkota.footballapp.R
 import com.indramahkota.footballapp.data.source.locale.entity.MatchEntity
-import com.indramahkota.footballapp.ui.activity.detail.match.MatchDetailsActivity
-import com.indramahkota.footballapp.ui.activity.detail.match.MatchDetailsActivity.Companion.PARCELABLE_MATCH_DATA
-import com.indramahkota.footballapp.ui.adapter.match.MatchAdapter
+import com.indramahkota.footballapp.ui.activity.DetailsMatchActivity.Companion.PARCELABLE_MATCH_DATA
+import com.indramahkota.footballapp.ui.adapter.MatchVerticalAdapter
 import kotlinx.android.synthetic.main.activity_search.*
 import org.jetbrains.anko.intentFor
 import java.util.*
@@ -25,7 +24,7 @@ class SearchActivity : AppCompatActivity() {
     }
 
     private lateinit var linearLayoutManager: LinearLayoutManager
-    private lateinit var matchAdapter: MatchAdapter
+    private lateinit var matchAdapter: MatchVerticalAdapter
 
     private var listData: List<MatchEntity>? = null
 
@@ -43,9 +42,10 @@ class SearchActivity : AppCompatActivity() {
         rv_category.setHasFixedSize(true)
 
         val rvData = mutableListOf<MatchEntity>()
-        matchAdapter = MatchAdapter(rvData) { matchModel ->
-                startActivity(intentFor<MatchDetailsActivity>(PARCELABLE_MATCH_DATA to matchModel))
-        }
+        matchAdapter =
+            MatchVerticalAdapter(rvData) { matchModel ->
+                startActivity(intentFor<DetailsMatchActivity>(PARCELABLE_MATCH_DATA to matchModel))
+            }
         rv_category.adapter = matchAdapter
 
         setRecycleView()

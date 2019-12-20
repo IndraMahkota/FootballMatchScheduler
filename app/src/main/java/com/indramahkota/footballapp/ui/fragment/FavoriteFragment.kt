@@ -1,4 +1,4 @@
-package com.indramahkota.footballapp.ui.fragment.favorite
+package com.indramahkota.footballapp.ui.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,9 +13,9 @@ import com.indramahkota.footballapp.data.source.Resource
 import com.indramahkota.footballapp.data.source.Status.ERROR
 import com.indramahkota.footballapp.data.source.Status.SUCCESS
 import com.indramahkota.footballapp.data.source.locale.entity.MatchEntity
-import com.indramahkota.footballapp.ui.activity.detail.match.MatchDetailsActivity
-import com.indramahkota.footballapp.ui.activity.detail.match.MatchDetailsActivity.Companion.PARCELABLE_MATCH_DATA
-import com.indramahkota.footballapp.ui.adapter.match.MatchAdapter
+import com.indramahkota.footballapp.ui.activity.DetailsMatchActivity
+import com.indramahkota.footballapp.ui.activity.DetailsMatchActivity.Companion.PARCELABLE_MATCH_DATA
+import com.indramahkota.footballapp.ui.adapter.MatchVerticalAdapter
 import com.indramahkota.footballapp.utilities.Utilities.compareDateAfter
 import com.indramahkota.footballapp.utilities.Utilities.compareDateBeforeAndEqual
 import com.indramahkota.footballapp.viewmodel.FavoriteMatchViewModel
@@ -44,7 +44,7 @@ class FavoriteFragment : Fragment() {
     private var state: String? = null
     private var matchsData: ArrayList<MatchEntity>? = null
     private lateinit var linearLayoutManager: LinearLayoutManager
-    private lateinit var matchAdapter: MatchAdapter
+    private lateinit var matchAdapter: MatchVerticalAdapter
 
     @set:Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -76,10 +76,10 @@ class FavoriteFragment : Fragment() {
 
         val listData = mutableListOf<MatchEntity>()
         matchAdapter =
-            MatchAdapter(
+            MatchVerticalAdapter(
                 listData
             ) { matchModel ->
-                startActivity(intentFor<MatchDetailsActivity>(PARCELABLE_MATCH_DATA to matchModel))
+                startActivity(intentFor<DetailsMatchActivity>(PARCELABLE_MATCH_DATA to matchModel))
             }
         rv_category.adapter = matchAdapter
 
