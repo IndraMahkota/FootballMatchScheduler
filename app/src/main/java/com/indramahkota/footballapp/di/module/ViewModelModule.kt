@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.indramahkota.footballapp.di.scope.ViewModelKey
 import com.indramahkota.footballapp.di.factory.ViewModelFactory
-import com.indramahkota.footballapp.viewmodel.FavoriteMatchViewModel
+import com.indramahkota.footballapp.viewmodel.FavoriteViewModel
 import com.indramahkota.footballapp.viewmodel.MatchDetailsViewModel
 import com.indramahkota.footballapp.viewmodel.LeagueDetailsViewModel
 import dagger.Binds
@@ -28,6 +28,6 @@ abstract class ViewModelModule {
 
     @Binds
     @IntoMap
-    @ViewModelKey(FavoriteMatchViewModel::class)
-    protected abstract fun favoriteMatchViewModel(favoriteMatchViewModel: FavoriteMatchViewModel?): ViewModel?
+    @ViewModelKey(FavoriteViewModel::class)
+    protected abstract fun favoriteMatchViewModel(favoriteMatchViewModel: FavoriteViewModel?): ViewModel?
 }

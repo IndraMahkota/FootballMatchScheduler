@@ -19,7 +19,7 @@ import com.indramahkota.footballapp.data.source.remote.apimodel.TeamDetailsApiMo
 import com.indramahkota.footballapp.data.source.remote.apiresponse.MatchDetailsApiResponse
 import com.indramahkota.footballapp.data.source.remote.apiresponse.TeamDetailsApiResponse
 import com.indramahkota.footballapp.utilities.Utilities.formatDateFromString
-import com.indramahkota.footballapp.viewmodel.FavoriteMatchViewModel
+import com.indramahkota.footballapp.viewmodel.FavoriteViewModel
 import com.indramahkota.footballapp.viewmodel.MatchDetailsViewModel
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_match_details.*
@@ -40,7 +40,7 @@ class DetailsMatchActivity : AppCompatActivity() {
     private var awayTeamDetailsData: TeamDetailsApiModel? = null
 
     private lateinit var viewModel: MatchDetailsViewModel
-    private lateinit var favViewModel: FavoriteMatchViewModel
+    private lateinit var favViewModel: FavoriteViewModel
 
     @set:Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -108,15 +108,15 @@ class DetailsMatchActivity : AppCompatActivity() {
             }
         })
 
-        favViewModel = ViewModelProvider(this, viewModelFactory).get(FavoriteMatchViewModel::class.java)
-        favViewModel.favoriteById.observe(this, Observer<MatchEntity>{
+        favViewModel = ViewModelProvider(this, viewModelFactory).get(FavoriteViewModel::class.java)
+        favViewModel.favoriteMatchById.observe(this, Observer<MatchEntity>{
             if(it != null){
                 favMatch = it
                 fab.setImageResource(R.drawable.ic_star_pink)
             }
         })
 
-        matchDetail?.idEvent?.let {favViewModel.getFavoriteById(it)}
+        matchDetail?.idEvent?.let {favViewModel.getFavoriteMatchById(it)}
         matchDetail?.idEvent?.let {viewModel.loadMatchDetails(it)}
         matchDetail?.idHomeTeam?.let {viewModel.loadHomeTeamDetails(it)}
         matchDetail?.idAwayTeam?.let {viewModel.loadAwayTeamDetails(it)}
@@ -136,7 +136,7 @@ class DetailsMatchActivity : AppCompatActivity() {
                                awayTeam: TeamDetailsApiModel?){
         if(favMatch != null){
             val newData = createNewFavoriteData(match, homeTeam, awayTeam)
-            favViewModel.updateFavorite(newData)
+            favViewModel.updateFavoriteMatch(newData)
         }
     }
 
@@ -161,14 +161,14 @@ class DetailsMatchActivity : AppCompatActivity() {
         fab.setOnClickListener { view ->
             val message: String
             if(favMatch != null){
-                favViewModel.deleteFavorite(favMatch!!)
+                favViewModel.deleteFavoriteMatch(favMatch!!)
                 favMatch = null
                 fab.setImageResource(R.drawable.ic_star_white_border)
                 fab.imageMatrix = Matrix()
                 message = "Delete favorite"
             } else{
                 val newData = createNewFavoriteData(data, homeTeamDetailsData, awayTeamDetailsData)
-                favViewModel.insertFavorite(newData)
+                favViewModel.insertFavoriteMatch(newData)
                 favMatch = newData
                 fab.setImageResource(R.drawable.ic_star_pink)
                 fab.imageMatrix = Matrix()

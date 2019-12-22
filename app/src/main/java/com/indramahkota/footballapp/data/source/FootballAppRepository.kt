@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.indramahkota.footballapp.data.source.locale.database.MyDatabase
 import com.indramahkota.footballapp.data.source.locale.entity.MatchEntity
+import com.indramahkota.footballapp.data.source.locale.entity.TeamEntity
 import com.indramahkota.footballapp.data.source.remote.api.ApiEndPoint
 import com.indramahkota.footballapp.data.source.remote.apiresponse.LeagueDetailsApiResponse
 import com.indramahkota.footballapp.data.source.remote.apiresponse.MatchDetailsApiResponse
@@ -146,6 +147,84 @@ class FootballAppRepository @Inject constructor(private val api: ApiEndPoint,
                             MatchEntity.Column.HOME_IMAGE to match.sourceHomeImage,
                             MatchEntity.Column.AWAY_IMAGE to match.sourceAwayImage)
                     .whereSimple("${MatchEntity.Column.ID_EVENT} = ?", match.idEvent)
+                    .exec()
+            }
+        } catch (e: SQLiteConstraintException){
+            e.printStackTrace()
+        }
+    }
+
+    override fun loadAllFavoriteTeam(): LiveData<List<TeamEntity>> {
+        val favoriteTeam: MutableLiveData<List<TeamEntity>> = MutableLiveData()
+        try {
+            db.use {
+                val result = select(TeamEntity.TABLE_NAME)
+                val favoriteTeamData = result.parseList(classParser<TeamEntity>())
+                favoriteTeam.postValue(favoriteTeamData)
+            }
+        } catch (e: SQLiteConstraintException){
+            e.printStackTrace()
+        }
+        return favoriteTeam
+    }
+
+    override fun loadFavoriteTeamById(id: String): LiveData<TeamEntity> {
+        val favoriteTeam: MutableLiveData<TeamEntity> = MutableLiveData()
+        try {
+            db.use {
+                val result = select(TeamEntity.TABLE_NAME)
+                    .whereArgs(
+                        "${TeamEntity.Column.ID_TEAM} = {id}",
+                        "id" to id
+                    )
+                val favoriteTeamData = result.parseOpt(classParser<TeamEntity>())
+                favoriteTeam.postValue(favoriteTeamData)
+            }
+        } catch (e: SQLiteConstraintException){
+            e.printStackTrace()
+        }
+        return favoriteTeam
+    }
+
+    override fun insertFavoriteTeamById(team: TeamEntity) {
+        try {
+            db.use {
+                insert(
+                    TeamEntity.TABLE_NAME,
+                    TeamEntity.Column.ID_TEAM to team.idTeam,
+                    TeamEntity.Column.TEAM_NAME to team.strTeam,
+                    TeamEntity.Column.TEAM_BADGE to team.strTeamBadge,
+                    TeamEntity.Column.TEAM_DESCRIPTION to team.strDescription
+                )
+            }
+        } catch (e: SQLiteConstraintException){
+            e.printStackTrace()
+        }
+    }
+
+    override fun deleteFavoriteTeamById(team: TeamEntity) {
+        try {
+            db.use {
+                delete(
+                    TeamEntity.TABLE_NAME,
+                    "${TeamEntity.Column.ID_TEAM} = {id}",
+                    "id" to team.idTeam
+                )
+            }
+        } catch (e: SQLiteConstraintException){
+            e.printStackTrace()
+        }
+    }
+
+    override fun updateFavoriteTeamById(team: TeamEntity) {
+        try {
+            db.use {
+                update(TeamEntity.TABLE_NAME,
+                    TeamEntity.Column.ID_TEAM to team.idTeam,
+                    TeamEntity.Column.TEAM_NAME to team.strTeam,
+                    TeamEntity.Column.TEAM_BADGE to team.strTeamBadge,
+                    TeamEntity.Column.TEAM_DESCRIPTION to team.strDescription)
+                    .whereSimple("${TeamEntity.Column.ID_TEAM} = ?", team.idTeam)
                     .exec()
             }
         } catch (e: SQLiteConstraintException){

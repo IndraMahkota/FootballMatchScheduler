@@ -15,7 +15,7 @@ import org.junit.Test
 import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
 
-class FavoriteMatchViewModelTest {
+class FavoriteViewModelTest {
 
     @get:Rule
     val rule = InstantTaskExecutorRule()
@@ -24,12 +24,12 @@ class FavoriteMatchViewModelTest {
     private val observerDataById: Observer<MatchEntity> = mock()
     private val observerAllData: Observer<List<MatchEntity>> = mock()
 
-    private lateinit var viewModel: FavoriteMatchViewModel
+    private lateinit var viewModel: FavoriteViewModel
 
     @Before
     fun setUp() {
         MockitoAnnotations.initMocks(this)
-        viewModel = FavoriteMatchViewModel(repository)
+        viewModel = FavoriteViewModel(repository)
     }
 
     @Test
@@ -42,12 +42,12 @@ class FavoriteMatchViewModelTest {
         Mockito.`when`(repository.loadFavoriteMatchById( id ))
             .thenReturn(liveData)
 
-        viewModel.favoriteById.observeForever(observerDataById)
+        viewModel.favoriteMatchById.observeForever(observerDataById)
 
-        viewModel.getFavoriteById(id)
+        viewModel.getFavoriteMatchById(id)
 
         Mockito.verify(observerDataById).onChanged(data)
-        Assert.assertEquals(viewModel.favoriteById.value, data)
+        Assert.assertEquals(viewModel.favoriteMatchById.value, data)
     }
 
     @Test
@@ -60,11 +60,11 @@ class FavoriteMatchViewModelTest {
         Mockito.`when`(repository.loadAllFavoriteMatch())
             .thenReturn(liveData)
 
-        viewModel.getAllFavorite().observeForever(observerAllData)
+        viewModel.getAllFavoriteMatch().observeForever(observerAllData)
         
-        viewModel.getAllFavorite()
+        viewModel.getAllFavoriteMatch()
 
         Mockito.verify(observerAllData).onChanged(data)
-        Assert.assertEquals(viewModel.getAllFavorite().value, data)
+        Assert.assertEquals(viewModel.getAllFavoriteMatch().value, data)
     }
 }

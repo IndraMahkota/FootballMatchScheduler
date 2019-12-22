@@ -9,21 +9,16 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.indramahkota.footballapp.R
-import com.indramahkota.footballapp.data.source.Resource
-import com.indramahkota.footballapp.data.source.Status.ERROR
-import com.indramahkota.footballapp.data.source.Status.SUCCESS
 import com.indramahkota.footballapp.data.source.locale.entity.MatchEntity
 import com.indramahkota.footballapp.ui.activity.DetailsMatchActivity
 import com.indramahkota.footballapp.ui.activity.DetailsMatchActivity.Companion.PARCELABLE_MATCH_DATA
 import com.indramahkota.footballapp.ui.adapter.MatchVerticalAdapter
 import com.indramahkota.footballapp.utilities.Utilities.compareDateAfter
 import com.indramahkota.footballapp.utilities.Utilities.compareDateBeforeAndEqual
-import com.indramahkota.footballapp.viewmodel.FavoriteMatchViewModel
-import com.indramahkota.footballapp.viewmodel.LeagueDetailsViewModel
+import com.indramahkota.footballapp.viewmodel.FavoriteViewModel
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_favorite.*
 import org.jetbrains.anko.support.v4.intentFor
-import org.jetbrains.anko.support.v4.toast
 import javax.inject.Inject
 
 class FavoriteFragment : Fragment() {
@@ -53,9 +48,7 @@ class FavoriteFragment : Fragment() {
         AndroidSupportInjection.inject(this)
         super.onCreate(savedInstanceState)
 
-        savedInstanceState?.run {
-            matchsData?.addAll(savedInstanceState.getParcelableArrayList(ARG_SAVE_DATA)!!)
-        }
+        matchsData = savedInstanceState?.getParcelableArrayList(ARG_SAVE_DATA)
     }
 
     override fun onCreateView(
@@ -87,31 +80,15 @@ class FavoriteFragment : Fragment() {
             initializeUi(matchsData)
         } else {
             when (state) {
-                resources.getString(R.string.prev_match_fragment) -> getPrevListData()
-                resources.getString(R.string.next_match_fragment) -> getNextListData()
                 resources.getString(R.string.prev_favorite_match_fragment) -> getFavoritePrevListData()
                 resources.getString(R.string.next_favorite_match_fragment) -> getFavoriteNextListData()
             }
         }
     }
 
-    private fun getPrevListData() {
-        val viewModel = activity?.let { ViewModelProvider(it, viewModelFactory).get(LeagueDetailsViewModel::class.java) }
-        viewModel?.newPrevMatchData?.observe(viewLifecycleOwner, Observer<Resource<List<MatchEntity>?>> {
-            checkState(it)
-        })
-    }
-
-    private fun getNextListData() {
-        val viewModel = activity?.let { ViewModelProvider(it, viewModelFactory).get(LeagueDetailsViewModel::class.java) }
-        viewModel?.newNextMatchData?.observe(viewLifecycleOwner, Observer<Resource<List<MatchEntity>?>> {
-            checkState(it)
-        })
-    }
-
     private fun getFavoritePrevListData() {
-        val viewModel = ViewModelProvider(this, viewModelFactory).get(FavoriteMatchViewModel::class.java)
-        viewModel.getAllFavorite().observe(viewLifecycleOwner, Observer<List<MatchEntity>> {
+        val viewModel = ViewModelProvider(this, viewModelFactory).get(FavoriteViewModel::class.java)
+        viewModel.getAllFavoriteMatch().observe(viewLifecycleOwner, Observer<List<MatchEntity>> {
             val newList = ArrayList<MatchEntity>()
             for (item in it) {
                 if(compareDateBeforeAndEqual(item.dateEvent)){
@@ -123,8 +100,8 @@ class FavoriteFragment : Fragment() {
     }
 
     private fun getFavoriteNextListData() {
-        val viewModel = ViewModelProvider(this, viewModelFactory).get(FavoriteMatchViewModel::class.java)
-        viewModel.getAllFavorite().observe(viewLifecycleOwner, Observer<List<MatchEntity>> {
+        val viewModel = ViewModelProvider(this, viewModelFactory).get(FavoriteViewModel::class.java)
+        viewModel.getAllFavoriteMatch().observe(viewLifecycleOwner, Observer<List<MatchEntity>> {
             val newList = ArrayList<MatchEntity>()
             for (item in it) {
                 if(compareDateAfter(item.dateEvent)){
@@ -133,15 +110,6 @@ class FavoriteFragment : Fragment() {
             }
             initializeUi(newList)
         })
-    }
-
-    private fun checkState(it: Resource<List<MatchEntity>?>){
-        when (it.status) {
-            SUCCESS -> {
-                initializeUi(it.data)
-            }
-            ERROR -> toast(it.message.toString())
-        }
     }
 
     private fun initializeUi(it: List<MatchEntity>?) {
