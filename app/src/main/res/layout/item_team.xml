@@ -13,8 +13,8 @@
 
     <ImageView
         android:id="@+id/image_team"
-        android:layout_width="75dp"
-        android:layout_height="75dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:contentDescription="@string/league_img_details"
@@ -27,7 +27,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="4dp"
         android:text="@string/team_name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/image_team"

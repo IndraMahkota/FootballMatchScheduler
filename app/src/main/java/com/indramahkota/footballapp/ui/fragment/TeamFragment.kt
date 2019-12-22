@@ -1,7 +1,6 @@
 package com.indramahkota.footballapp.ui.fragment
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +13,7 @@ import com.indramahkota.footballapp.data.source.Status.ERROR
 import com.indramahkota.footballapp.data.source.Status.SUCCESS
 import com.indramahkota.footballapp.data.source.locale.entity.TeamEntity
 import com.indramahkota.footballapp.ui.adapter.TeamAdapter
+import com.indramahkota.footballapp.viewmodel.FavoriteViewModel
 import com.indramahkota.footballapp.viewmodel.LeagueDetailsViewModel
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_team.*
@@ -33,6 +33,7 @@ class TeamFragment : Fragment() {
         }
     }
 
+    private var state: String? = null
     private var allTeamData: ArrayList<TeamEntity>? = null
 
     private lateinit var allTeamAdapter: TeamAdapter
@@ -57,6 +58,8 @@ class TeamFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        state = arguments?.getString(ARG_SECTION_FRAGMENT)
+
         rv_all_team.setHasFixedSize(true)
 
         val listTeamData = mutableListOf<TeamEntity>()
@@ -65,14 +68,14 @@ class TeamFragment : Fragment() {
         rv_all_team.adapter = allTeamAdapter
 
         if(allTeamData != null) {
-            Log.d("Test", "Test1")
             initialize(allTeamData)
         } else {
-            Log.d("Test", "Test2")
-            getAllTeamData()
+            //getAllTeamData()
+            when (state) {
+                resources.getString(R.string.team_fragment) -> getAllTeamData()
+                resources.getString(R.string.favorite_team_fragment) -> getAllFavoriteTeamData()
+            }
         }
-
-        Log.d("Test", "Test3")
     }
 
     private fun getAllTeamData() {
@@ -80,6 +83,13 @@ class TeamFragment : Fragment() {
             LeagueDetailsViewModel::class.java) }
         viewModel?.allTeamData?.observe(viewLifecycleOwner, Observer<Resource<List<TeamEntity>?>> {
             checkState(it)
+        })
+    }
+
+    private fun getAllFavoriteTeamData() {
+        val viewModel = ViewModelProvider(this, viewModelFactory).get(FavoriteViewModel::class.java)
+        viewModel.getAllFavoriteTeam().observe(viewLifecycleOwner, Observer<List<TeamEntity>> {
+            initialize(it)
         })
     }
 
@@ -94,16 +104,10 @@ class TeamFragment : Fragment() {
 
     private fun initialize(it: List<TeamEntity>?) {
         if(it.isNullOrEmpty()) {
-
-            Log.d("Test", "Test4")
-
             no_data.visibility = View.VISIBLE
         } else {
-            Log.d("Test", "Test6")
             no_data.visibility = View.INVISIBLE
         }
-
-        Log.d("Test", "Test5")
 
         allTeamData = it?.let { ArrayList(it) }
         it?.let { allTeamAdapter.replace(it) }
@@ -114,5 +118,13 @@ class TeamFragment : Fragment() {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putParcelableArrayList(ARG_SAVE_DATA, allTeamData)
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        when (state) {
+            resources.getString(R.string.favorite_team_fragment) -> getAllFavoriteTeamData()
+        }
     }
 }

@@ -56,14 +56,10 @@ fun List<TeamDetailsApiModel>?.toListTeamEntity(): List<TeamEntity> {
             teamList.add(matchNetworkModel.toTeamEntity())
         }
     }
-
-    Log.d("Test", teamList.size.toString() + " sasa19")
     return teamList
 }
 
 fun TeamDetailsApiModel.toTeamEntity(): TeamEntity {
-    Log.d("Test", idTeam+strTeam+strTeamBadge+strCountry)
-
     return TeamEntity(idTeam ?: "",
         strTeam ?: "",
         strTeamBadge ?: "",

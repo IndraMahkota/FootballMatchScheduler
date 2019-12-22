@@ -1,6 +1,5 @@
 package com.indramahkota.footballapp.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.*
 import com.indramahkota.footballapp.data.source.FootballAppRepository
 import com.indramahkota.footballapp.data.source.Resource
@@ -52,7 +51,6 @@ class LeagueDetailsViewModel @Inject constructor(private val repository: Footbal
     private fun setAllTeamData(all: Resource<TeamDetailsApiResponse?>) {
         if(all.isSuccess) {
             val listAllTeam = all.data?.teams.toListTeamEntity()
-            Log.d("Test", listAllTeam.size.toString())
             allTeamData.postValue(Resource.success(listAllTeam))
         } else {
             allTeamData.postValue(Resource.error(all.message, null))
