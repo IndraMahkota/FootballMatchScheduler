@@ -70,7 +70,6 @@ class TeamFragment : Fragment() {
         if(allTeamData != null) {
             initialize(allTeamData)
         } else {
-            //getAllTeamData()
             when (state) {
                 resources.getString(R.string.team_fragment) -> getAllTeamData()
                 resources.getString(R.string.favorite_team_fragment) -> getAllFavoriteTeamData()

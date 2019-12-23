@@ -7,6 +7,7 @@ import com.indramahkota.footballapp.data.source.locale.database.MyDatabase
 import com.indramahkota.footballapp.data.source.locale.entity.MatchEntity
 import com.indramahkota.footballapp.data.source.locale.entity.TeamEntity
 import com.indramahkota.footballapp.data.source.remote.api.ApiEndPoint
+import com.indramahkota.footballapp.data.source.remote.apiresponse.ClassementApiResponse
 import com.indramahkota.footballapp.data.source.remote.apiresponse.LeagueDetailsApiResponse
 import com.indramahkota.footballapp.data.source.remote.apiresponse.MatchDetailsApiResponse
 import com.indramahkota.footballapp.data.source.remote.apiresponse.TeamDetailsApiResponse
@@ -62,6 +63,14 @@ class FootballAppRepository @Inject constructor(private val api: ApiEndPoint,
             Resource.success(api.getLastMatchByLeagueId(id))
         } catch (e: Exception) {
             Resource.error(e.message, MatchDetailsApiResponse())
+        }
+    }
+
+    override suspend fun loadClassementByLeagueId(id: String): Resource<ClassementApiResponse?> {
+        return try {
+            Resource.success(api.getClassementTable(id))
+        } catch (e: Exception) {
+            Resource.error(e.message, ClassementApiResponse())
         }
     }
 

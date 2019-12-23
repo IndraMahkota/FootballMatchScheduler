@@ -1,6 +1,5 @@
 package com.indramahkota.footballapp.ui.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,8 +23,6 @@ class TeamAdapter(private val teamList: MutableList<TeamEntity>,
     fun replace(items: List<TeamEntity>){
         teamList.clear()
         teamList.addAll(items)
-
-        Log.d("Test", teamList.size.toString() + " askaskasa")
         notifyDataSetChanged()
     }
 

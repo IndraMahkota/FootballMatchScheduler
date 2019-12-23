@@ -18,7 +18,7 @@ import com.indramahkota.footballapp.data.source.locale.entity.LeagueEntity
 import com.indramahkota.footballapp.data.source.remote.apiresponse.LeagueDetailsApiResponse
 import com.indramahkota.footballapp.ui.activity.SearchActivity.Companion.PARCELABLE_DATA
 import com.indramahkota.footballapp.ui.fragment.MatchFragment
-import com.indramahkota.footballapp.ui.fragment.StandingFragment
+import com.indramahkota.footballapp.ui.fragment.ClassementFragment
 import com.indramahkota.footballapp.ui.fragment.TeamFragment
 import com.indramahkota.footballapp.ui.pager.TabPagerAdapter
 import com.indramahkota.footballapp.viewmodel.LeagueDetailsViewModel
@@ -59,7 +59,7 @@ class MatchActivity : AppCompatActivity() {
 
         val listFragment = mutableListOf(
             MatchFragment.newInstance(resources.getString(R.string.prev_match_fragment)),
-            StandingFragment.newInstance(resources.getString(R.string.next_match_fragment)),
+            ClassementFragment.newInstance(resources.getString(R.string.next_match_fragment)),
             TeamFragment.newInstance(resources.getString(R.string.team_fragment))
         )
 

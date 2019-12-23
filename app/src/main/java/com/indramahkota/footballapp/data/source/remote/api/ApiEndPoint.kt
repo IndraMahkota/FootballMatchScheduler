@@ -1,5 +1,6 @@
 package com.indramahkota.footballapp.data.source.remote.api
 
+import com.indramahkota.footballapp.data.source.remote.apiresponse.ClassementApiResponse
 import com.indramahkota.footballapp.data.source.remote.apiresponse.LeagueDetailsApiResponse
 import com.indramahkota.footballapp.data.source.remote.apiresponse.MatchDetailsApiResponse
 import com.indramahkota.footballapp.data.source.remote.apiresponse.TeamDetailsApiResponse
@@ -36,4 +37,9 @@ interface ApiEndPoint {
     suspend fun getLastMatchByLeagueId(
         @Query("id") leagueId : String
     ) : MatchDetailsApiResponse
+
+    @GET("lookuptable.php")
+    suspend fun getClassementTable(
+        @Query("l") leagueId : String
+    ) : ClassementApiResponse
 }

@@ -13,7 +13,7 @@
         android:padding="10dp"
         android:orientation="vertical"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/item_team"/>
+        tools:listitem="@layout/item_classement"/>
 
     <include
         android:id="@+id/no_data"
@@ -25,6 +25,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="10dp"
+        android:visibility="gone"
         android:orientation="vertical">
 
         <LinearLayout

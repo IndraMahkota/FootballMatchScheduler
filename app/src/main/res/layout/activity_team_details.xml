@@ -52,7 +52,6 @@
                     app:layout_constraintTop_toBottomOf="@+id/ivTeamLogo" />
 
                 <TextView
-                    android:id="@+id/teamDescription"
                     style="@style/TextContent.Small"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"

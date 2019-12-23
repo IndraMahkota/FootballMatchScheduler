@@ -11,7 +11,7 @@
         android:layout_height="match_parent"
         android:clipToPadding="false"
         android:padding="10dp"
-        tools:listitem="@layout/item_match"/>
+        tools:listitem="@layout/item_match_vertical"/>
 
     <include
         android:id="@+id/no_data"
