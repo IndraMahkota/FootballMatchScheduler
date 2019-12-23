@@ -12,11 +12,14 @@ import com.indramahkota.footballapp.data.source.Resource
 import com.indramahkota.footballapp.data.source.Status.ERROR
 import com.indramahkota.footballapp.data.source.Status.SUCCESS
 import com.indramahkota.footballapp.data.source.locale.entity.TeamEntity
+import com.indramahkota.footballapp.ui.activity.DetailsTeamActivity
+import com.indramahkota.footballapp.ui.activity.DetailsTeamActivity.Companion.PARCELABLE_TEAM_DATA
 import com.indramahkota.footballapp.ui.adapter.TeamAdapter
 import com.indramahkota.footballapp.viewmodel.FavoriteViewModel
 import com.indramahkota.footballapp.viewmodel.LeagueDetailsViewModel
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_team.*
+import org.jetbrains.anko.support.v4.intentFor
 import org.jetbrains.anko.support.v4.toast
 import javax.inject.Inject
 
@@ -64,7 +67,9 @@ class TeamFragment : Fragment() {
 
         val listTeamData = mutableListOf<TeamEntity>()
         allTeamAdapter =
-            TeamAdapter(listTeamData) {}
+            TeamAdapter(listTeamData) { teamEntity ->
+                startActivity(intentFor<DetailsTeamActivity>(PARCELABLE_TEAM_DATA to teamEntity))
+            }
         rv_all_team.adapter = allTeamAdapter
 
         if(allTeamData != null) {

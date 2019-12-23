@@ -4,6 +4,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.indramahkota.footballapp.R
 import com.indramahkota.footballapp.data.source.remote.apimodel.ClassementApiModel
 import kotlinx.android.synthetic.main.item_team.view.*
@@ -35,6 +37,13 @@ class ClassementAdapter(private val classementList: MutableList<ClassementApiMod
             with(itemView) {
                 strTeam.text = classement.name
                 strDescription.text = classement.played
+
+                Glide.with(this)
+                    .load(classement.image)
+                    .placeholder(R.drawable.spinner_animation)
+                    .error(R.drawable.image_error)
+                    .transform(RoundedCorners(8))
+                    .into(image_team)
             }
             itemView.setOnClickListener { listener(classement) }
         }

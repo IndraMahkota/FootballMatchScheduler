@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardCornerRadius="4dp"
-    android:layout_margin="4dp">
-
+    app:cardCornerRadius="8dp"
+    android:layout_margin="8dp">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -29,7 +29,6 @@
             android:padding="5dp"
             android:maxLines="2"
             android:textSize="18sp"
-            android:textStyle="bold"
             android:text="@string/team1"
             android:gravity="center"
             app:layout_constraintStart_toStartOf="parent"

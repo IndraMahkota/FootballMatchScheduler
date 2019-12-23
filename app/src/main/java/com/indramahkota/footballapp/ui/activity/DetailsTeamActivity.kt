@@ -8,6 +8,11 @@ import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_match_details.*
 
 class DetailsTeamActivity : AppCompatActivity() {
+
+    companion object {
+        const val PARCELABLE_TEAM_DATA = "parcelable_team_data"
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)

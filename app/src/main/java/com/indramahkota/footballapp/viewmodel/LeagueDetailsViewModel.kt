@@ -5,8 +5,10 @@ import com.indramahkota.footballapp.data.source.FootballAppRepository
 import com.indramahkota.footballapp.data.source.Resource
 import com.indramahkota.footballapp.data.source.locale.entity.MatchEntity
 import com.indramahkota.footballapp.data.source.locale.entity.TeamEntity
+import com.indramahkota.footballapp.data.source.remote.apimodel.ClassementApiModel
 import com.indramahkota.footballapp.data.source.remote.apimodel.MatchDetailsApiModel
 import com.indramahkota.footballapp.data.source.remote.apimodel.TeamDetailsApiModel
+import com.indramahkota.footballapp.data.source.remote.apiresponse.ClassementApiResponse
 import com.indramahkota.footballapp.data.source.remote.apiresponse.LeagueDetailsApiResponse
 import com.indramahkota.footballapp.data.source.remote.apiresponse.MatchDetailsApiResponse
 import com.indramahkota.footballapp.data.source.remote.apiresponse.TeamDetailsApiResponse
@@ -23,6 +25,7 @@ class LeagueDetailsViewModel @Inject constructor(private val repository: Footbal
     var allTeamData: MutableLiveData<Resource<List<TeamEntity>?>> = MutableLiveData()
     var newNextMatchData: MutableLiveData<Resource<List<MatchEntity>?>> = MutableLiveData()
     var newPrevMatchData: MutableLiveData<Resource<List<MatchEntity>?>> = MutableLiveData()
+    var allClassementData: MutableLiveData<Resource<List<ClassementApiModel>?>> = MutableLiveData()
 
     private val leagueId = MutableLiveData<String>()
     var leagueDetails: LiveData<Resource<LeagueDetailsApiResponse?>> =
@@ -39,10 +42,12 @@ class LeagueDetailsViewModel @Inject constructor(private val repository: Footbal
             val allTeamResource = async { repository.loadAllTeamByLeagueId(id) }
             val nextMatchResource = async { repository.loadNextMatchesByLeagueId(id) }
             val prevMatchResource = async { repository.loadLastMatchesByLeagueId(id) }
+            val allClassementResource = async { repository.loadClassementByLeagueId(id) }
 
             val allTeam = allTeamResource.await()
 
             setAllTeamData(allTeam)
+            setAllClassementData(allTeam, allClassementResource.await())
             setNewNextMatchData(allTeam, nextMatchResource.await())
             setNewPrevMatchData(allTeam, prevMatchResource.await())
         }
@@ -121,6 +126,29 @@ class LeagueDetailsViewModel @Inject constructor(private val repository: Footbal
         }
 
         return newMatchList
+    }
+
+    private fun setAllClassementData(all: Resource<TeamDetailsApiResponse?>, classement: Resource<ClassementApiResponse?>) {
+        val newClassementList = arrayListOf<ClassementApiModel>()
+
+        val allTeam = all.data?.teams
+        val classementList = classement.data?.table
+
+        if(allTeam != null && classementList != null) {
+            for (classementApiModel in classementList) {
+                for (teamDetailsApiModel in allTeam) {
+                    if(teamDetailsApiModel.strTeam.equals(classementApiModel.name)) {
+                        classementApiModel.image = teamDetailsApiModel.strTeamBadge
+                        newClassementList.add(classementApiModel)
+                        break
+                    }
+                }
+            }
+            allClassementData.postValue(Resource.success(newClassementList))
+
+        } else {
+            allClassementData.postValue(Resource.error(classement.message, null))
+        }
     }
 
     fun getAllMatchsData(): List<MatchEntity>{
