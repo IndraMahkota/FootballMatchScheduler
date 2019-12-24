@@ -32,20 +32,28 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:listitem="@layout/item_match_horizontal" />
 
-    <TextView
+    <androidx.cardview.widget.CardView
         android:id="@+id/next_no_data"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="60dp"
-        android:layout_marginEnd="10dp"
-        android:background="@drawable/item_match_background"
-        android:gravity="center"
-        android:text="@string/no_data"
+        app:cardCornerRadius="8dp"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="68dp"
+        android:layout_marginEnd="18dp"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/no_data"
+            android:visibility="visible" />
+    </androidx.cardview.widget.CardView>
 
     <com.facebook.shimmer.ShimmerFrameLayout
         android:id="@+id/next_shimmer_view_container"
@@ -61,7 +69,6 @@
         <include layout="@layout/item_match_loading" />
     </com.facebook.shimmer.ShimmerFrameLayout>
 
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -76,7 +83,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_prev_match"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="130dp"
         android:layout_marginTop="220dp"
         android:clipToPadding="false"
         android:orientation="horizontal"
@@ -87,20 +94,28 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:listitem="@layout/item_match_horizontal" />
 
-    <TextView
+    <androidx.cardview.widget.CardView
         android:id="@+id/prev_no_data"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="230dp"
-        android:layout_marginEnd="10dp"
-        android:background="@drawable/item_match_background"
-        android:gravity="center"
-        android:text="@string/no_data"
+        app:cardCornerRadius="8dp"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="238dp"
+        android:layout_marginEnd="18dp"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/no_data"
+            android:visibility="visible" />
+    </androidx.cardview.widget.CardView>
 
     <com.facebook.shimmer.ShimmerFrameLayout
         android:id="@+id/prev_shimmer_view_container"
