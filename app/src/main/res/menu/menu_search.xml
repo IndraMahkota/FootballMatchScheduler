@@ -9,6 +9,21 @@
         android:title="@string/action_search"
         android:icon="@drawable/ic_search_white"
         app:actionViewClass="androidx.appcompat.widget.SearchView"
-        app:showAsAction="always"/>
+        app:showAsAction="ifRoom|collapseActionView"/>
+
+    <item
+        android:id="@+id/search_menu_icon"
+        android:title="@string/action_search"
+        android:icon="@drawable/ic_more_vert_white"
+        app:showAsAction="ifRoom|collapseActionView">
+        <menu>
+            <item
+                android:id="@+id/item1"
+                android:title="@string/match" />
+            <item
+                android:id="@+id/item2"
+                android:title="@string/team" />
+        </menu>
+    </item>
 
 </menu>

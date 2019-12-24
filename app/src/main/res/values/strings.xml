@@ -46,6 +46,7 @@
     <string name="team_description">Team Description</string>
     <string name="standings">Standings</string>
     <string name="team_fragment">Team Fragment</string>
+    <string name="nol_nol">000</string>
 
     <string-array name="league_id">
         <item>4328</item>

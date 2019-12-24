@@ -8,7 +8,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.indramahkota.footballapp.R
 import com.indramahkota.footballapp.data.source.remote.apimodel.ClassementApiModel
-import kotlinx.android.synthetic.main.item_team.view.*
+import kotlinx.android.synthetic.main.item_classement.view.*
 
 class ClassementAdapter(private val classementList: MutableList<ClassementApiModel>,
                         private val listener: (ClassementApiModel) -> Unit
@@ -36,7 +36,12 @@ class ClassementAdapter(private val classementList: MutableList<ClassementApiMod
         fun bind(classement: ClassementApiModel) {
             with(itemView) {
                 strTeam.text = classement.name
-                strDescription.text = classement.played
+                pld.text = classement.played
+                win.text = classement.win
+                draw.text = classement.draw
+                loss.text = classement.loss
+                gf.text = classement.goalsfor
+                ga.text = classement.goalsagainst
 
                 Glide.with(this)
                     .load(classement.image)
