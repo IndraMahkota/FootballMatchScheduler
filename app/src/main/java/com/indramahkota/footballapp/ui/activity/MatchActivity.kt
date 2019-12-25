@@ -15,7 +15,8 @@ import com.indramahkota.footballapp.data.source.Status.ERROR
 import com.indramahkota.footballapp.data.source.Status.SUCCESS
 import com.indramahkota.footballapp.data.source.locale.entity.LeagueEntity
 import com.indramahkota.footballapp.data.source.remote.apiresponse.LeagueDetailsApiResponse
-import com.indramahkota.footballapp.ui.activity.SearchActivity.Companion.PARCELABLE_DATA
+import com.indramahkota.footballapp.ui.activity.SearchActivity.Companion.MATCH_PARCELABLE_DATA
+import com.indramahkota.footballapp.ui.activity.SearchActivity.Companion.TEAM_PARCELABLE_DATA
 import com.indramahkota.footballapp.ui.fragment.MatchFragment
 import com.indramahkota.footballapp.ui.fragment.ClassementFragment
 import com.indramahkota.footballapp.ui.fragment.TeamFragment
@@ -110,7 +111,9 @@ class MatchActivity : AppCompatActivity() {
             }
             R.id.search_menu_icon -> {
                 startActivity(intentFor<SearchActivity>(
-                    PARCELABLE_DATA to viewModel.getAllMatchsData()))
+                    MATCH_PARCELABLE_DATA to viewModel.getAllMatchsData(),
+                    TEAM_PARCELABLE_DATA to viewModel.getAllTeamData()
+                ))
                 true
             }
             else -> {

@@ -18,10 +18,10 @@
         app:showAsAction="ifRoom|collapseActionView">
         <menu>
             <item
-                android:id="@+id/item1"
+                android:id="@+id/search_match"
                 android:title="@string/match" />
             <item
-                android:id="@+id/item2"
+                android:id="@+id/search_team"
                 android:title="@string/team" />
         </menu>
     </item>

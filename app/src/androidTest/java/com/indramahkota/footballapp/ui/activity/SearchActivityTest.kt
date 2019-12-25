@@ -10,7 +10,7 @@ import androidx.test.rule.ActivityTestRule
 import com.indramahkota.footballapp.AndroidTestFakeData.generateListMatchEntity
 import com.indramahkota.footballapp.R
 import com.indramahkota.footballapp.countRecyclerViewItem
-import com.indramahkota.footballapp.ui.activity.SearchActivity.Companion.PARCELABLE_DATA
+import com.indramahkota.footballapp.ui.activity.SearchActivity.Companion.MATCH_PARCELABLE_DATA
 import org.junit.Test
 
 class SearchActivityTest {
@@ -20,13 +20,13 @@ class SearchActivityTest {
         val data = generateListMatchEntity()
 
         val activityRule = ActivityTestRule(SearchActivity::class.java)
-        val intent = Intent().putParcelableArrayListExtra(PARCELABLE_DATA, data)
+        val intent = Intent().putParcelableArrayListExtra(MATCH_PARCELABLE_DATA, data)
         activityRule.launchActivity(intent)
 
         onView(withId(R.id.no_data))
             .check(matches(isDisplayed()))
 
-        onView(withId(R.id.rv_category))
+        onView(withId(R.id.rv_match))
             .check(matches(isDisplayed()))
 
         onView(withId(R.id.search_menu))
@@ -37,7 +37,7 @@ class SearchActivityTest {
                 typeText("Totten"),
                 pressKey(KeyEvent.KEYCODE_ENTER)
             )
-        onView(withId(R.id.rv_category))
+        onView(withId(R.id.rv_match))
             .check(countRecyclerViewItem(1))
         onView(withId(R.id.search_src_text))
             .perform(clearText())
@@ -47,7 +47,7 @@ class SearchActivityTest {
                 typeText("Southampton"),
                 pressKey(KeyEvent.KEYCODE_ENTER)
             )
-        onView(withId(R.id.rv_category))
+        onView(withId(R.id.rv_match))
             .check(countRecyclerViewItem(1))
         onView(withId(R.id.search_src_text))
             .perform(clearText())
@@ -57,7 +57,7 @@ class SearchActivityTest {
                 typeText("Leicester"),
                 pressKey(KeyEvent.KEYCODE_ENTER)
             )
-        onView(withId(R.id.rv_category))
+        onView(withId(R.id.rv_match))
             .check(countRecyclerViewItem(2))
         onView(withId(R.id.search_src_text))
             .perform(clearText())

@@ -8,11 +8,13 @@ import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.indramahkota.footballapp.R
 import com.indramahkota.footballapp.data.source.locale.entity.MatchEntity
+import com.indramahkota.footballapp.data.source.locale.entity.TeamEntity
 import com.indramahkota.footballapp.ui.activity.DetailsMatchActivity.Companion.PARCELABLE_MATCH_DATA
+import com.indramahkota.footballapp.ui.activity.DetailsTeamActivity.Companion.PARCELABLE_TEAM_DATA
 import com.indramahkota.footballapp.ui.adapter.MatchVerticalAdapter
+import com.indramahkota.footballapp.ui.adapter.TeamAdapter
 import kotlinx.android.synthetic.main.activity_search.*
 import org.jetbrains.anko.intentFor
 import java.util.*
@@ -20,13 +22,18 @@ import java.util.*
 class SearchActivity : AppCompatActivity() {
 
     companion object {
-        const val PARCELABLE_DATA = "parcelable_data"
+        const val MATCH_PARCELABLE_DATA = "match_parcelable_data"
+        const val TEAM_PARCELABLE_DATA = "team_parcelable_data"
     }
 
-    private lateinit var linearLayoutManager: LinearLayoutManager
-    private lateinit var matchAdapter: MatchVerticalAdapter
+    private var searchType = 0
+    private var searchQuery = ""
 
-    private var listData: List<MatchEntity>? = null
+    private lateinit var matchAdapter: MatchVerticalAdapter
+    private lateinit var teamAdapter: TeamAdapter
+
+    private var listMatchData: List<MatchEntity>? = null
+    private var listTeamData: List<TeamEntity>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,39 +42,64 @@ class SearchActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         shimmer_view_container.visibility = View.GONE
 
-        listData = intent?.getParcelableArrayListExtra(PARCELABLE_DATA)
+        listMatchData = intent?.getParcelableArrayListExtra(MATCH_PARCELABLE_DATA)
+        listTeamData = intent?.getParcelableArrayListExtra(TEAM_PARCELABLE_DATA)
 
-        linearLayoutManager = LinearLayoutManager(this)
-        rv_category.layoutManager = linearLayoutManager
-        rv_category.setHasFixedSize(true)
+        rv_match.setHasFixedSize(true)
+        rv_team.setHasFixedSize(true)
 
-        val rvData = mutableListOf<MatchEntity>()
-        matchAdapter =
-            MatchVerticalAdapter(rvData) { matchModel ->
+        val rvMatchData = mutableListOf<MatchEntity>()
+        matchAdapter = MatchVerticalAdapter(rvMatchData) { matchModel ->
                 startActivity(intentFor<DetailsMatchActivity>(PARCELABLE_MATCH_DATA to matchModel))
             }
-        rv_category.adapter = matchAdapter
+        rv_match.adapter = matchAdapter
 
-        setRecycleView()
+        val rvTeamData = mutableListOf<TeamEntity>()
+        teamAdapter = TeamAdapter(rvTeamData) { teamModel ->
+            startActivity(intentFor<DetailsTeamActivity>(PARCELABLE_TEAM_DATA to teamModel))
+        }
+        rv_team.adapter = teamAdapter
+
+        setRecycleView(null, searchType)
     }
 
-    private fun setRecycleView(query:String? = null){
-        var newData:List<MatchEntity>? = null
+    private fun setRecycleView(query:String? = null, type: Int){
+        var newMatchData:List<MatchEntity>? = null
+        var newTeamData:List<TeamEntity>? = null
 
         if(query != null && query.isNotEmpty()) {
-            newData = listData?.filter {
+            newMatchData = listMatchData?.filter {
                 it.strHomeTeam.toLowerCase(Locale.getDefault()).contains(query) ||
                         it.strAwayTeam.toLowerCase(Locale.getDefault()).contains(query)
             }
+
+            newTeamData = listTeamData?.filter {
+                it.strTeam.toLowerCase(Locale.getDefault()).contains(query)
+            }
         }
 
-        if(newData.isNullOrEmpty()) {
-            no_data.visibility = View.VISIBLE
+        newTeamData?.let { teamAdapter.replace(it) }
+        newMatchData?.let { matchAdapter.replace(it) }
+
+        if(type == 0) {
+            if(newMatchData.isNullOrEmpty()) {
+                no_data.visibility = View.VISIBLE
+            } else {
+                no_data.visibility = View.INVISIBLE
+            }
+
+            rv_match.visibility = View.VISIBLE
+            rv_team.visibility = View.GONE
         } else {
-            no_data.visibility = View.INVISIBLE
-        }
+            if(newTeamData.isNullOrEmpty()) {
+                no_data.visibility = View.VISIBLE
+            } else {
+                no_data.visibility = View.INVISIBLE
+            }
 
-        newData?.let { matchAdapter.replace(it) }
+            rv_team.visibility = View.VISIBLE
+            rv_match.visibility = View.GONE
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -86,12 +118,14 @@ class SearchActivity : AppCompatActivity() {
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
-                setRecycleView(query.toLowerCase(Locale.getDefault()))
+                searchQuery = query
+                setRecycleView(query.toLowerCase(Locale.getDefault()), searchType)
                 return true
             }
 
             override fun onQueryTextChange(query: String): Boolean {
-                setRecycleView(query.toLowerCase(Locale.getDefault()))
+                searchQuery = query
+                setRecycleView(query.toLowerCase(Locale.getDefault()), searchType)
                 return false
             }
         })
@@ -100,11 +134,24 @@ class SearchActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return if (item.itemId == android.R.id.home) {
-            finish()
-            true
-        } else {
-            super.onOptionsItemSelected(item)
+        return when (item.itemId) {
+            android.R.id.home -> {
+                finish()
+                true
+            }
+            R.id.search_match -> {
+                searchType = 0
+                setRecycleView(searchQuery, searchType)
+                true
+            }
+            R.id.search_team -> {
+                searchType = 1
+                setRecycleView(searchQuery, searchType)
+                true
+            }
+            else -> {
+                super.onOptionsItemSelected(item)
+            }
         }
     }
 }

@@ -64,8 +64,8 @@ class FavoriteFragment : Fragment() {
         state = arguments?.getString(ARG_SECTION_FRAGMENT)
 
         linearLayoutManager = LinearLayoutManager(view.context)
-        rv_category.layoutManager = linearLayoutManager
-        rv_category.setHasFixedSize(true)
+        rv_match.layoutManager = linearLayoutManager
+        rv_match.setHasFixedSize(true)
 
         val listData = mutableListOf<MatchEntity>()
         matchAdapter =
@@ -74,7 +74,7 @@ class FavoriteFragment : Fragment() {
             ) { matchModel ->
                 startActivity(intentFor<DetailsMatchActivity>(PARCELABLE_MATCH_DATA to matchModel))
             }
-        rv_category.adapter = matchAdapter
+        rv_match.adapter = matchAdapter
 
         if(matchsData != null){
             initializeUi(matchsData)

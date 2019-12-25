@@ -19,6 +19,7 @@ import javax.inject.Inject
 class LeagueDetailsViewModel @Inject constructor(private val repository: FootballAppRepository) :
     ViewModel() {
 
+    private var teamHelper = arrayListOf<TeamEntity>()
     private var nextHelper = arrayListOf<MatchEntity>()
     private var prevHelper = arrayListOf<MatchEntity>()
 
@@ -57,6 +58,7 @@ class LeagueDetailsViewModel @Inject constructor(private val repository: Footbal
         if(all.isSuccess) {
             val listAllTeam = all.data?.teams.toListTeamEntity()
             allTeamData.postValue(Resource.success(listAllTeam))
+            teamHelper = ArrayList(listAllTeam)
         } else {
             allTeamData.postValue(Resource.error(all.message, null))
         }
@@ -156,5 +158,9 @@ class LeagueDetailsViewModel @Inject constructor(private val repository: Footbal
         arrayList.addAll(nextHelper)
         arrayList.addAll(prevHelper)
         return arrayList
+    }
+
+    fun getAllTeamData(): List<TeamEntity> {
+        return teamHelper
     }
 }
