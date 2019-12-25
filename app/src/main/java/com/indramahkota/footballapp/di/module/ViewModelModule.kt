@@ -7,6 +7,7 @@ import com.indramahkota.footballapp.di.factory.ViewModelFactory
 import com.indramahkota.footballapp.viewmodel.FavoriteViewModel
 import com.indramahkota.footballapp.viewmodel.MatchDetailsViewModel
 import com.indramahkota.footballapp.viewmodel.LeagueDetailsViewModel
+import com.indramahkota.footballapp.viewmodel.TeamDetailsViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -30,4 +31,9 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(FavoriteViewModel::class)
     protected abstract fun favoriteMatchViewModel(favoriteMatchViewModel: FavoriteViewModel?): ViewModel?
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(TeamDetailsViewModel::class)
+    protected abstract fun teamDetailsViewModel(teamDetailsViewModel: TeamDetailsViewModel?): ViewModel?
 }

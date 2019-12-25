@@ -1,4 +1,4 @@
-package com.indramahkota.footballapp.ui.activity.favorite
+package com.indramahkota.footballapp.ui.activity
 
 import androidx.test.espresso.Espresso.*
 import androidx.test.espresso.assertion.ViewAssertions.*
@@ -6,7 +6,6 @@ import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.rule.ActivityTestRule
 import com.indramahkota.footballapp.R
 import com.indramahkota.footballapp.selectTabAtPosition
-import com.indramahkota.footballapp.ui.activity.FavoriteActivity
 import org.junit.Rule
 import org.junit.Test
 

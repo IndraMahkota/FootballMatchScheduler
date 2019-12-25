@@ -10,7 +10,7 @@ import dagger.android.ContributesAndroidInjector
 @Module
 abstract class FragmentModule {
     @ContributesAndroidInjector
-    abstract fun matchesFragmentInjector(): MatchFragment?
+    abstract fun matchFragmentInjector(): MatchFragment?
 
     @ContributesAndroidInjector
     abstract fun standingFragmentInjector(): ClassementFragment?

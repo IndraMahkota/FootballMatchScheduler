@@ -2,6 +2,7 @@ package com.indramahkota.footballapp.ui.activity
 
 import android.graphics.Matrix
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -33,14 +34,14 @@ class DetailsMatchActivity : AppCompatActivity() {
         const val PARCELABLE_MATCH_DATA = "parcelable_match_data"
     }
 
-    private var favMatch: MatchEntity? = null
-    private var matchDetail: MatchEntity? = null
+    private var favoriteMatch: MatchEntity? = null
+    private var matchEntity: MatchEntity? = null
     private var matchDetailsData: MatchDetailsApiModel? = null
     private var homeTeamDetailsData: TeamDetailsApiModel? = null
     private var awayTeamDetailsData: TeamDetailsApiModel? = null
 
     private lateinit var viewModel: MatchDetailsViewModel
-    private lateinit var favViewModel: FavoriteViewModel
+    private lateinit var favoriteViewModel: FavoriteViewModel
 
     @set:Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -53,7 +54,7 @@ class DetailsMatchActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        matchDetail = intent?.getParcelableExtra(PARCELABLE_MATCH_DATA)
+        matchEntity = intent?.getParcelableExtra(PARCELABLE_MATCH_DATA)
 
         viewModel = ViewModelProvider(this, viewModelFactory).get(MatchDetailsViewModel::class.java)
         viewModel.matchDetails.observe(this, Observer<Resource<MatchDetailsApiResponse?>>{
@@ -61,7 +62,6 @@ class DetailsMatchActivity : AppCompatActivity() {
                 Status.SUCCESS -> {
                     if(it.data?.events != null) {
                         initializeUi(it.data.events[0])
-
                         matchDetailsData = it.data.events[0]
                         updateFavorite(matchDetailsData, homeTeamDetailsData, awayTeamDetailsData)
                     }
@@ -108,18 +108,18 @@ class DetailsMatchActivity : AppCompatActivity() {
             }
         })
 
-        favViewModel = ViewModelProvider(this, viewModelFactory).get(FavoriteViewModel::class.java)
-        favViewModel.favoriteMatchById.observe(this, Observer<MatchEntity>{
+        favoriteViewModel = ViewModelProvider(this, viewModelFactory).get(FavoriteViewModel::class.java)
+        favoriteViewModel.favoriteMatchById.observe(this, Observer<MatchEntity>{
             if(it != null){
-                favMatch = it
+                favoriteMatch = it
                 fab.setImageResource(R.drawable.ic_star_pink)
             }
         })
 
-        matchDetail?.idEvent?.let {favViewModel.getFavoriteMatchById(it)}
-        matchDetail?.idEvent?.let {viewModel.loadMatchDetails(it)}
-        matchDetail?.idHomeTeam?.let {viewModel.loadHomeTeamDetails(it)}
-        matchDetail?.idAwayTeam?.let {viewModel.loadAwayTeamDetails(it)}
+        matchEntity?.idEvent?.let {favoriteViewModel.getFavoriteMatchById(it)}
+        matchEntity?.idEvent?.let {viewModel.loadMatchDetails(it)}
+        matchEntity?.idHomeTeam?.let {viewModel.loadHomeTeamDetails(it)}
+        matchEntity?.idAwayTeam?.let {viewModel.loadAwayTeamDetails(it)}
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -134,9 +134,9 @@ class DetailsMatchActivity : AppCompatActivity() {
     private fun updateFavorite(match: MatchDetailsApiModel?,
                                homeTeam: TeamDetailsApiModel?,
                                awayTeam: TeamDetailsApiModel?){
-        if(favMatch != null){
+        if(favoriteMatch != null){
             val newData = createNewFavoriteData(match, homeTeam, awayTeam)
-            favViewModel.updateFavoriteMatch(newData)
+            favoriteViewModel.updateFavoriteMatch(newData)
         }
     }
 
@@ -160,22 +160,23 @@ class DetailsMatchActivity : AppCompatActivity() {
     private fun initializeUi(data: MatchDetailsApiModel) {
         fab.setOnClickListener { view ->
             val message: String
-            if(favMatch != null){
-                favViewModel.deleteFavoriteMatch(favMatch!!)
-                favMatch = null
+            val favorite = favoriteMatch
+            if (favorite != null) {
+                favoriteViewModel.deleteFavoriteMatch(favorite)
+                favoriteMatch = null
                 fab.setImageResource(R.drawable.ic_star_white_border)
                 fab.imageMatrix = Matrix()
                 message = "Delete favorite"
-            } else{
+            } else {
                 val newData = createNewFavoriteData(data, homeTeamDetailsData, awayTeamDetailsData)
-                favViewModel.insertFavoriteMatch(newData)
-                favMatch = newData
+                favoriteViewModel.insertFavoriteMatch(newData)
+                favoriteMatch = newData
                 fab.setImageResource(R.drawable.ic_star_pink)
                 fab.imageMatrix = Matrix()
                 message = "Insert to favorite"
             }
 
-            Snackbar.make(view, message, Snackbar.LENGTH_LONG)
+            Snackbar.make(view, message, Snackbar.LENGTH_SHORT)
                 .setAction("Action", null).show()
         }
 
@@ -185,42 +186,100 @@ class DetailsMatchActivity : AppCompatActivity() {
         tvTeam1Name.text = data.strHomeTeam ?: "-"
         tvTeam2Name.text = data.strAwayTeam ?: "-"
 
-        formation.tvLeft.text = data.strHomeFormation ?: "-"
-        formation.tvCenter.text = getString(R.string.formation)
-        formation.tvRight.text = data.strAwayFormation ?: "-"
+        if (checkNullAndEmpty(data.strHomeFormation, data.strAwayFormation)) {
+            formation.tvLeft.text = data.strHomeFormation
+            formation.tvCenter.text = getString(R.string.formation)
+            formation.tvRight.text = data.strAwayFormation
+        }
 
-        goal_details.tvLeft.text = data.strHomeGoalDetails ?: "-"
-        goal_details.tvCenter.text = getString(R.string.goal)
-        goal_details.tvRight.text = data.strAwayGoalDetails ?: "-"
+        if (checkNullAndEmpty(data.strHomeGoalDetails, data.strAwayGoalDetails)) {
+            goal_details.tvLeft.text = data.strHomeGoalDetails
+            goal_details.tvCenter.text = getString(R.string.goal)
+            goal_details.tvRight.text = data.strAwayGoalDetails
+        }
 
-        lineup_goal_keeper.tvLeft.text = data.strHomeLineupGoalkeeper ?: "-"
-        lineup_goal_keeper.tvCenter.text = getString(R.string.lineup_goal_keeper)
-        lineup_goal_keeper.tvRight.text = data.strAwayLineupGoalkeeper ?: "-"
+        if (checkNullAndEmpty(data.strHomeLineupGoalkeeper, data.strAwayLineupGoalkeeper)) {
+            lineup_goal_keeper.tvLeft.text = data.strHomeLineupGoalkeeper
+            lineup_goal_keeper.tvCenter.text = getString(R.string.lineup_goal_keeper)
+            lineup_goal_keeper.tvRight.text = data.strAwayLineupGoalkeeper
+        }
 
-        lineup_defense.tvLeft.text = data.strHomeLineupDefense ?: "-"
-        lineup_defense.tvCenter.text = getString(R.string.lineup_defense)
-        lineup_defense.tvRight.text = data.strAwayLineupDefense ?: "-"
+        if (checkNullAndEmpty(data.strHomeLineupDefense, data.strAwayLineupDefense)) {
+            lineup_defense.tvLeft.text = data.strHomeLineupDefense
+            lineup_defense.tvCenter.text = getString(R.string.lineup_defense)
+            lineup_defense.tvRight.text = data.strAwayLineupDefense
+        }
 
-        lineup_mid_field.tvLeft.text = data.strHomeLineupMidfield ?: "-"
-        lineup_mid_field.tvCenter.text = getString(R.string.lineup_mid_field)
-        lineup_mid_field.tvRight.text = data.strAwayLineupMidfield ?: "-"
+        if (checkNullAndEmpty(data.strHomeLineupMidfield, data.strAwayLineupMidfield)) {
+            lineup_mid_field.tvLeft.text = data.strHomeLineupMidfield
+            lineup_mid_field.tvCenter.text = getString(R.string.lineup_mid_field)
+            lineup_mid_field.tvRight.text = data.strAwayLineupMidfield
+        }
 
-        lineup_forward.tvLeft.text = data.strHomeLineupForward ?: "-"
-        lineup_forward.tvCenter.text = getString(R.string.lineup_forward)
-        lineup_forward.tvRight.text = data.strAwayLineupForward ?: "-"
+        if (checkNullAndEmpty(data.strHomeLineupForward, data.strAwayLineupForward)) {
+            lineup_forward.tvLeft.text = data.strHomeLineupForward
+            lineup_forward.tvCenter.text = getString(R.string.lineup_forward)
+            lineup_forward.tvRight.text = data.strAwayLineupForward
+        }
 
-        lineup_substitutes.tvLeft.text = data.strHomeLineupSubstitutes ?: "-"
-        lineup_substitutes.tvCenter.text = getString(R.string.lineup_subtitutes)
-        lineup_substitutes.tvRight.text = data.strAwayLineupSubstitutes ?: "-"
+        if (checkNullAndEmpty(data.strHomeLineupSubstitutes, data.strAwayLineupSubstitutes)) {
+            lineup_substitutes.tvLeft.text = data.strHomeLineupSubstitutes
+            lineup_substitutes.tvCenter.text = getString(R.string.lineup_subtitutes)
+            lineup_substitutes.tvRight.text = data.strAwayLineupSubstitutes
+        }
 
-        red_cards.tvLeft.text = data.strHomeRedCards ?: "-"
-        red_cards.tvCenter.text = getString(R.string.red_cards)
-        red_cards.tvRight.text = data.strAwayRedCards ?: "-"
+        if (checkNullAndEmpty(data.strHomeRedCards, data.strAwayRedCards)) {
+            red_cards.tvLeft.text = data.strHomeRedCards
+            red_cards.tvCenter.text = getString(R.string.red_cards)
+            red_cards.tvRight.text = data.strAwayRedCards
+        }
 
-        yellow_cards.tvLeft.text = data.strHomeYellowCards ?: "-"
-        yellow_cards.tvCenter.text = getString(R.string.yellow_cards)
-        yellow_cards.tvRight.text = data.strAwayYellowCards ?: "-"
+        if (checkNullAndEmpty(data.strHomeYellowCards, data.strAwayYellowCards)) {
+            yellow_cards.tvLeft.text = data.strHomeYellowCards
+            yellow_cards.tvCenter.text = getString(R.string.yellow_cards)
+            yellow_cards.tvRight.text = data.strAwayYellowCards
+        }
+
+        val list = mutableListOf<String?>()
+        list.add(data.strHomeFormation)
+        list.add(data.strAwayFormation)
+        list.add(data.strHomeGoalDetails)
+        list.add(data.strAwayGoalDetails)
+        list.add(data.strHomeLineupGoalkeeper)
+        list.add(data.strAwayLineupGoalkeeper)
+        list.add(data.strHomeLineupDefense)
+        list.add(data.strAwayLineupDefense)
+        list.add(data.strHomeLineupMidfield)
+        list.add(data.strAwayLineupMidfield)
+        list.add(data.strHomeLineupForward)
+        list.add(data.strAwayLineupForward)
+        list.add(data.strHomeLineupSubstitutes)
+        list.add(data.strAwayLineupSubstitutes)
+        list.add(data.strHomeRedCards)
+        list.add(data.strAwayRedCards)
+        list.add(data.strHomeYellowCards)
+        list.add(data.strAwayYellowCards)
+
+        if(!checkAllNullAndEmpty(list)){
+            no_data.visibility = View.VISIBLE
+        }
 
         shimmer_view_container.visibility = View.GONE
+    }
+
+    private fun checkNullAndEmpty(str1: String?, str2: String?): Boolean {
+        return (str1 != null && str1.isNotEmpty()) ||
+                (str2 != null && str2.isNotEmpty())
+    }
+
+    private fun checkAllNullAndEmpty(list: List<String?>): Boolean {
+        var result = false
+        for (str in list) {
+            if(str != null && str.isNotEmpty()) {
+                result = true
+                break
+            }
+        }
+        return result
     }
 }

@@ -1,4 +1,4 @@
-package com.indramahkota.footballapp.ui.activity.match
+package com.indramahkota.footballapp.ui.activity
 
 import android.content.Intent
 import androidx.test.espresso.Espresso.onView
@@ -9,7 +9,6 @@ import androidx.test.rule.ActivityTestRule
 import com.indramahkota.footballapp.R
 import com.indramahkota.footballapp.data.source.locale.entity.LeagueEntity
 import com.indramahkota.footballapp.selectTabAtPosition
-import com.indramahkota.footballapp.ui.activity.MatchActivity
 import com.indramahkota.footballapp.ui.activity.MatchActivity.Companion.PARCELABLE_LEAGUE_DATA
 import org.junit.Test
 

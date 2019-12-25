@@ -1,4 +1,4 @@
-package com.indramahkota.footballapp.ui.activity.search
+package com.indramahkota.footballapp.ui.activity
 
 import android.content.Intent
 import android.view.KeyEvent
@@ -10,7 +10,6 @@ import androidx.test.rule.ActivityTestRule
 import com.indramahkota.footballapp.AndroidTestFakeData.generateListMatchEntity
 import com.indramahkota.footballapp.R
 import com.indramahkota.footballapp.countRecyclerViewItem
-import com.indramahkota.footballapp.ui.activity.SearchActivity
 import com.indramahkota.footballapp.ui.activity.SearchActivity.Companion.PARCELABLE_DATA
 import org.junit.Test
 

@@ -1,4 +1,4 @@
-package com.indramahkota.footballapp.ui.activity.detail
+package com.indramahkota.footballapp.ui.activity
 
 import android.content.Intent
 import androidx.test.espresso.Espresso.onView
@@ -10,7 +10,6 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.rule.ActivityTestRule
 import com.indramahkota.footballapp.AndroidTestFakeData.generateMatchEntity
 import com.indramahkota.footballapp.R
-import com.indramahkota.footballapp.ui.activity.DetailsMatchActivity
 import com.indramahkota.footballapp.ui.activity.DetailsMatchActivity.Companion.PARCELABLE_MATCH_DATA
 import org.junit.Test
 import org.junit.runner.RunWith

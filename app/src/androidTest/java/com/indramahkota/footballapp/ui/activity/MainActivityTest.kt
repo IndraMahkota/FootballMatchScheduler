@@ -1,4 +1,4 @@
-package com.indramahkota.footballapp.ui.activity.main
+package com.indramahkota.footballapp.ui.activity
 
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.contrib.RecyclerViewActions
@@ -11,9 +11,6 @@ import androidx.test.espresso.assertion.ViewAssertions.*
 import androidx.test.espresso.matcher.ViewMatchers.*
 import com.indramahkota.footballapp.R
 import com.indramahkota.footballapp.countRecyclerViewItem
-import com.indramahkota.footballapp.ui.activity.FavoriteActivity
-import com.indramahkota.footballapp.ui.activity.MainActivity
-import com.indramahkota.footballapp.ui.activity.MatchActivity
 import org.junit.Rule
 import org.junit.Test
 

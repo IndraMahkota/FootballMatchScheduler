@@ -214,6 +214,11 @@
                 </LinearLayout>
 
             </com.facebook.shimmer.ShimmerFrameLayout>
+
+            <include
+                android:id="@+id/no_data"
+                android:visibility="gone"
+                layout="@layout/item_no_data"/>
         </FrameLayout>
 
     </androidx.core.widget.NestedScrollView>
