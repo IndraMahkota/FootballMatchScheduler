@@ -27,6 +27,11 @@ class MatchVerticalAdapter(private val matchList: MutableList<MatchEntity>,
         notifyDataSetChanged()
     }
 
+    fun removeAllData() {
+        matchList.clear()
+        notifyDataSetChanged()
+    }
+
     override fun getItemCount(): Int =  matchList.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {

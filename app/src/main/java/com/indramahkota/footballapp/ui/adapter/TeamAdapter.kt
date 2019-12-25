@@ -26,6 +26,11 @@ class TeamAdapter(private val teamList: MutableList<TeamEntity>,
         notifyDataSetChanged()
     }
 
+    fun removeAllData() {
+        teamList.clear()
+        notifyDataSetChanged()
+    }
+
     override fun getItemCount(): Int =  teamList.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {

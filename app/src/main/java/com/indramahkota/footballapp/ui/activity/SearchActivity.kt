@@ -78,8 +78,17 @@ class SearchActivity : AppCompatActivity() {
             }
         }
 
-        newTeamData?.let { teamAdapter.replace(it) }
-        newMatchData?.let { matchAdapter.replace(it) }
+        if(newTeamData != null) {
+            teamAdapter.replace(newTeamData)
+        } else {
+            teamAdapter.removeAllData()
+        }
+
+        if(newMatchData != null) {
+            matchAdapter.replace(newMatchData)
+        } else {
+            matchAdapter.removeAllData()
+        }
 
         if(type == 0) {
             if(newMatchData.isNullOrEmpty()) {
