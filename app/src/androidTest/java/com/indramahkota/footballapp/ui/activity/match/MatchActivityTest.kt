@@ -1,28 +1,24 @@
 package com.indramahkota.footballapp.ui.activity.match
 
 import android.content.Intent
-import androidx.test.espresso.IdlingRegistry
-import androidx.test.espresso.Espresso.*
-import androidx.test.espresso.action.ViewActions.*
-import androidx.test.espresso.assertion.ViewAssertions.*
+import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.rule.ActivityTestRule
-import com.indramahkota.footballapp.EspressoIdlingResource
 import com.indramahkota.footballapp.R
 import com.indramahkota.footballapp.data.source.locale.entity.LeagueEntity
 import com.indramahkota.footballapp.selectTabAtPosition
 import com.indramahkota.footballapp.ui.activity.MatchActivity
 import com.indramahkota.footballapp.ui.activity.MatchActivity.Companion.PARCELABLE_LEAGUE_DATA
-import org.junit.After
-import org.junit.Before
 import org.junit.Test
 
 class MatchActivityTest {
 
-    @Before
+    /*@Before
     fun setUp() {
         IdlingRegistry.getInstance().register(EspressoIdlingResource.espressoIdlingResource)
-    }
+    }*/
 
     @Test
     fun toMatchActivityTest() {
@@ -76,8 +72,8 @@ class MatchActivityTest {
             .check(matches(isDisplayed()))
     }
 
-    @After
+    /*@After
     fun tearDown() {
         IdlingRegistry.getInstance().unregister(EspressoIdlingResource.espressoIdlingResource)
-    }
+    }*/
 }

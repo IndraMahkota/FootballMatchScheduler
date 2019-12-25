@@ -9,7 +9,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.google.android.material.tabs.TabLayout
-import com.indramahkota.footballapp.EspressoIdlingResource
 import com.indramahkota.footballapp.R
 import com.indramahkota.footballapp.data.source.Resource
 import com.indramahkota.footballapp.data.source.Status.ERROR
@@ -75,8 +74,6 @@ class MatchActivity : AppCompatActivity() {
         val tabs: TabLayout = findViewById(R.id.tabLayout)
         tabs.setupWithViewPager(viewPager)
 
-        EspressoIdlingResource.increment()
-
         viewModel = ViewModelProvider(this, viewModelFactory).get(LeagueDetailsViewModel::class.java)
         viewModel.leagueDetails.observe(this, Observer<Resource<LeagueDetailsApiResponse?>>{
             when (it.status) {
@@ -91,8 +88,6 @@ class MatchActivity : AppCompatActivity() {
                     strSportData.text = it.data?.leagues?.get(0)?.strSport ?: ""
                     strCountryData.text = it.data?.leagues?.get(0)?.strCountry ?: ""
                     strWebsiteData.text = it.data?.leagues?.get(0)?.strWebsite ?: ""
-
-                    EspressoIdlingResource.decrement()
                 }
                 ERROR -> toast(it.message.toString())
             }

@@ -33,13 +33,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-            <include layout="@layout/item_team_loading"/>
-            <include layout="@layout/item_team_loading"/>
-            <include layout="@layout/item_team_loading"/>
-            <include layout="@layout/item_team_loading"/>
-            <include layout="@layout/item_team_loading"/>
-            <include layout="@layout/item_team_loading"/>
-            <include layout="@layout/item_team_loading"/>
+            <include layout="@layout/item_classement_loading"/>
+            <include layout="@layout/item_classement_loading"/>
+            <include layout="@layout/item_classement_loading"/>
+            <include layout="@layout/item_classement_loading"/>
+            <include layout="@layout/item_classement_loading"/>
+            <include layout="@layout/item_classement_loading"/>
+            <include layout="@layout/item_classement_loading"/>
         </LinearLayout>
 
     </com.facebook.shimmer.ShimmerFrameLayout>
