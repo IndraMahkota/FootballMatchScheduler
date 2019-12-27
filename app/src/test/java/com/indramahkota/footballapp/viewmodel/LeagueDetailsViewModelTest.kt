@@ -1,14 +1,16 @@
 package com.indramahkota.footballapp.viewmodel
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import com.indramahkota.footballapp.MainCoroutineRule
+import com.indramahkota.footballapp.UnitTestFakeData.generateListClassementApiModel
 import com.indramahkota.footballapp.UnitTestFakeData.generateListLeagueDetailsApiModel
 import com.indramahkota.footballapp.UnitTestFakeData.generateListMatchDetailsApiModel
 import com.indramahkota.footballapp.UnitTestFakeData.generateListMatchEntity
 import com.indramahkota.footballapp.UnitTestFakeData.generateListTeamDetailsApiModel
-import com.indramahkota.footballapp.MainCoroutineRule
 import com.indramahkota.footballapp.data.source.FootballAppRepository
 import com.indramahkota.footballapp.data.source.Resource
 import com.indramahkota.footballapp.data.source.locale.entity.MatchEntity
+import com.indramahkota.footballapp.data.source.remote.apiresponse.ClassementApiResponse
 import com.indramahkota.footballapp.data.source.remote.apiresponse.LeagueDetailsApiResponse
 import com.indramahkota.footballapp.data.source.remote.apiresponse.MatchDetailsApiResponse
 import com.indramahkota.footballapp.data.source.remote.apiresponse.TeamDetailsApiResponse
@@ -51,11 +53,14 @@ class LeagueDetailsViewModelTest {
         val allTeamData = TeamDetailsApiResponse(generateListTeamDetailsApiModel())
         val allTeamResource: Resource<TeamDetailsApiResponse?> = Resource.success(allTeamData)
 
-        val nextMatchDataData = MatchDetailsApiResponse(generateListMatchDetailsApiModel())
-        val nextMatchDataResource: Resource<MatchDetailsApiResponse?> = Resource.success(nextMatchDataData)
+        val nextMatchData = MatchDetailsApiResponse(generateListMatchDetailsApiModel())
+        val nextMatchDataResource: Resource<MatchDetailsApiResponse?> = Resource.success(nextMatchData)
 
-        val prevMatchDataData = MatchDetailsApiResponse(generateListMatchDetailsApiModel())
-        val prevMatchDataResource: Resource<MatchDetailsApiResponse?> = Resource.success(prevMatchDataData)
+        val prevMatchData = MatchDetailsApiResponse(generateListMatchDetailsApiModel())
+        val prevMatchDataResource: Resource<MatchDetailsApiResponse?> = Resource.success(prevMatchData)
+
+        val classementData = ClassementApiResponse(generateListClassementApiModel())
+        val classementDataResource: Resource<ClassementApiResponse?> = Resource.success(classementData)
 
         Mockito.`when`(repository.loadAllTeamByLeagueId( id ))
             .thenReturn(allTeamResource)
@@ -65,6 +70,9 @@ class LeagueDetailsViewModelTest {
 
         Mockito.`when`(repository.loadLastMatchesByLeagueId( id ))
             .thenReturn(prevMatchDataResource)
+
+        Mockito.`when`(repository.loadClassementByLeagueId( id ))
+            .thenReturn(classementDataResource)
 
         viewModel.loadAllDetails(id)
 
@@ -84,11 +92,14 @@ class LeagueDetailsViewModelTest {
         val allTeamData = TeamDetailsApiResponse(generateListTeamDetailsApiModel())
         val allTeamResource: Resource<TeamDetailsApiResponse?> = Resource.success(allTeamData)
 
-        val nextMatchDataData = MatchDetailsApiResponse(generateListMatchDetailsApiModel())
-        val nextMatchDataResource: Resource<MatchDetailsApiResponse?> = Resource.success(nextMatchDataData)
+        val nextMatchData = MatchDetailsApiResponse(generateListMatchDetailsApiModel())
+        val nextMatchDataResource: Resource<MatchDetailsApiResponse?> = Resource.success(nextMatchData)
 
-        val prevMatchDataData = MatchDetailsApiResponse(generateListMatchDetailsApiModel())
-        val prevMatchDataResource: Resource<MatchDetailsApiResponse?> = Resource.success(prevMatchDataData)
+        val prevMatchData = MatchDetailsApiResponse(generateListMatchDetailsApiModel())
+        val prevMatchDataResource: Resource<MatchDetailsApiResponse?> = Resource.success(prevMatchData)
+
+        val classementData = ClassementApiResponse(generateListClassementApiModel())
+        val classementDataResource: Resource<ClassementApiResponse?> = Resource.success(classementData)
 
         Mockito.`when`(repository.loadAllTeamByLeagueId( id ))
             .thenReturn(allTeamResource)
@@ -98,6 +109,9 @@ class LeagueDetailsViewModelTest {
 
         Mockito.`when`(repository.loadLastMatchesByLeagueId( id ))
             .thenReturn(prevMatchDataResource)
+
+        Mockito.`when`(repository.loadClassementByLeagueId( id ))
+            .thenReturn(classementDataResource)
 
         viewModel.loadAllDetails(id)
 
@@ -117,11 +131,14 @@ class LeagueDetailsViewModelTest {
         val allTeamData = TeamDetailsApiResponse(generateListTeamDetailsApiModel())
         val allTeamResource: Resource<TeamDetailsApiResponse?> = Resource.success(allTeamData)
 
-        val nextMatchDataData = MatchDetailsApiResponse(generateListMatchDetailsApiModel())
-        val nextMatchDataResource: Resource<MatchDetailsApiResponse?> = Resource.success(nextMatchDataData)
+        val nextMatchData = MatchDetailsApiResponse(generateListMatchDetailsApiModel())
+        val nextMatchDataResource: Resource<MatchDetailsApiResponse?> = Resource.success(nextMatchData)
 
-        val prevMatchDataData = MatchDetailsApiResponse(generateListMatchDetailsApiModel())
-        val prevMatchDataResource: Resource<MatchDetailsApiResponse?> = Resource.success(prevMatchDataData)
+        val prevMatchData = MatchDetailsApiResponse(generateListMatchDetailsApiModel())
+        val prevMatchDataResource: Resource<MatchDetailsApiResponse?> = Resource.success(prevMatchData)
+
+        val classementData = ClassementApiResponse(generateListClassementApiModel())
+        val classementDataResource: Resource<ClassementApiResponse?> = Resource.success(classementData)
 
         Mockito.`when`(repository.loadAllTeamByLeagueId( id ))
             .thenReturn(allTeamResource)
@@ -134,6 +151,9 @@ class LeagueDetailsViewModelTest {
 
         Mockito.`when`(repository.loadLeagueDetailsByLeagueId( id ))
             .thenReturn(resourceData)
+
+        Mockito.`when`(repository.loadClassementByLeagueId( id ))
+            .thenReturn(classementDataResource)
 
         viewModel.loadAllDetails(id)
 
@@ -153,11 +173,14 @@ class LeagueDetailsViewModelTest {
         val allTeamData = TeamDetailsApiResponse(generateListTeamDetailsApiModel())
         val allTeamResource: Resource<TeamDetailsApiResponse?> = Resource.success(allTeamData)
 
-        val nextMatchDataData = MatchDetailsApiResponse(generateListMatchDetailsApiModel())
-        val nextMatchDataResource: Resource<MatchDetailsApiResponse?> = Resource.success(nextMatchDataData)
+        val nextMatchData = MatchDetailsApiResponse(generateListMatchDetailsApiModel())
+        val nextMatchDataResource: Resource<MatchDetailsApiResponse?> = Resource.success(nextMatchData)
 
-        val prevMatchDataData = MatchDetailsApiResponse(generateListMatchDetailsApiModel())
-        val prevMatchDataResource: Resource<MatchDetailsApiResponse?> = Resource.success(prevMatchDataData)
+        val prevMatchData = MatchDetailsApiResponse(generateListMatchDetailsApiModel())
+        val prevMatchDataResource: Resource<MatchDetailsApiResponse?> = Resource.success(prevMatchData)
+
+        val classementData = ClassementApiResponse(generateListClassementApiModel())
+        val classementDataResource: Resource<ClassementApiResponse?> = Resource.success(classementData)
 
         val listMatchEntity = generateListMatchEntity(id)
 
@@ -172,6 +195,9 @@ class LeagueDetailsViewModelTest {
 
         Mockito.`when`(repository.loadLeagueDetailsByLeagueId( id ))
             .thenReturn(resourceData)
+
+        Mockito.`when`(repository.loadClassementByLeagueId( id ))
+            .thenReturn(classementDataResource)
 
         viewModel.loadAllDetails(id)
 

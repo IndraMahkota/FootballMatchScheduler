@@ -1,13 +1,14 @@
 package com.indramahkota.footballapp.viewmodel
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
-import com.indramahkota.footballapp.UnitTestFakeData
+import com.indramahkota.footballapp.MainCoroutineRule
 import com.indramahkota.footballapp.UnitTestFakeData.generateListMatchEntity
+import com.indramahkota.footballapp.UnitTestFakeData.generateMatchEntity
 import com.indramahkota.footballapp.data.source.FootballAppRepository
-import com.indramahkota.footballapp.data.source.locale.entity.MatchEntity
+import com.indramahkota.footballapp.getOrAwaitValue
 import com.indramahkota.footballapp.mock
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
@@ -15,14 +16,16 @@ import org.junit.Test
 import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
 
+@ExperimentalCoroutinesApi
 class FavoriteViewModelTest {
 
     @get:Rule
     val rule = InstantTaskExecutorRule()
 
+    @get:Rule
+    var mainCoroutineRule = MainCoroutineRule()
+
     private val repository: FootballAppRepository = mock()
-    private val observerDataById: Observer<MatchEntity> = mock()
-    private val observerAllData: Observer<List<MatchEntity>> = mock()
 
     private lateinit var viewModel: FavoriteViewModel
 
@@ -33,38 +36,34 @@ class FavoriteViewModelTest {
     }
 
     @Test
-    fun `Check value when get favorite by Id`() {
+    fun `Check value when get favorite by Id`() = mainCoroutineRule.runBlockingTest {
         val id = "1234"
-        val data = UnitTestFakeData.generateMatchEntity(id)
-        val liveData: MutableLiveData<MatchEntity> = MutableLiveData()
-        liveData.value = data
-
-        Mockito.`when`(repository.loadFavoriteMatchById( id ))
-            .thenReturn(liveData)
-
-        viewModel.favoriteMatchById.observeForever(observerDataById)
+        val data = generateMatchEntity(id)
 
         viewModel.getFavoriteMatchById(id)
 
-        Mockito.verify(observerDataById).onChanged(data)
-        Assert.assertEquals(viewModel.favoriteMatchById.value, data)
+        val transformed = viewModel.favoriteMatchById.getOrAwaitValue {
+            mainCoroutineRule.advanceUntilIdle()
+        }
+
+        Mockito.`when`(repository.loadFavoriteMatchById( id ))
+            .thenReturn(data)
+
+        Assert.assertEquals(viewModel.favoriteMatchById.value, transformed)
     }
 
     @Test
-    fun `Check value when get list all favorite`() {
+    fun `Check value when get list all favorite`() = mainCoroutineRule.runBlockingTest {
         val id = "1234"
         val data = generateListMatchEntity(id)
-        val liveData: MutableLiveData<List<MatchEntity>> = MutableLiveData()
-        liveData.value = data
+
+        val transformed = viewModel.getAllFavoriteMatch().getOrAwaitValue {
+            mainCoroutineRule.advanceUntilIdle()
+        }
 
         Mockito.`when`(repository.loadAllFavoriteMatch())
-            .thenReturn(liveData)
+            .thenReturn(data)
 
-        viewModel.getAllFavoriteMatch().observeForever(observerAllData)
-        
-        viewModel.getAllFavoriteMatch()
-
-        Mockito.verify(observerAllData).onChanged(data)
-        Assert.assertEquals(viewModel.getAllFavoriteMatch().value, data)
+        Assert.assertEquals(viewModel.getAllFavoriteMatch().value, transformed)
     }
 }

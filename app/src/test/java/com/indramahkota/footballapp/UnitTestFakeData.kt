@@ -1,6 +1,7 @@
 package com.indramahkota.footballapp
 
 import com.indramahkota.footballapp.data.source.locale.entity.MatchEntity
+import com.indramahkota.footballapp.data.source.remote.apimodel.ClassementApiModel
 import com.indramahkota.footballapp.data.source.remote.apimodel.LeagueDetailsApiModel
 import com.indramahkota.footballapp.data.source.remote.apimodel.MatchDetailsApiModel
 import com.indramahkota.footballapp.data.source.remote.apimodel.TeamDetailsApiModel
@@ -88,6 +89,18 @@ object UnitTestFakeData {
         return mutableListOf(
             generateTeamDetailsApiModel("this_id_home_team_test"),
             generateTeamDetailsApiModel("this_id_away_team_test")
+        )
+    }
+
+
+    private fun generateClassementApiModel(): ClassementApiModel {
+        return ClassementApiModel("", "", "", "",
+            "", "", "", "", "", "", "")
+    }
+
+    fun generateListClassementApiModel(): List<ClassementApiModel> {
+        return mutableListOf(
+            generateClassementApiModel()
         )
     }
 }
