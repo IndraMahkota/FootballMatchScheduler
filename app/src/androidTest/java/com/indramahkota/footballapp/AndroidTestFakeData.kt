@@ -1,6 +1,7 @@
 package com.indramahkota.footballapp
 
 import com.indramahkota.footballapp.data.source.locale.entity.MatchEntity
+import com.indramahkota.footballapp.data.source.locale.entity.TeamEntity
 
 object AndroidTestFakeData {
     fun generateMatchEntity(home: String, away: String, homeScore: String, awayScore: String): MatchEntity{
@@ -23,5 +24,12 @@ object AndroidTestFakeData {
         arrayListData.add(generateMatchEntity("Man City", "Leicester", "4", "3"))
         arrayListData.add(generateMatchEntity("Newcastle", "Crystal Palace", "3", "4"))
         return arrayListData
+    }
+
+    fun generateTeamEntity(): TeamEntity {
+        val url = "https://www.thesportsdb.com/images/media/team/badge/a1af2i1557005128.png"
+        return TeamEntity("133604",
+            "Arsenal", url,
+            "description")
     }
 }

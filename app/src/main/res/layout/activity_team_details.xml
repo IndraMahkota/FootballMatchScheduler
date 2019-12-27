@@ -77,7 +77,7 @@
             android:layout_marginTop="10dp"
             android:padding="10dp"
             android:paddingBottom="20dp"
-            android:text="@string/team_description"/>
+            android:text="@string/team_description" />
 
     </androidx.core.widget.NestedScrollView>
 

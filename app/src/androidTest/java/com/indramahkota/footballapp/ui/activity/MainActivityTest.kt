@@ -1,14 +1,15 @@
 package com.indramahkota.footballapp.ui.activity
 
 import androidx.recyclerview.widget.RecyclerView
+import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.intent.Intents.intended
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
 import androidx.test.espresso.intent.rule.IntentsTestRule
-import androidx.test.espresso.Espresso.*
-import androidx.test.espresso.action.ViewActions.*
-import androidx.test.espresso.assertion.ViewAssertions.*
-import androidx.test.espresso.matcher.ViewMatchers.*
+import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
+import androidx.test.espresso.matcher.ViewMatchers.withId
 import com.indramahkota.footballapp.R
 import com.indramahkota.footballapp.countRecyclerViewItem
 import org.junit.Rule
@@ -22,16 +23,16 @@ class MainActivityTest {
 
     @Test
     fun toActivityTestRecycleView() {
-        onView(withId(R.id.main_rv))
+        onView(withId(R.id.rv_league))
             .check(matches(isDisplayed()))
 
-        onView(withId(R.id.main_rv))
+        onView(withId(R.id.rv_league))
             .check(countRecyclerViewItem(10))
 
-        onView(withId(R.id.main_rv)).perform(
+        onView(withId(R.id.rv_league)).perform(
             RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(10))
 
-        onView(withId(R.id.main_rv)).perform(
+        onView(withId(R.id.rv_league)).perform(
             RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(5, click()))
 
         intended(hasComponent(MatchActivity::class.java.name))

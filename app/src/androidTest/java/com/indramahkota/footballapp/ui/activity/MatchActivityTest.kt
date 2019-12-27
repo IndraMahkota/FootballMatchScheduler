@@ -14,11 +14,6 @@ import org.junit.Test
 
 class MatchActivityTest {
 
-    /*@Before
-    fun setUp() {
-        IdlingRegistry.getInstance().register(EspressoIdlingResource.espressoIdlingResource)
-    }*/
-
     @Test
     fun toMatchActivityTest() {
         val data = LeagueEntity("4328", "English Premier League", "")
@@ -26,6 +21,8 @@ class MatchActivityTest {
         val activityRule = ActivityTestRule(MatchActivity::class.java)
         val intent = Intent().putExtra(PARCELABLE_LEAGUE_DATA, data)
         activityRule.launchActivity(intent)
+
+        Thread.sleep(2000L)
 
         onView(withId(R.id.image_league))
             .check(matches(isDisplayed()))
@@ -70,9 +67,4 @@ class MatchActivityTest {
         onView(withId(R.id.viewPager))
             .check(matches(isDisplayed()))
     }
-
-    /*@After
-    fun tearDown() {
-        IdlingRegistry.getInstance().unregister(EspressoIdlingResource.espressoIdlingResource)
-    }*/
 }
