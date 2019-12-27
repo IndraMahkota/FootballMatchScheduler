@@ -165,18 +165,18 @@ class DetailsMatchActivity : AppCompatActivity() {
                 favoriteMatch = null
                 fab.setImageResource(R.drawable.ic_star_white_border)
                 fab.imageMatrix = Matrix()
-                message = "Delete favorite"
+                message = resources.getString(R.string.delete_favorite)
             } else {
                 val newData = createNewFavoriteData(data, homeTeamDetailsData, awayTeamDetailsData)
                 favoriteViewModel.insertFavoriteMatch(newData)
                 favoriteMatch = newData
                 fab.setImageResource(R.drawable.ic_star_pink)
                 fab.imageMatrix = Matrix()
-                message = "Insert to favorite"
+                message = resources.getString(R.string.insert_favorite)
             }
 
             Snackbar.make(view, message, Snackbar.LENGTH_SHORT)
-                .setAction("Action", null).show()
+                .setAction(resources.getString(R.string.action), null).show()
         }
 
         tvDate.text = formatDateFromString(data.dateEvent ?: "")

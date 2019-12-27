@@ -16,6 +16,15 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [
+                        "room.schemaLocation":"$projectDir/schemas".toString(),
+                        "room.incremental":"true",
+                        "room.expandProjection":"true"]
+            }
+        }
     }
     buildTypes {
         release {
@@ -34,6 +43,9 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+    packagingOptions {
+        exclude 'META-INF/atomicfu.kotlin_module'
     }
 }
 
@@ -90,6 +102,13 @@ dependencies {
 
     //Dagger Instrumentation Test
     androidTestAnnotationProcessor 'com.google.dagger:dagger-compiler:2.25.3'
+
+    //Room
+    implementation 'androidx.room:room-runtime:2.2.3'
+    implementation 'androidx.room:room-ktx:2.2.3'
+    kapt 'androidx.room:room-compiler:2.2.3'
+
+    androidTestImplementation 'androidx.room:room-testing:2.2.3'
 
     //Unit Test
     testImplementation 'junit:junit:4.12'

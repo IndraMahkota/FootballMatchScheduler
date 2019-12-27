@@ -76,7 +76,7 @@ class FakeFootballAppRepository constructor(
         val favoriteMatch: MutableLiveData<List<MatchEntity>> = MutableLiveData()
         try {
             db.use {
-                val result = select(MatchEntity.TABLE_NAME)
+                val result = select(MatchEntity.TABLE_MATCH)
                 val favoriteMatchData = result.parseList(classParser<MatchEntity>())
                 favoriteMatch.postValue(favoriteMatchData)
             }
@@ -90,7 +90,7 @@ class FakeFootballAppRepository constructor(
         val favoriteMatch: MutableLiveData<MatchEntity> = MutableLiveData()
         try {
             db.use {
-                val result = select(MatchEntity.TABLE_NAME)
+                val result = select(MatchEntity.TABLE_MATCH)
                     .whereArgs(
                         "${MatchEntity.Column.ID_EVENT} = {id}",
                         "id" to id
@@ -108,7 +108,7 @@ class FakeFootballAppRepository constructor(
         try {
             db.use {
                 insert(
-                    MatchEntity.TABLE_NAME,
+                    MatchEntity.TABLE_MATCH,
                     MatchEntity.Column.ID_EVENT to match.idEvent,
                     MatchEntity.Column.ID_HOME_TEAM to match.idHomeTeam,
                     MatchEntity.Column.ID_AWAY_TEAM to match.idAwayTeam,
@@ -130,7 +130,7 @@ class FakeFootballAppRepository constructor(
         try {
             db.use {
                 delete(
-                    MatchEntity.TABLE_NAME,
+                    MatchEntity.TABLE_MATCH,
                     "${MatchEntity.Column.ID_EVENT} = {id}",
                     "id" to match.idEvent
                 )
@@ -143,7 +143,7 @@ class FakeFootballAppRepository constructor(
     override fun updateFavoriteMatchById(match: MatchEntity) {
         try {
             db.use {
-                update(MatchEntity.TABLE_NAME,
+                update(MatchEntity.TABLE_MATCH,
                     MatchEntity.Column.ID_HOME_TEAM to match.idHomeTeam,
                     MatchEntity.Column.ID_AWAY_TEAM to match.idAwayTeam,
                     MatchEntity.Column.DATE_EVENT to match.dateEvent,
@@ -165,7 +165,7 @@ class FakeFootballAppRepository constructor(
         val favoriteTeam: MutableLiveData<List<TeamEntity>> = MutableLiveData()
         try {
             db.use {
-                val result = select(TeamEntity.TABLE_NAME)
+                val result = select(TeamEntity.TABLE_TEAM)
                 val favoriteTeamData = result.parseList(classParser<TeamEntity>())
                 favoriteTeam.postValue(favoriteTeamData)
             }
@@ -179,7 +179,7 @@ class FakeFootballAppRepository constructor(
         val favoriteTeam: MutableLiveData<TeamEntity> = MutableLiveData()
         try {
             db.use {
-                val result = select(TeamEntity.TABLE_NAME)
+                val result = select(TeamEntity.TABLE_TEAM)
                     .whereArgs(
                         "${TeamEntity.Column.ID_TEAM} = {id}",
                         "id" to id
@@ -197,7 +197,7 @@ class FakeFootballAppRepository constructor(
         try {
             db.use {
                 insert(
-                    TeamEntity.TABLE_NAME,
+                    TeamEntity.TABLE_TEAM,
                     TeamEntity.Column.ID_TEAM to team.idTeam,
                     TeamEntity.Column.TEAM_NAME to team.strTeam,
                     TeamEntity.Column.TEAM_BADGE to team.strTeamBadge,
@@ -213,7 +213,7 @@ class FakeFootballAppRepository constructor(
         try {
             db.use {
                 delete(
-                    TeamEntity.TABLE_NAME,
+                    TeamEntity.TABLE_TEAM,
                     "${TeamEntity.Column.ID_TEAM} = {id}",
                     "id" to team.idTeam
                 )
@@ -226,7 +226,7 @@ class FakeFootballAppRepository constructor(
     override fun updateFavoriteTeamById(team: TeamEntity) {
         try {
             db.use {
-                update(TeamEntity.TABLE_NAME,
+                update(TeamEntity.TABLE_TEAM,
                     TeamEntity.Column.ID_TEAM to team.idTeam,
                     TeamEntity.Column.TEAM_NAME to team.strTeam,
                     TeamEntity.Column.TEAM_BADGE to team.strTeamBadge,

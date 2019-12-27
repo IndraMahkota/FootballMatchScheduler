@@ -1,12 +1,11 @@
 package com.indramahkota.footballapp.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import com.indramahkota.footballapp.data.source.FootballAppRepository
 import com.indramahkota.footballapp.data.source.locale.entity.MatchEntity
 import com.indramahkota.footballapp.data.source.locale.entity.TeamEntity
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class FavoriteViewModel @Inject constructor(private val repository: FootballAppRepository) :
@@ -14,7 +13,9 @@ ViewModel() {
 
     private val favoriteMatchId = MutableLiveData<String>()
     var favoriteMatchById: LiveData<MatchEntity> = Transformations.switchMap(favoriteMatchId) { id: String ->
-        repository.loadFavoriteMatchById( id )
+        liveData(context = viewModelScope.coroutineContext + Dispatchers.IO) {
+            emit(repository.loadFavoriteMatchById( id ))
+        }
     }
 
     fun getFavoriteMatchById(id: String){
@@ -22,24 +23,34 @@ ViewModel() {
     }
 
     fun getAllFavoriteMatch(): LiveData<List<MatchEntity>>{
-        return repository.loadAllFavoriteMatch()
+        return liveData(context = viewModelScope.coroutineContext + Dispatchers.IO) {
+            emit(repository.loadAllFavoriteMatch())
+        }
     }
 
     fun insertFavoriteMatch(match: MatchEntity){
-        repository.insertFavoriteMatchById(match)
+        viewModelScope.launch {
+            repository.insertFavoriteMatchById(match)
+        }
     }
 
     fun deleteFavoriteMatch(match: MatchEntity){
-        repository.deleteFavoriteMatchById(match)
+        viewModelScope.launch {
+            repository.deleteFavoriteMatchById(match)
+        }
     }
 
     fun updateFavoriteMatch(match: MatchEntity){
-        repository.updateFavoriteMatchById(match)
+        viewModelScope.launch {
+            repository.updateFavoriteMatchById(match)
+        }
     }
 
     private val favoriteTeamId = MutableLiveData<String>()
     var favoriteTeamById: LiveData<TeamEntity> = Transformations.switchMap(favoriteTeamId) { id: String ->
-        repository.loadFavoriteTeamById( id )
+        liveData(context = viewModelScope.coroutineContext + Dispatchers.IO) {
+            emit(repository.loadFavoriteTeamById( id ))
+        }
     }
 
     fun getFavoriteTeamById(id: String){
@@ -47,18 +58,26 @@ ViewModel() {
     }
 
     fun getAllFavoriteTeam(): LiveData<List<TeamEntity>>{
-        return repository.loadAllFavoriteTeam()
+        return liveData(context = viewModelScope.coroutineContext + Dispatchers.IO) {
+            emit(repository.loadAllFavoriteTeam())
+        }
     }
 
     fun insertFavoriteTeam(team: TeamEntity){
-        repository.insertFavoriteTeamById(team)
+        viewModelScope.launch {
+            repository.insertFavoriteTeamById(team)
+        }
     }
 
     fun deleteFavoriteTeam(team: TeamEntity){
-        repository.deleteFavoriteTeamById(team)
+        viewModelScope.launch {
+            repository.deleteFavoriteTeamById(team)
+        }
     }
 
     fun updateFavoriteTeam(team: TeamEntity){
-        repository.updateFavoriteTeamById(team)
+        viewModelScope.launch {
+            repository.updateFavoriteTeamById(team)
+        }
     }
 }

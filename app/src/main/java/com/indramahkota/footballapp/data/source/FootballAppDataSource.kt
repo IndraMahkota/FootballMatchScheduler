@@ -1,6 +1,5 @@
 package com.indramahkota.footballapp.data.source
 
-import androidx.lifecycle.LiveData
 import com.indramahkota.footballapp.data.source.locale.entity.MatchEntity
 import com.indramahkota.footballapp.data.source.locale.entity.TeamEntity
 import com.indramahkota.footballapp.data.source.remote.apiresponse.ClassementApiResponse
@@ -17,15 +16,15 @@ interface FootballAppDataSource {
     suspend fun loadLastMatchesByLeagueId(id: String): Resource<MatchDetailsApiResponse?>
     suspend fun loadClassementByLeagueId(id: String): Resource<ClassementApiResponse?>
 
-    fun loadAllFavoriteMatch(): LiveData<List<MatchEntity>>
-    fun loadFavoriteMatchById(id: String): LiveData<MatchEntity>
-    fun insertFavoriteMatchById(match: MatchEntity)
-    fun deleteFavoriteMatchById(match: MatchEntity)
-    fun updateFavoriteMatchById(match: MatchEntity)
+    suspend fun loadAllFavoriteMatch(): List<MatchEntity>
+    suspend fun loadFavoriteMatchById(id: String): MatchEntity
+    suspend fun insertFavoriteMatchById(match: MatchEntity)
+    suspend fun deleteFavoriteMatchById(match: MatchEntity)
+    suspend fun updateFavoriteMatchById(match: MatchEntity)
 
-    fun loadAllFavoriteTeam(): LiveData<List<TeamEntity>>
-    fun loadFavoriteTeamById(id: String): LiveData<TeamEntity>
-    fun insertFavoriteTeamById(team: TeamEntity)
-    fun deleteFavoriteTeamById(team: TeamEntity)
-    fun updateFavoriteTeamById(team: TeamEntity)
+    suspend fun loadAllFavoriteTeam(): List<TeamEntity>
+    suspend fun loadFavoriteTeamById(id: String): TeamEntity
+    suspend fun insertFavoriteTeamById(team: TeamEntity)
+    suspend fun deleteFavoriteTeamById(team: TeamEntity)
+    suspend fun updateFavoriteTeamById(team: TeamEntity)
 }

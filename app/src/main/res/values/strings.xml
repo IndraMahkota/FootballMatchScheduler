@@ -47,6 +47,9 @@
     <string name="standings">Standings</string>
     <string name="team_fragment">Team Fragment</string>
     <string name="nol_nol">000</string>
+    <string name="delete_favorite">Delete favorite</string>
+    <string name="insert_favorite">Insert to favorite</string>
+    <string name="action">Action</string>
 
     <string-array name="league_id">
         <item>4328</item>
