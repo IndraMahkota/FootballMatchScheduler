@@ -1,11 +1,11 @@
 package com.indramahkota.footballapp.data.source
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import com.indramahkota.footballapp.MainCoroutineRule
 import com.indramahkota.footballapp.UnitTestFakeData.generateListLeagueDetailsApiModel
 import com.indramahkota.footballapp.UnitTestFakeData.generateListMatchDetailsApiModel
 import com.indramahkota.footballapp.UnitTestFakeData.generateListTeamDetailsApiModel
-import com.indramahkota.footballapp.MainCoroutineRule
-import com.indramahkota.footballapp.data.source.locale.database.MyDatabase
+import com.indramahkota.footballapp.data.source.locale.database.AppDao
 import com.indramahkota.footballapp.data.source.remote.api.ApiEndPoint
 import com.indramahkota.footballapp.data.source.remote.apiresponse.LeagueDetailsApiResponse
 import com.indramahkota.footballapp.data.source.remote.apiresponse.MatchDetailsApiResponse
@@ -28,8 +28,8 @@ class FootballAppRepositoryTest {
     var mainCoroutineRule = MainCoroutineRule()
 
     private val api: ApiEndPoint = mock()
-    private val db: MyDatabase = mock()
-    private val repository: FakeFootballAppRepository = FakeFootballAppRepository(api, db)
+    private val dao: AppDao = mock()
+    private val repository: FakeFootballAppRepository = FakeFootballAppRepository(api, dao)
 
     @Test
     fun `Check success value when get League Details By League Id`() = mainCoroutineRule.runBlockingTest {
