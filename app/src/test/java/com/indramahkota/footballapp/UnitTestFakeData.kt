@@ -1,10 +1,12 @@
 package com.indramahkota.footballapp
 
 import com.indramahkota.footballapp.data.source.locale.entity.MatchEntity
+import com.indramahkota.footballapp.data.source.locale.entity.TeamEntity
 import com.indramahkota.footballapp.data.source.remote.apimodel.ClassementApiModel
 import com.indramahkota.footballapp.data.source.remote.apimodel.LeagueDetailsApiModel
 import com.indramahkota.footballapp.data.source.remote.apimodel.MatchDetailsApiModel
 import com.indramahkota.footballapp.data.source.remote.apimodel.TeamDetailsApiModel
+import com.indramahkota.footballapp.utilities.toTeamEntity
 
 object UnitTestFakeData {
     fun generateMatchEntity(id: String): MatchEntity{
@@ -69,7 +71,7 @@ object UnitTestFakeData {
         )
     }
 
-    private fun generateTeamDetailsApiModel(id: String): TeamDetailsApiModel {
+    fun generateTeamDetailsApiModel(id: String): TeamDetailsApiModel {
         return TeamDetailsApiModel("123", "456",
             id, "2019", "222", "",
             "", "", "", "",
@@ -92,6 +94,12 @@ object UnitTestFakeData {
         )
     }
 
+    fun generateListTeamEntity(): List<TeamEntity> {
+        return mutableListOf(
+            generateTeamDetailsApiModel("this_id_home_team_test").toTeamEntity(),
+            generateTeamDetailsApiModel("this_id_away_team_test").toTeamEntity()
+        )
+    }
 
     private fun generateClassementApiModel(): ClassementApiModel {
         return ClassementApiModel("", "", "", "",
