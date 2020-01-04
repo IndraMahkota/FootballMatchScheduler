@@ -42,7 +42,6 @@ class MatchHorizontalAdapter(private val matchList: MutableList<MatchEntity>,
                 tvSkorTeam1.text = match.intHomeScore
                 tvSkorTeam2.text = match.intAwayScore
 
-
                 Glide.with(this)
                     .load(match.sourceHomeImage)
                     .placeholder(R.drawable.spinner_animation)

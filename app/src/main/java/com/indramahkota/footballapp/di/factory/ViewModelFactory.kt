@@ -14,7 +14,7 @@ class ViewModelFactory @Inject internal constructor(private val creators: Map<Cl
         var creator: Provider<out ViewModel>? = creators[modelClass]
         if (creator == null) {
             for ((key, value) in creators) {
-                if (modelClass.isAssignableFrom(key!!)) {
+                if (key != null && modelClass.isAssignableFrom(key)) {
                     creator = value
                     break
                 }
