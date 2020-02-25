@@ -5,17 +5,16 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.indramahkota.footballapp.R
 import com.indramahkota.footballapp.data.source.locale.entity.LeagueEntity
-import com.indramahkota.footballapp.ui.adapter.LeagueAdapter
 import com.indramahkota.footballapp.ui.activity.MatchActivity.Companion.PARCELABLE_LEAGUE_DATA
+import com.indramahkota.footballapp.ui.adapter.LeagueAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.intentFor
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var linearLayoutManager: LinearLayoutManager
+    private lateinit var linearLayoutManager: GridLayoutManager
     private lateinit var leagueAdapter: LeagueAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
