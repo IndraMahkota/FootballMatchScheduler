@@ -3,107 +3,121 @@ package com.indramahkota.footballapp.data.source
 import com.indramahkota.footballapp.data.source.locale.database.AppDao
 import com.indramahkota.footballapp.data.source.locale.entity.MatchEntity
 import com.indramahkota.footballapp.data.source.locale.entity.TeamEntity
-import com.indramahkota.footballapp.data.source.remote.api.ApiEndPoint
-import com.indramahkota.footballapp.data.source.remote.apiresponse.ClassementApiResponse
-import com.indramahkota.footballapp.data.source.remote.apiresponse.LeagueDetailsApiResponse
-import com.indramahkota.footballapp.data.source.remote.apiresponse.MatchDetailsApiResponse
-import com.indramahkota.footballapp.data.source.remote.apiresponse.TeamDetailsApiResponse
+import com.indramahkota.footballapp.data.source.remote.EndPointService
+import com.indramahkota.footballapp.data.source.remote.model.ClassementResponse
+import com.indramahkota.footballapp.data.source.remote.model.LeagueDetailsResponse
+import com.indramahkota.footballapp.data.source.remote.model.MatchDetailsResponse
+import com.indramahkota.footballapp.data.source.remote.model.TeamDetailsResponse
 
-class FakeFootballAppRepository constructor(private val api: ApiEndPoint,
-                                                private val dao: AppDao ) : FootballAppDataSource {
-    override suspend fun loadLeagueDetailsByLeagueId(id: String): Resource<LeagueDetailsApiResponse?> {
+class FakeFootballAppRepository constructor(private val service: EndPointService,
+                                            private val dao: AppDao ) {
+    suspend fun loadLeagueDetailsByLeagueId(id: String): Resource<LeagueDetailsResponse?> {
         return try {
-            Resource.success(api.getLeagueDetailsByLeagueId(id))
+            Resource.success(service.getLeagueDetailsByLeagueId(id))
         } catch(e: Exception) {
-            Resource.error(e.message, LeagueDetailsApiResponse())
+            Resource.error(e.message,
+                LeagueDetailsResponse()
+            )
         }
     }
 
-    override suspend fun loadMatchDetailById(id: String): Resource<MatchDetailsApiResponse?> {
+    suspend fun loadMatchDetailById(id: String): Resource<MatchDetailsResponse?> {
         return try {
-            Resource.success(api.getMatchDetailsById(id))
+            Resource.success(service.getMatchDetailsById(id))
         } catch(e: Exception) {
-            Resource.error(e.message, MatchDetailsApiResponse())
+            Resource.error(e.message,
+                MatchDetailsResponse()
+            )
         }
     }
 
-    override suspend fun loadTeamDetailById(id: String): Resource<TeamDetailsApiResponse?> {
+    suspend fun loadTeamDetailById(id: String): Resource<TeamDetailsResponse?> {
         return try {
-            Resource.success(api.getTeamDetailsById(id))
+            Resource.success(service.getTeamDetailsById(id))
         } catch(e: Exception) {
-            Resource.error(e.message, TeamDetailsApiResponse())
+            Resource.error(e.message,
+                TeamDetailsResponse()
+            )
         }
     }
 
-    override suspend fun loadAllTeamByLeagueId(id: String): Resource<TeamDetailsApiResponse?> {
+    suspend fun loadAllTeamByLeagueId(id: String): Resource<TeamDetailsResponse?> {
         return try {
-            Resource.success(api.getAllTeamByLeagueId(id))
+            Resource.success(service.getAllTeamByLeagueId(id))
         } catch (e: Exception) {
-            Resource.error(e.message, TeamDetailsApiResponse())
+            Resource.error(e.message,
+                TeamDetailsResponse()
+            )
         }
     }
 
-    override suspend fun loadNextMatchesByLeagueId(id: String): Resource<MatchDetailsApiResponse?> {
+    suspend fun loadNextMatchesByLeagueId(id: String): Resource<MatchDetailsResponse?> {
         return try {
-            Resource.success(api.getNextMatchByLeagueId(id))
+            Resource.success(service.getNextMatchByLeagueId(id))
         } catch (e: Exception) {
-            Resource.error(e.message, MatchDetailsApiResponse())
+            Resource.error(e.message,
+                MatchDetailsResponse()
+            )
         }
     }
 
-    override suspend fun loadLastMatchesByLeagueId(id: String): Resource<MatchDetailsApiResponse?> {
+    suspend fun loadLastMatchesByLeagueId(id: String): Resource<MatchDetailsResponse?> {
         return try {
-            Resource.success(api.getLastMatchByLeagueId(id))
+            Resource.success(service.getLastMatchByLeagueId(id))
         } catch (e: Exception) {
-            Resource.error(e.message, MatchDetailsApiResponse())
+            Resource.error(e.message,
+                MatchDetailsResponse()
+            )
         }
     }
 
-    override suspend fun loadClassementByLeagueId(id: String): Resource<ClassementApiResponse?> {
+    suspend fun loadClassementByLeagueId(id: String): Resource<ClassementResponse?> {
         return try {
-            Resource.success(api.getClassementTable(id))
+            Resource.success(service.getClassementTable(id))
         } catch (e: Exception) {
-            Resource.error(e.message, ClassementApiResponse())
+            Resource.error(e.message,
+                ClassementResponse()
+            )
         }
     }
 
-    override suspend fun loadAllFavoriteMatch(): List<MatchEntity> {
+    suspend fun loadAllFavoriteMatch(): List<MatchEntity> {
         return dao.getAllFavoriteMatch()
     }
 
-    override suspend fun loadFavoriteMatchById(id: String): MatchEntity {
+    suspend fun loadFavoriteMatchById(id: String): MatchEntity {
         return dao.getFavoriteMatchById(id)
     }
 
-    override suspend fun insertFavoriteMatchById(match: MatchEntity) {
+    suspend fun insertFavoriteMatchById(match: MatchEntity) {
         return dao.insertFavoriteMatch(match)
     }
 
-    override suspend fun deleteFavoriteMatchById(match: MatchEntity) {
+    suspend fun deleteFavoriteMatchById(match: MatchEntity) {
         return dao.deleteFavoriteMatch(match)
     }
 
-    override suspend fun updateFavoriteMatchById(match: MatchEntity) {
+    suspend fun updateFavoriteMatchById(match: MatchEntity) {
         return dao.updateFavoriteMatch(match)
     }
 
-    override suspend fun loadAllFavoriteTeam(): List<TeamEntity> {
+    suspend fun loadAllFavoriteTeam(): List<TeamEntity> {
         return dao.getAllFavoriteTeam()
     }
 
-    override suspend fun loadFavoriteTeamById(id: String): TeamEntity {
+    suspend fun loadFavoriteTeamById(id: String): TeamEntity {
         return dao.getFavoriteTeamById(id)
     }
 
-    override suspend fun insertFavoriteTeamById(team: TeamEntity) {
+    suspend fun insertFavoriteTeamById(team: TeamEntity) {
         return dao.insertFavoriteTeam(team)
     }
 
-    override suspend fun deleteFavoriteTeamById(team: TeamEntity) {
+    suspend fun deleteFavoriteTeamById(team: TeamEntity) {
         return dao.deleteFavoriteTeam(team)
     }
 
-    override suspend fun updateFavoriteTeamById(team: TeamEntity) {
+    suspend fun updateFavoriteTeamById(team: TeamEntity) {
         return dao.updateFavoriteTeam(team)
     }
 }

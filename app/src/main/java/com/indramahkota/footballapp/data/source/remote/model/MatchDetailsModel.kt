@@ -1,11 +1,11 @@
-package com.indramahkota.footballapp.data.source.remote.apimodel
+package com.indramahkota.footballapp.data.source.remote.model
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class MatchDetailsApiModel(
+data class MatchDetailsModel(
     @SerializedName("dateEvent")
     val dateEvent: String? = null,
     @SerializedName("dateEventLocal")

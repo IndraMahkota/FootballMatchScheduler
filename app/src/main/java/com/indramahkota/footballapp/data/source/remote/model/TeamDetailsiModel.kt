@@ -1,27 +1,25 @@
-package com.indramahkota.footballapp.data.source.remote.apimodel
+package com.indramahkota.footballapp.data.source.remote.model
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class LeagueDetailsApiModel(
-    @SerializedName("dateFirstEvent")
-    val dateFirstEvent: String? = null,
-    @SerializedName("idCup")
-    val idCup: String? = null,
+data class TeamDetailsiModel(
     @SerializedName("idLeague")
     val idLeague: String? = null,
     @SerializedName("idSoccerXML")
     val idSoccerXML: String? = null,
+    @SerializedName("idTeam")
+    val idTeam: String? = null,
     @SerializedName("intFormedYear")
     val intFormedYear: String? = null,
-    @SerializedName("strBadge")
-    val strBadge: String? = null,
-    @SerializedName("strBanner")
-    val strBanner: String? = null,
-    @SerializedName("strComplete")
-    val strComplete: String? = null,
+    @SerializedName("intLoved")
+    val intLoved: String? = null,
+    @SerializedName("intStadiumCapacity")
+    val intStadiumCapacity: String? = null,
+    @SerializedName("strAlternate")
+    val strAlternate: String? = null,
     @SerializedName("strCountry")
     val strCountry: String? = null,
     @SerializedName("strDescriptionCN")
@@ -58,34 +56,50 @@ data class LeagueDetailsApiModel(
     val strDivision: String? = null,
     @SerializedName("strFacebook")
     val strFacebook: String? = null,
-    @SerializedName("strFanart1")
-    val strFanart1: String? = null,
-    @SerializedName("strFanart2")
-    val strFanart2: String? = null,
-    @SerializedName("strFanart3")
-    val strFanart3: String? = null,
-    @SerializedName("strFanart4")
-    val strFanart4: String? = null,
     @SerializedName("strGender")
     val strGender: String? = null,
+    @SerializedName("strInstagram")
+    val strInstagram: String? = null,
+    @SerializedName("strKeywords")
+    val strKeywords: String? = null,
     @SerializedName("strLeague")
     val strLeague: String? = null,
-    @SerializedName("strLeagueAlternate")
-    val strLeagueAlternate: String? = null,
     @SerializedName("strLocked")
     val strLocked: String? = null,
-    @SerializedName("strLogo")
-    val strLogo: String? = null,
-    @SerializedName("strNaming")
-    val strNaming: String? = null,
-    @SerializedName("strPoster")
-    val strPoster: String? = null,
+    @SerializedName("strManager")
+    val strManager: String? = null,
     @SerializedName("strRSS")
     val strRSS: String? = null,
     @SerializedName("strSport")
     val strSport: String? = null,
-    @SerializedName("strTrophy")
-    val strTrophy: String? = null,
+    @SerializedName("strStadium")
+    val strStadium: String? = null,
+    @SerializedName("strStadiumDescription")
+    val strStadiumDescription: String? = null,
+    @SerializedName("strStadiumLocation")
+    val strStadiumLocation: String? = null,
+    @SerializedName("strStadiumThumb")
+    val strStadiumThumb: String? = null,
+    @SerializedName("strTeam")
+    val strTeam: String? = null,
+    @SerializedName("strTeamBadge")
+    val strTeamBadge: String? = null,
+    @SerializedName("strTeamBanner")
+    val strTeamBanner: String? = null,
+    @SerializedName("strTeamFanart1")
+    val strTeamFanart1: String? = null,
+    @SerializedName("strTeamFanart2")
+    val strTeamFanart2: String? = null,
+    @SerializedName("strTeamFanart3")
+    val strTeamFanart3: String? = null,
+    @SerializedName("strTeamFanart4")
+    val strTeamFanart4: String? = null,
+    @SerializedName("strTeamJersey")
+    val strTeamJersey: String? = null,
+    @SerializedName("strTeamLogo")
+    val strTeamLogo: String? = null,
+    @SerializedName("strTeamShort")
+    val strTeamShort: String? = null,
     @SerializedName("strTwitter")
     val strTwitter: String? = null,
     @SerializedName("strWebsite")

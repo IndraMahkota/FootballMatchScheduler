@@ -2,7 +2,7 @@ package com.indramahkota.footballapp.utilities
 
 import android.util.Log
 import com.indramahkota.footballapp.data.source.locale.entity.TeamEntity
-import com.indramahkota.footballapp.data.source.remote.apimodel.TeamDetailsApiModel
+import com.indramahkota.footballapp.data.source.remote.model.TeamDetailsiModel
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -49,7 +49,7 @@ object Utilities {
     }
 }
 
-fun List<TeamDetailsApiModel>?.toListTeamEntity(): List<TeamEntity> {
+fun List<TeamDetailsiModel>?.toListTeamEntity(): List<TeamEntity> {
     val teamList = mutableListOf<TeamEntity>()
     if(this != null) {
         for (matchNetworkModel in this) {
@@ -59,7 +59,7 @@ fun List<TeamDetailsApiModel>?.toListTeamEntity(): List<TeamEntity> {
     return teamList
 }
 
-fun TeamDetailsApiModel.toTeamEntity(): TeamEntity {
+fun TeamDetailsiModel.toTeamEntity(): TeamEntity {
     return TeamEntity(idTeam ?: "",
         strTeam ?: "",
         strTeamBadge ?: "",

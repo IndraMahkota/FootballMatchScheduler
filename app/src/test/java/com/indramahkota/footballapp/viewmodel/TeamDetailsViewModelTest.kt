@@ -5,7 +5,7 @@ import com.indramahkota.footballapp.MainCoroutineRule
 import com.indramahkota.footballapp.UnitTestFakeData.generateListTeamDetailsApiModel
 import com.indramahkota.footballapp.data.source.FootballAppRepository
 import com.indramahkota.footballapp.data.source.Resource
-import com.indramahkota.footballapp.data.source.remote.apiresponse.TeamDetailsApiResponse
+import com.indramahkota.footballapp.data.source.remote.model.TeamDetailsResponse
 import com.indramahkota.footballapp.getOrAwaitValue
 import com.indramahkota.footballapp.mock
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -39,8 +39,11 @@ class TeamDetailsViewModelTest {
     @Test
     fun `Check success value when get Match Details by Event Id`() = mainCoroutineRule.runBlockingTest {
         val id = "1234"
-        val data = TeamDetailsApiResponse(generateListTeamDetailsApiModel())
-        val resourceData: Resource<TeamDetailsApiResponse?> = Resource.success(data)
+        val data =
+            TeamDetailsResponse(
+                generateListTeamDetailsApiModel()
+            )
+        val resourceData: Resource<TeamDetailsResponse?> = Resource.success(data)
 
         Mockito.`when`(repository.loadTeamDetailById( id ))
             .thenReturn(resourceData)

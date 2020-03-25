@@ -1,45 +1,45 @@
-package com.indramahkota.footballapp.data.source.remote.api
+package com.indramahkota.footballapp.data.source.remote
 
-import com.indramahkota.footballapp.data.source.remote.apiresponse.ClassementApiResponse
-import com.indramahkota.footballapp.data.source.remote.apiresponse.LeagueDetailsApiResponse
-import com.indramahkota.footballapp.data.source.remote.apiresponse.MatchDetailsApiResponse
-import com.indramahkota.footballapp.data.source.remote.apiresponse.TeamDetailsApiResponse
+import com.indramahkota.footballapp.data.source.remote.model.ClassementResponse
+import com.indramahkota.footballapp.data.source.remote.model.LeagueDetailsResponse
+import com.indramahkota.footballapp.data.source.remote.model.MatchDetailsResponse
+import com.indramahkota.footballapp.data.source.remote.model.TeamDetailsResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-interface ApiEndPoint {
+interface EndPointService {
     @GET("lookupleague.php")
     suspend fun getLeagueDetailsByLeagueId(
         @Query("id") leagueId : String
-    ) : LeagueDetailsApiResponse
+    ) : LeagueDetailsResponse
 
     @GET("lookupteam.php")
     suspend fun getTeamDetailsById(
         @Query("id") matchId : String
-    ) : TeamDetailsApiResponse
+    ) : TeamDetailsResponse
 
     @GET("lookupevent.php")
     suspend fun getMatchDetailsById(
         @Query("id") matchId : String
-    ) : MatchDetailsApiResponse
+    ) : MatchDetailsResponse
 
     @GET("lookup_all_teams.php")
     suspend fun getAllTeamByLeagueId(
         @Query("id") leagueId : String
-    ) : TeamDetailsApiResponse
+    ) : TeamDetailsResponse
 
     @GET("eventsnextleague.php")
     suspend fun getNextMatchByLeagueId(
         @Query("id") leagueId : String
-    ) : MatchDetailsApiResponse
+    ) : MatchDetailsResponse
 
     @GET("eventspastleague.php")
     suspend fun getLastMatchByLeagueId(
         @Query("id") leagueId : String
-    ) : MatchDetailsApiResponse
+    ) : MatchDetailsResponse
 
     @GET("lookuptable.php")
     suspend fun getClassementTable(
         @Query("l") leagueId : String
-    ) : ClassementApiResponse
+    ) : ClassementResponse
 }

@@ -12,7 +12,7 @@ import com.indramahkota.footballapp.data.source.Resource
 import com.indramahkota.footballapp.data.source.Status.ERROR
 import com.indramahkota.footballapp.data.source.Status.SUCCESS
 import com.indramahkota.footballapp.data.source.locale.entity.LeagueEntity
-import com.indramahkota.footballapp.data.source.remote.apimodel.ClassementApiModel
+import com.indramahkota.footballapp.data.source.remote.model.ClassementModel
 import com.indramahkota.footballapp.ui.adapter.ClassementAdapter
 import com.indramahkota.footballapp.viewmodel.LeagueDetailsViewModel
 import dagger.android.support.AndroidSupportInjection
@@ -33,7 +33,7 @@ class ClassementFragment : Fragment() {
             }
     }
 
-    private var allClassementData: ArrayList<ClassementApiModel>? = null
+    private var allClassementData: ArrayList<ClassementModel>? = null
 
     private lateinit var allClassementAdapter: ClassementAdapter
 
@@ -57,7 +57,7 @@ class ClassementFragment : Fragment() {
 
         rv_all_classement.setHasFixedSize(true)
 
-        val listTeamData = mutableListOf<ClassementApiModel>()
+        val listTeamData = mutableListOf<ClassementModel>()
         allClassementAdapter =
             ClassementAdapter(listTeamData) {}
         rv_all_classement.adapter = allClassementAdapter
@@ -72,12 +72,12 @@ class ClassementFragment : Fragment() {
     private fun getAllClassementData() {
         val viewModel = activity?.let { ViewModelProvider(it, viewModelFactory).get(
             LeagueDetailsViewModel::class.java) }
-        viewModel?.allClassementData?.observe(viewLifecycleOwner, Observer<Resource<List<ClassementApiModel>?>> {
+        viewModel?.allClassementData?.observe(viewLifecycleOwner, Observer<Resource<List<ClassementModel>?>> {
             checkState(it)
         })
     }
 
-    private fun checkState(it: Resource<List<ClassementApiModel>?>){
+    private fun checkState(it: Resource<List<ClassementModel>?>){
         when (it.status) {
             SUCCESS -> {
                 initialize(it.data)
@@ -86,7 +86,7 @@ class ClassementFragment : Fragment() {
         }
     }
 
-    private fun initialize(it: List<ClassementApiModel>?) {
+    private fun initialize(it: List<ClassementModel>?) {
         if(it.isNullOrEmpty()) {
             no_data.visibility = View.VISIBLE
         } else {

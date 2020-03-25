@@ -2,10 +2,10 @@ package com.indramahkota.footballapp
 
 import com.indramahkota.footballapp.data.source.locale.entity.MatchEntity
 import com.indramahkota.footballapp.data.source.locale.entity.TeamEntity
-import com.indramahkota.footballapp.data.source.remote.apimodel.ClassementApiModel
-import com.indramahkota.footballapp.data.source.remote.apimodel.LeagueDetailsApiModel
-import com.indramahkota.footballapp.data.source.remote.apimodel.MatchDetailsApiModel
-import com.indramahkota.footballapp.data.source.remote.apimodel.TeamDetailsApiModel
+import com.indramahkota.footballapp.data.source.remote.model.ClassementModel
+import com.indramahkota.footballapp.data.source.remote.model.LeagueDetailsModel
+import com.indramahkota.footballapp.data.source.remote.model.MatchDetailsModel
+import com.indramahkota.footballapp.data.source.remote.model.TeamDetailsiModel
 import com.indramahkota.footballapp.utilities.toTeamEntity
 
 object UnitTestFakeData {
@@ -25,8 +25,8 @@ object UnitTestFakeData {
         )
     }
 
-    private fun generateLeagueDetailsApiModel(): LeagueDetailsApiModel {
-        return LeagueDetailsApiModel("2019-12-12", "123",
+    private fun generateLeagueDetailsApiModel(): LeagueDetailsModel {
+        return LeagueDetailsModel("2019-12-12", "123",
             "456", "789", "2019", "",
             "", "", "", "",
             "", "", "",
@@ -40,14 +40,14 @@ object UnitTestFakeData {
             "", "")
     }
 
-    fun generateListLeagueDetailsApiModel(): List<LeagueDetailsApiModel> {
+    fun generateListLeagueDetailsApiModel(): List<LeagueDetailsModel> {
         return mutableListOf(
             generateLeagueDetailsApiModel()
         )
     }
 
-    private fun generateMatchDetailsApiModel(): MatchDetailsApiModel {
-        return MatchDetailsApiModel("this_date_event_test", "2019-12-13",
+    private fun generateMatchDetailsApiModel(): MatchDetailsModel {
+        return MatchDetailsModel("this_date_event_test", "2019-12-13",
             "this_id_away_team_test", "this_id_event_test",
             "this_id_home_team_test", "", "",
             "this_away_score_test", "", "this_home_score_test",
@@ -65,14 +65,14 @@ object UnitTestFakeData {
             "", "", "", "")
     }
 
-    fun generateListMatchDetailsApiModel(): List<MatchDetailsApiModel>? {
+    fun generateListMatchDetailsApiModel(): List<MatchDetailsModel>? {
         return mutableListOf(
             generateMatchDetailsApiModel()
         )
     }
 
-    fun generateTeamDetailsApiModel(id: String): TeamDetailsApiModel {
-        return TeamDetailsApiModel("123", "456",
+    fun generateTeamDetailsApiModel(id: String): TeamDetailsiModel {
+        return TeamDetailsiModel("123", "456",
             id, "2019", "222", "",
             "", "", "", "",
             "", "", "", "",
@@ -87,7 +87,7 @@ object UnitTestFakeData {
             "", "", "")
     }
 
-    fun generateListTeamDetailsApiModel(): List<TeamDetailsApiModel> {
+    fun generateListTeamDetailsApiModel(): List<TeamDetailsiModel> {
         return mutableListOf(
             generateTeamDetailsApiModel("this_id_home_team_test"),
             generateTeamDetailsApiModel("this_id_away_team_test")
@@ -101,12 +101,12 @@ object UnitTestFakeData {
         )
     }
 
-    private fun generateClassementApiModel(): ClassementApiModel {
-        return ClassementApiModel("", "", "", "",
+    private fun generateClassementApiModel(): ClassementModel {
+        return ClassementModel("", "", "", "",
             "", "", "", "", "", "", "")
     }
 
-    fun generateListClassementApiModel(): List<ClassementApiModel> {
+    fun generateListClassementApiModel(): List<ClassementModel> {
         return mutableListOf(
             generateClassementApiModel()
         )

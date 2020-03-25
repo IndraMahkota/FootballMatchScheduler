@@ -5,13 +5,13 @@ import com.indramahkota.footballapp.data.source.FootballAppRepository
 import com.indramahkota.footballapp.data.source.Resource
 import com.indramahkota.footballapp.data.source.locale.entity.MatchEntity
 import com.indramahkota.footballapp.data.source.locale.entity.TeamEntity
-import com.indramahkota.footballapp.data.source.remote.apimodel.ClassementApiModel
-import com.indramahkota.footballapp.data.source.remote.apimodel.MatchDetailsApiModel
-import com.indramahkota.footballapp.data.source.remote.apimodel.TeamDetailsApiModel
-import com.indramahkota.footballapp.data.source.remote.apiresponse.ClassementApiResponse
-import com.indramahkota.footballapp.data.source.remote.apiresponse.LeagueDetailsApiResponse
-import com.indramahkota.footballapp.data.source.remote.apiresponse.MatchDetailsApiResponse
-import com.indramahkota.footballapp.data.source.remote.apiresponse.TeamDetailsApiResponse
+import com.indramahkota.footballapp.data.source.remote.model.ClassementModel
+import com.indramahkota.footballapp.data.source.remote.model.MatchDetailsModel
+import com.indramahkota.footballapp.data.source.remote.model.TeamDetailsiModel
+import com.indramahkota.footballapp.data.source.remote.model.ClassementResponse
+import com.indramahkota.footballapp.data.source.remote.model.LeagueDetailsResponse
+import com.indramahkota.footballapp.data.source.remote.model.MatchDetailsResponse
+import com.indramahkota.footballapp.data.source.remote.model.TeamDetailsResponse
 import com.indramahkota.footballapp.utilities.toListTeamEntity
 import kotlinx.coroutines.*
 import javax.inject.Inject
@@ -26,10 +26,10 @@ class LeagueDetailsViewModel @Inject constructor(private val repository: Footbal
     var allTeamData: MutableLiveData<Resource<List<TeamEntity>?>> = MutableLiveData()
     var newNextMatchData: MutableLiveData<Resource<List<MatchEntity>?>> = MutableLiveData()
     var newPrevMatchData: MutableLiveData<Resource<List<MatchEntity>?>> = MutableLiveData()
-    var allClassementData: MutableLiveData<Resource<List<ClassementApiModel>?>> = MutableLiveData()
+    var allClassementData: MutableLiveData<Resource<List<ClassementModel>?>> = MutableLiveData()
 
     private val leagueId = MutableLiveData<String>()
-    var leagueDetails: LiveData<Resource<LeagueDetailsApiResponse?>> =
+    var leagueDetails: LiveData<Resource<LeagueDetailsResponse?>> =
         Transformations.switchMap(leagueId) { id: String ->
             liveData(context = viewModelScope.coroutineContext + Dispatchers.IO) {
                 emit(repository.loadLeagueDetailsByLeagueId( id ))
@@ -54,7 +54,7 @@ class LeagueDetailsViewModel @Inject constructor(private val repository: Footbal
         }
     }
 
-    private fun setAllTeamData(all: Resource<TeamDetailsApiResponse?>) {
+    private fun setAllTeamData(all: Resource<TeamDetailsResponse?>) {
         if(all.isSuccess) {
             val listAllTeam = all.data?.teams.toListTeamEntity()
             allTeamData.postValue(Resource.success(listAllTeam))
@@ -64,8 +64,8 @@ class LeagueDetailsViewModel @Inject constructor(private val repository: Footbal
         }
     }
 
-    private fun setNewNextMatchData(all: Resource<TeamDetailsApiResponse?>,
-                                      next: Resource<MatchDetailsApiResponse?>) {
+    private fun setNewNextMatchData(all: Resource<TeamDetailsResponse?>,
+                                    next: Resource<MatchDetailsResponse?>) {
         var newNextMatches = arrayListOf<MatchEntity>()
         if(all.isSuccess && next.isSuccess) {
             newNextMatches = createNewListData(all.data?.teams, next.data?.events)
@@ -76,8 +76,8 @@ class LeagueDetailsViewModel @Inject constructor(private val repository: Footbal
         nextHelper = ArrayList(newNextMatches)
     }
 
-    private fun setNewPrevMatchData(all: Resource<TeamDetailsApiResponse?>,
-                                      prev: Resource<MatchDetailsApiResponse?>) {
+    private fun setNewPrevMatchData(all: Resource<TeamDetailsResponse?>,
+                                    prev: Resource<MatchDetailsResponse?>) {
         var newPrevMatches = arrayListOf<MatchEntity>()
         if(all.isSuccess && prev.isSuccess) {
             newPrevMatches = createNewListData(all.data?.teams, prev.data?.events)
@@ -88,8 +88,8 @@ class LeagueDetailsViewModel @Inject constructor(private val repository: Footbal
         prevHelper = ArrayList(newPrevMatches)
     }
 
-    private fun createNewListData(all: List<TeamDetailsApiModel>?,
-                                  dataList: List<MatchDetailsApiModel>?):ArrayList<MatchEntity>{
+    private fun createNewListData(all: List<TeamDetailsiModel>?,
+                                  dataList: List<MatchDetailsModel>?):ArrayList<MatchEntity>{
         val newMatchList = arrayListOf<MatchEntity>()
 
         if (dataList != null) {
@@ -130,8 +130,8 @@ class LeagueDetailsViewModel @Inject constructor(private val repository: Footbal
         return newMatchList
     }
 
-    private fun setAllClassementData(all: Resource<TeamDetailsApiResponse?>, classement: Resource<ClassementApiResponse?>) {
-        val newClassementList = arrayListOf<ClassementApiModel>()
+    private fun setAllClassementData(all: Resource<TeamDetailsResponse?>, classement: Resource<ClassementResponse?>) {
+        val newClassementList = arrayListOf<ClassementModel>()
 
         val allTeam = all.data?.teams
         val classementList = classement.data?.table

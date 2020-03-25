@@ -9,7 +9,7 @@ import com.indramahkota.footballapp.ui.fragment.TeamFragment
 import com.indramahkota.footballapp.ui.pager.TabPagerAdapter
 import kotlinx.android.synthetic.main.activity_favorite.*
 
-class FavoriteActivity : AppCompatActivity() {
+class   FavoriteActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

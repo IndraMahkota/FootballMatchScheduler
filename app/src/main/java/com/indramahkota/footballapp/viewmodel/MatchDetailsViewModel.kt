@@ -3,8 +3,8 @@ package com.indramahkota.footballapp.viewmodel
 import androidx.lifecycle.*
 import com.indramahkota.footballapp.data.source.FootballAppRepository
 import com.indramahkota.footballapp.data.source.Resource
-import com.indramahkota.footballapp.data.source.remote.apiresponse.MatchDetailsApiResponse
-import com.indramahkota.footballapp.data.source.remote.apiresponse.TeamDetailsApiResponse
+import com.indramahkota.footballapp.data.source.remote.model.MatchDetailsResponse
+import com.indramahkota.footballapp.data.source.remote.model.TeamDetailsResponse
 import kotlinx.coroutines.Dispatchers
 import javax.inject.Inject
 
@@ -12,7 +12,7 @@ class MatchDetailsViewModel @Inject constructor(private val repository: Football
     ViewModel() {
 
     private val eventId = MutableLiveData<String>()
-    var matchDetails: LiveData<Resource<MatchDetailsApiResponse?>> =
+    var matchDetails: LiveData<Resource<MatchDetailsResponse?>> =
         Transformations.switchMap(eventId) { id: String ->
             liveData(context = viewModelScope.coroutineContext + Dispatchers.IO) {
                 emit(repository.loadMatchDetailById( id ))
@@ -20,7 +20,7 @@ class MatchDetailsViewModel @Inject constructor(private val repository: Football
         }
 
     private val awayTeamId = MutableLiveData<String>()
-    var awayTeamDetails: LiveData<Resource<TeamDetailsApiResponse?>> =
+    var awayTeamDetails: LiveData<Resource<TeamDetailsResponse?>> =
         Transformations.switchMap(awayTeamId) { id: String ->
             liveData(context = viewModelScope.coroutineContext + Dispatchers.IO) {
                 emit(repository.loadTeamDetailById( id ))
@@ -28,7 +28,7 @@ class MatchDetailsViewModel @Inject constructor(private val repository: Football
         }
 
     private val homeTeamId = MutableLiveData<String>()
-    var homeTeamDetails: LiveData<Resource<TeamDetailsApiResponse?>> =
+    var homeTeamDetails: LiveData<Resource<TeamDetailsResponse?>> =
         Transformations.switchMap(homeTeamId) { id: String ->
             liveData(context = viewModelScope.coroutineContext + Dispatchers.IO) {
                 emit(repository.loadTeamDetailById( id ))

@@ -1,8 +1,8 @@
-package com.indramahkota.footballapp.data.source.remote.apimodel
+package com.indramahkota.footballapp.data.source.remote.model
 
 import com.google.gson.annotations.SerializedName
 
-data class ClassementApiModel(
+data class ClassementModel(
     @SerializedName("draw")
     val draw: String? = null,
     @SerializedName("goalsagainst")

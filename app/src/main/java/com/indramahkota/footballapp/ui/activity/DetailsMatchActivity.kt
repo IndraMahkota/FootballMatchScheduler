@@ -14,10 +14,10 @@ import com.indramahkota.footballapp.R
 import com.indramahkota.footballapp.data.source.Resource
 import com.indramahkota.footballapp.data.source.Status
 import com.indramahkota.footballapp.data.source.locale.entity.MatchEntity
-import com.indramahkota.footballapp.data.source.remote.apimodel.MatchDetailsApiModel
-import com.indramahkota.footballapp.data.source.remote.apimodel.TeamDetailsApiModel
-import com.indramahkota.footballapp.data.source.remote.apiresponse.MatchDetailsApiResponse
-import com.indramahkota.footballapp.data.source.remote.apiresponse.TeamDetailsApiResponse
+import com.indramahkota.footballapp.data.source.remote.model.MatchDetailsModel
+import com.indramahkota.footballapp.data.source.remote.model.TeamDetailsiModel
+import com.indramahkota.footballapp.data.source.remote.model.MatchDetailsResponse
+import com.indramahkota.footballapp.data.source.remote.model.TeamDetailsResponse
 import com.indramahkota.footballapp.utilities.Utilities.formatDateFromString
 import com.indramahkota.footballapp.viewmodel.FavoriteViewModel
 import com.indramahkota.footballapp.viewmodel.MatchDetailsViewModel
@@ -35,9 +35,9 @@ class DetailsMatchActivity : AppCompatActivity() {
 
     private var favoriteMatch: MatchEntity? = null
     private var matchEntity: MatchEntity? = null
-    private var matchDetailsData: MatchDetailsApiModel? = null
-    private var homeTeamDetailsData: TeamDetailsApiModel? = null
-    private var awayTeamDetailsData: TeamDetailsApiModel? = null
+    private var matchDetailsData: MatchDetailsModel? = null
+    private var homeTeamDetailsData: TeamDetailsiModel? = null
+    private var awayTeamDetailsData: TeamDetailsiModel? = null
 
     private lateinit var viewModel: MatchDetailsViewModel
     private lateinit var favoriteViewModel: FavoriteViewModel
@@ -56,7 +56,7 @@ class DetailsMatchActivity : AppCompatActivity() {
         matchEntity = intent?.getParcelableExtra(PARCELABLE_MATCH_DATA)
 
         viewModel = ViewModelProvider(this, viewModelFactory).get(MatchDetailsViewModel::class.java)
-        viewModel.matchDetails.observe(this, Observer<Resource<MatchDetailsApiResponse?>>{
+        viewModel.matchDetails.observe(this, Observer<Resource<MatchDetailsResponse?>>{
             when (it.status) {
                 Status.SUCCESS -> {
                     if(it.data?.events != null) {
@@ -69,7 +69,7 @@ class DetailsMatchActivity : AppCompatActivity() {
             }
         })
 
-        viewModel.homeTeamDetails.observe(this, Observer<Resource<TeamDetailsApiResponse?>>{
+        viewModel.homeTeamDetails.observe(this, Observer<Resource<TeamDetailsResponse?>>{
             when (it.status) {
                 Status.SUCCESS -> {
                     if(it.data?.teams != null) {
@@ -88,7 +88,7 @@ class DetailsMatchActivity : AppCompatActivity() {
             }
         })
 
-        viewModel.awayTeamDetails.observe(this, Observer<Resource<TeamDetailsApiResponse?>>{
+        viewModel.awayTeamDetails.observe(this, Observer<Resource<TeamDetailsResponse?>>{
             when (it.status) {
                 Status.SUCCESS -> {
                     if(it.data?.teams != null) {
@@ -130,18 +130,18 @@ class DetailsMatchActivity : AppCompatActivity() {
         }
     }
 
-    private fun updateFavorite(match: MatchDetailsApiModel?,
-                               homeTeam: TeamDetailsApiModel?,
-                               awayTeam: TeamDetailsApiModel?){
+    private fun updateFavorite(match: MatchDetailsModel?,
+                               homeTeam: TeamDetailsiModel?,
+                               awayTeam: TeamDetailsiModel?){
         if(favoriteMatch != null){
             val newData = createNewFavoriteData(match, homeTeam, awayTeam)
             favoriteViewModel.updateFavoriteMatch(newData)
         }
     }
 
-    private fun createNewFavoriteData(match: MatchDetailsApiModel?,
-                                      homeTeam: TeamDetailsApiModel?,
-                                      awayTeam: TeamDetailsApiModel?):MatchEntity {
+    private fun createNewFavoriteData(match: MatchDetailsModel?,
+                                      homeTeam: TeamDetailsiModel?,
+                                      awayTeam: TeamDetailsiModel?):MatchEntity {
         return MatchEntity(
             match?.idEvent ?: "",
             match?.idHomeTeam ?: "",
@@ -156,7 +156,7 @@ class DetailsMatchActivity : AppCompatActivity() {
         )
     }
 
-    private fun initializeUi(data: MatchDetailsApiModel) {
+    private fun initializeUi(data: MatchDetailsModel) {
         fab.setOnClickListener { view ->
             val message: String
             val favorite = favoriteMatch

@@ -14,8 +14,8 @@ import com.indramahkota.footballapp.data.source.Resource
 import com.indramahkota.footballapp.data.source.Status.ERROR
 import com.indramahkota.footballapp.data.source.Status.SUCCESS
 import com.indramahkota.footballapp.data.source.locale.entity.TeamEntity
-import com.indramahkota.footballapp.data.source.remote.apimodel.TeamDetailsApiModel
-import com.indramahkota.footballapp.data.source.remote.apiresponse.TeamDetailsApiResponse
+import com.indramahkota.footballapp.data.source.remote.model.TeamDetailsiModel
+import com.indramahkota.footballapp.data.source.remote.model.TeamDetailsResponse
 import com.indramahkota.footballapp.utilities.toTeamEntity
 import com.indramahkota.footballapp.viewmodel.FavoriteViewModel
 import com.indramahkota.footballapp.viewmodel.TeamDetailsViewModel
@@ -32,7 +32,7 @@ class DetailsTeamActivity : AppCompatActivity() {
 
     private var favoriteTeam: TeamEntity? = null
     private var teamEntity: TeamEntity? = null
-    private var teamDetailsData: TeamDetailsApiModel? = null
+    private var teamDetailsData: TeamDetailsiModel? = null
 
     private lateinit var viewModel: TeamDetailsViewModel
     private lateinit var favoriteViewModel: FavoriteViewModel
@@ -51,7 +51,7 @@ class DetailsTeamActivity : AppCompatActivity() {
         teamEntity = intent?.getParcelableExtra(PARCELABLE_TEAM_DATA)
 
         viewModel = ViewModelProvider(this, viewModelFactory).get(TeamDetailsViewModel::class.java)
-        viewModel.teamDetails.observe(this, Observer<Resource<TeamDetailsApiResponse?>>{
+        viewModel.teamDetails.observe(this, Observer<Resource<TeamDetailsResponse?>>{
             when (it.status) {
                 SUCCESS -> {
                     if(it.data?.teams != null) {
@@ -76,7 +76,7 @@ class DetailsTeamActivity : AppCompatActivity() {
         teamEntity?.idTeam?.let {viewModel.loadTeamDetails(it)}
     }
 
-    private fun initializeUi(data: TeamDetailsApiModel) {
+    private fun initializeUi(data: TeamDetailsiModel) {
         fab.setOnClickListener { view ->
             val message: String
             val favorite = favoriteTeam
@@ -119,7 +119,7 @@ class DetailsTeamActivity : AppCompatActivity() {
         }
     }
 
-    private fun updateFavorite(team: TeamDetailsApiModel){
+    private fun updateFavorite(team: TeamDetailsiModel){
         if(favoriteTeam != null){
             val newData = team.toTeamEntity()
             favoriteViewModel.updateFavoriteTeam(newData)

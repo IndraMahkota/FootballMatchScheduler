@@ -14,7 +14,7 @@ import com.indramahkota.footballapp.data.source.Resource
 import com.indramahkota.footballapp.data.source.Status.ERROR
 import com.indramahkota.footballapp.data.source.Status.SUCCESS
 import com.indramahkota.footballapp.data.source.locale.entity.LeagueEntity
-import com.indramahkota.footballapp.data.source.remote.apiresponse.LeagueDetailsApiResponse
+import com.indramahkota.footballapp.data.source.remote.model.LeagueDetailsResponse
 import com.indramahkota.footballapp.ui.activity.SearchActivity.Companion.MATCH_PARCELABLE_DATA
 import com.indramahkota.footballapp.ui.activity.SearchActivity.Companion.TEAM_PARCELABLE_DATA
 import com.indramahkota.footballapp.ui.fragment.MatchFragment
@@ -76,7 +76,7 @@ class MatchActivity : AppCompatActivity() {
         tabs.setupWithViewPager(viewPager)
 
         viewModel = ViewModelProvider(this, viewModelFactory).get(LeagueDetailsViewModel::class.java)
-        viewModel.leagueDetails.observe(this, Observer<Resource<LeagueDetailsApiResponse?>>{
+        viewModel.leagueDetails.observe(this, Observer<Resource<LeagueDetailsResponse?>>{
             when (it.status) {
                 SUCCESS -> {
                     Glide.with(this)
