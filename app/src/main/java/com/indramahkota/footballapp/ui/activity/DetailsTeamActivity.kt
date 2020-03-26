@@ -10,9 +10,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.google.android.material.snackbar.Snackbar
 import com.indramahkota.footballapp.R
-import com.indramahkota.footballapp.data.source.Resource
-import com.indramahkota.footballapp.data.source.Status.ERROR
-import com.indramahkota.footballapp.data.source.Status.SUCCESS
+import com.indramahkota.footballapp.data.source.repository.Result
 import com.indramahkota.footballapp.data.source.locale.entity.TeamEntity
 import com.indramahkota.footballapp.data.source.remote.model.TeamDetailsiModel
 import com.indramahkota.footballapp.data.source.remote.model.TeamDetailsResponse
@@ -51,16 +49,16 @@ class DetailsTeamActivity : AppCompatActivity() {
         teamEntity = intent?.getParcelableExtra(PARCELABLE_TEAM_DATA)
 
         viewModel = ViewModelProvider(this, viewModelFactory).get(TeamDetailsViewModel::class.java)
-        viewModel.teamDetails.observe(this, Observer<Resource<TeamDetailsResponse?>>{
-            when (it.status) {
-                SUCCESS -> {
+        viewModel.teamDetails.observe(this, Observer<Result<TeamDetailsResponse?>>{
+            when (it) {
+                is Result.Success -> {
                     if(it.data?.teams != null) {
                         initializeUi(it.data.teams[0])
                         teamDetailsData = it.data.teams[0]
                         updateFavorite(it.data.teams[0])
                     }
                 }
-                ERROR -> toast(it.message.toString())
+                is Result.Error -> toast(it.exception.toString())
             }
         })
 

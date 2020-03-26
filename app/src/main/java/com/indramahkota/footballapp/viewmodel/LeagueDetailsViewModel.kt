@@ -1,8 +1,8 @@
 package com.indramahkota.footballapp.viewmodel
 
 import androidx.lifecycle.*
-import com.indramahkota.footballapp.data.source.FootballAppRepository
-import com.indramahkota.footballapp.data.source.Resource
+import com.indramahkota.footballapp.data.source.repository.FootballAppRepository
+import com.indramahkota.footballapp.data.source.repository.Result
 import com.indramahkota.footballapp.data.source.locale.entity.MatchEntity
 import com.indramahkota.footballapp.data.source.locale.entity.TeamEntity
 import com.indramahkota.footballapp.data.source.remote.model.ClassementModel
@@ -14,6 +14,7 @@ import com.indramahkota.footballapp.data.source.remote.model.MatchDetailsRespons
 import com.indramahkota.footballapp.data.source.remote.model.TeamDetailsResponse
 import com.indramahkota.footballapp.utilities.toListTeamEntity
 import kotlinx.coroutines.*
+import java.lang.Exception
 import javax.inject.Inject
 
 class LeagueDetailsViewModel @Inject constructor(private val repository: FootballAppRepository) :
@@ -23,13 +24,13 @@ class LeagueDetailsViewModel @Inject constructor(private val repository: Footbal
     private var nextHelper = arrayListOf<MatchEntity>()
     private var prevHelper = arrayListOf<MatchEntity>()
 
-    var allTeamData: MutableLiveData<Resource<List<TeamEntity>?>> = MutableLiveData()
-    var newNextMatchData: MutableLiveData<Resource<List<MatchEntity>?>> = MutableLiveData()
-    var newPrevMatchData: MutableLiveData<Resource<List<MatchEntity>?>> = MutableLiveData()
-    var allClassementData: MutableLiveData<Resource<List<ClassementModel>?>> = MutableLiveData()
+    var allTeamData: MutableLiveData<Result<List<TeamEntity>?>> = MutableLiveData()
+    var newNextMatchData: MutableLiveData<Result<List<MatchEntity>?>> = MutableLiveData()
+    var newPrevMatchData: MutableLiveData<Result<List<MatchEntity>?>> = MutableLiveData()
+    var allClassementData: MutableLiveData<Result<List<ClassementModel>?>> = MutableLiveData()
 
     private val leagueId = MutableLiveData<String>()
-    var leagueDetails: LiveData<Resource<LeagueDetailsResponse?>> =
+    var leagueDetails: LiveData<Result<LeagueDetailsResponse?>> =
         Transformations.switchMap(leagueId) { id: String ->
             liveData(context = viewModelScope.coroutineContext + Dispatchers.IO) {
                 emit(repository.loadLeagueDetailsByLeagueId( id ))
@@ -54,36 +55,38 @@ class LeagueDetailsViewModel @Inject constructor(private val repository: Footbal
         }
     }
 
-    private fun setAllTeamData(all: Resource<TeamDetailsResponse?>) {
-        if(all.isSuccess) {
-            val listAllTeam = all.data?.teams.toListTeamEntity()
-            allTeamData.postValue(Resource.success(listAllTeam))
-            teamHelper = ArrayList(listAllTeam)
-        } else {
-            allTeamData.postValue(Resource.error(all.message, null))
+    private fun setAllTeamData(it: Result<TeamDetailsResponse?>) {
+        when (it) {
+            is Result.Success -> {
+                val listAllTeam = it.data?.teams.toListTeamEntity()
+                allTeamData.postValue(Result.Success(listAllTeam))
+                teamHelper = ArrayList(listAllTeam)
+            }
         }
     }
 
-    private fun setNewNextMatchData(all: Resource<TeamDetailsResponse?>,
-                                    next: Resource<MatchDetailsResponse?>) {
+    private fun setNewNextMatchData(all: Result<TeamDetailsResponse?>,
+                                    next: Result<MatchDetailsResponse?>
+    ) {
         var newNextMatches = arrayListOf<MatchEntity>()
-        if(all.isSuccess && next.isSuccess) {
+        if(all is Result.Success && next is Result.Success) {
             newNextMatches = createNewListData(all.data?.teams, next.data?.events)
-            newNextMatchData.postValue(Resource.success(newNextMatches))
+            newNextMatchData.postValue(Result.Success(newNextMatches))
         } else {
-            newNextMatchData.postValue(Resource.error(next.message, null))
+            newNextMatchData.postValue(Result.Error(Exception("Error Parsing")))
         }
         nextHelper = ArrayList(newNextMatches)
     }
 
-    private fun setNewPrevMatchData(all: Resource<TeamDetailsResponse?>,
-                                    prev: Resource<MatchDetailsResponse?>) {
+    private fun setNewPrevMatchData(all: Result<TeamDetailsResponse?>,
+                                    prev: Result<MatchDetailsResponse?>
+    ) {
         var newPrevMatches = arrayListOf<MatchEntity>()
-        if(all.isSuccess && prev.isSuccess) {
+        if(all is Result.Success && prev is Result.Success) {
             newPrevMatches = createNewListData(all.data?.teams, prev.data?.events)
-            newPrevMatchData.postValue(Resource.success(newPrevMatches))
+            newPrevMatchData.postValue(Result.Success(newPrevMatches))
         } else {
-            newPrevMatchData.postValue(Resource.error(prev.message, null))
+            newPrevMatchData.postValue(Result.Error(Exception("Error Parsing")))
         }
         prevHelper = ArrayList(newPrevMatches)
     }
@@ -130,11 +133,18 @@ class LeagueDetailsViewModel @Inject constructor(private val repository: Footbal
         return newMatchList
     }
 
-    private fun setAllClassementData(all: Resource<TeamDetailsResponse?>, classement: Resource<ClassementResponse?>) {
+    private fun setAllClassementData(all: Result<TeamDetailsResponse?>, classement: Result<ClassementResponse?>) {
         val newClassementList = arrayListOf<ClassementModel>()
 
-        val allTeam = all.data?.teams
-        val classementList = classement.data?.table
+        var allTeam: List<TeamDetailsiModel>? = null
+        if(all is Result.Success) {
+            allTeam = all.data?.teams
+        }
+
+        var classementList: List<ClassementModel>? = null
+        if(classement is Result.Success) {
+            classementList = classement.data?.table
+        }
 
         if(allTeam != null && classementList != null) {
             for (classementApiModel in classementList) {
@@ -146,10 +156,10 @@ class LeagueDetailsViewModel @Inject constructor(private val repository: Footbal
                     }
                 }
             }
-            allClassementData.postValue(Resource.success(newClassementList))
+            allClassementData.postValue(Result.Success(newClassementList))
 
         } else {
-            allClassementData.postValue(Resource.error(classement.message, null))
+            allClassementData.postValue(Result.Error(Exception("Error Parsing")))
         }
     }
 

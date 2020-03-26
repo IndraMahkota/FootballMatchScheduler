@@ -8,9 +8,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.indramahkota.footballapp.R
-import com.indramahkota.footballapp.data.source.Resource
-import com.indramahkota.footballapp.data.source.Status.ERROR
-import com.indramahkota.footballapp.data.source.Status.SUCCESS
+import com.indramahkota.footballapp.data.source.repository.Result
+import com.indramahkota.footballapp.data.source.repository.Status.ERROR
+import com.indramahkota.footballapp.data.source.repository.Status.SUCCESS
 import com.indramahkota.footballapp.data.source.locale.entity.MatchEntity
 import com.indramahkota.footballapp.ui.activity.DetailsMatchActivity
 import com.indramahkota.footballapp.ui.activity.DetailsMatchActivity.Companion.PARCELABLE_MATCH_DATA
@@ -99,27 +99,27 @@ class MatchFragment : Fragment() {
 
     private fun getNextListData() {
         val viewModel = activity?.let { ViewModelProvider(it, viewModelFactory).get(LeagueDetailsViewModel::class.java) }
-        viewModel?.newNextMatchData?.observe(viewLifecycleOwner, Observer<Resource<List<MatchEntity>?>> {
+        viewModel?.newNextMatchData?.observe(viewLifecycleOwner, Observer<Result<List<MatchEntity>?>> {
             checkState(it, 0)
         })
     }
 
     private fun getPrevListData() {
         val viewModel = activity?.let { ViewModelProvider(it, viewModelFactory).get(LeagueDetailsViewModel::class.java) }
-        viewModel?.newPrevMatchData?.observe(viewLifecycleOwner, Observer<Resource<List<MatchEntity>?>> {
+        viewModel?.newPrevMatchData?.observe(viewLifecycleOwner, Observer<Result<List<MatchEntity>?>> {
             checkState(it, 1)
         })
     }
 
-    private fun checkState(it: Resource<List<MatchEntity>?>, int: Int){
-        when (it.status) {
-            SUCCESS -> {
+    private fun checkState(it: Result<List<MatchEntity>?>, int: Int){
+        when (it) {
+            is Result.Success -> {
                 if(int == 0)
                     initializeNext(it.data)
                 else
                     initializePrev(it.data)
             }
-            ERROR -> toast(it.message.toString())
+            is Result.Error -> toast(it.exception.toString())
         }
     }
 

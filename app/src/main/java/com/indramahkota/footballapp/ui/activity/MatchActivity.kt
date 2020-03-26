@@ -10,15 +10,13 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.google.android.material.tabs.TabLayout
 import com.indramahkota.footballapp.R
-import com.indramahkota.footballapp.data.source.Resource
-import com.indramahkota.footballapp.data.source.Status.ERROR
-import com.indramahkota.footballapp.data.source.Status.SUCCESS
 import com.indramahkota.footballapp.data.source.locale.entity.LeagueEntity
 import com.indramahkota.footballapp.data.source.remote.model.LeagueDetailsResponse
+import com.indramahkota.footballapp.data.source.repository.Result
 import com.indramahkota.footballapp.ui.activity.SearchActivity.Companion.MATCH_PARCELABLE_DATA
 import com.indramahkota.footballapp.ui.activity.SearchActivity.Companion.TEAM_PARCELABLE_DATA
-import com.indramahkota.footballapp.ui.fragment.MatchFragment
 import com.indramahkota.footballapp.ui.fragment.ClassementFragment
+import com.indramahkota.footballapp.ui.fragment.MatchFragment
 import com.indramahkota.footballapp.ui.fragment.TeamFragment
 import com.indramahkota.footballapp.ui.pager.TabPagerAdapter
 import com.indramahkota.footballapp.viewmodel.LeagueDetailsViewModel
@@ -76,9 +74,9 @@ class MatchActivity : AppCompatActivity() {
         tabs.setupWithViewPager(viewPager)
 
         viewModel = ViewModelProvider(this, viewModelFactory).get(LeagueDetailsViewModel::class.java)
-        viewModel.leagueDetails.observe(this, Observer<Resource<LeagueDetailsResponse?>>{
-            when (it.status) {
-                SUCCESS -> {
+        viewModel.leagueDetails.observe(this, Observer<Result<LeagueDetailsResponse?>>{
+            when (it) {
+                is Result.Success -> {
                     Glide.with(this)
                         .load(it.data?.leagues?.get(0)?.strPoster ?: R.drawable.image_error)
                         .placeholder(R.drawable.spinner_animation)
@@ -90,7 +88,7 @@ class MatchActivity : AppCompatActivity() {
                     strCountryData.text = it.data?.leagues?.get(0)?.strCountry ?: ""
                     strWebsiteData.text = it.data?.leagues?.get(0)?.strWebsite ?: ""
                 }
-                ERROR -> toast(it.message.toString())
+                is Result.Error -> toast(it.exception.toString())
             }
         })
 

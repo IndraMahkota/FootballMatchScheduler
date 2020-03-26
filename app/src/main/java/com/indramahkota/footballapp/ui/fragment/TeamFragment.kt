@@ -8,10 +8,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.indramahkota.footballapp.R
-import com.indramahkota.footballapp.data.source.Resource
-import com.indramahkota.footballapp.data.source.Status.ERROR
-import com.indramahkota.footballapp.data.source.Status.SUCCESS
 import com.indramahkota.footballapp.data.source.locale.entity.TeamEntity
+import com.indramahkota.footballapp.data.source.repository.Result
 import com.indramahkota.footballapp.ui.activity.DetailsTeamActivity
 import com.indramahkota.footballapp.ui.activity.DetailsTeamActivity.Companion.PARCELABLE_TEAM_DATA
 import com.indramahkota.footballapp.ui.adapter.TeamAdapter
@@ -85,7 +83,7 @@ class TeamFragment : Fragment() {
     private fun getAllTeamData() {
         val viewModel = activity?.let { ViewModelProvider(it, viewModelFactory).get(
             LeagueDetailsViewModel::class.java) }
-        viewModel?.allTeamData?.observe(viewLifecycleOwner, Observer<Resource<List<TeamEntity>?>> {
+        viewModel?.allTeamData?.observe(viewLifecycleOwner, Observer<Result<List<TeamEntity>?>> {
             checkState(it)
         })
     }
@@ -97,12 +95,12 @@ class TeamFragment : Fragment() {
         })
     }
 
-    private fun checkState(it: Resource<List<TeamEntity>?>){
-        when (it.status) {
-            SUCCESS -> {
+    private fun checkState(it: Result<List<TeamEntity>?>){
+        when (it) {
+            is Result.Success -> {
                 initialize(it.data)
             }
-            ERROR -> toast(it.message.toString())
+            is Result.Error -> toast(it.exception.toString())
         }
     }
 

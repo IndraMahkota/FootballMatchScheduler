@@ -6,7 +6,7 @@ import com.indramahkota.footballapp.UnitTestFakeData.generateListMatchEntity
 import com.indramahkota.footballapp.UnitTestFakeData.generateListTeamEntity
 import com.indramahkota.footballapp.UnitTestFakeData.generateMatchEntity
 import com.indramahkota.footballapp.UnitTestFakeData.generateTeamDetailsApiModel
-import com.indramahkota.footballapp.data.source.FootballAppRepository
+import com.indramahkota.footballapp.data.source.repository.FootballAppRepository
 import com.indramahkota.footballapp.getOrAwaitValue
 import com.indramahkota.footballapp.mock
 import com.indramahkota.footballapp.utilities.toTeamEntity

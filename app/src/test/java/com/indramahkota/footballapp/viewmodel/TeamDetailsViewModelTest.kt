@@ -3,8 +3,8 @@ package com.indramahkota.footballapp.viewmodel
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.indramahkota.footballapp.MainCoroutineRule
 import com.indramahkota.footballapp.UnitTestFakeData.generateListTeamDetailsApiModel
-import com.indramahkota.footballapp.data.source.FootballAppRepository
-import com.indramahkota.footballapp.data.source.Resource
+import com.indramahkota.footballapp.data.source.repository.FootballAppRepository
+import com.indramahkota.footballapp.data.source.repository.Result
 import com.indramahkota.footballapp.data.source.remote.model.TeamDetailsResponse
 import com.indramahkota.footballapp.getOrAwaitValue
 import com.indramahkota.footballapp.mock
@@ -43,10 +43,10 @@ class TeamDetailsViewModelTest {
             TeamDetailsResponse(
                 generateListTeamDetailsApiModel()
             )
-        val resourceData: Resource<TeamDetailsResponse?> = Resource.success(data)
+        val resultData: Result<TeamDetailsResponse?> = Result.Success(data)
 
         Mockito.`when`(repository.loadTeamDetailById( id ))
-            .thenReturn(resourceData)
+            .thenReturn(resultData)
 
         viewModel.loadTeamDetails(id)
 
@@ -54,7 +54,7 @@ class TeamDetailsViewModelTest {
             mainCoroutineRule.advanceUntilIdle()
         }
 
-        Assert.assertEquals(resourceData.data?.teams, transformed.data?.teams)
+        if(transformed is Result.Success)
+            Assert.assertEquals(data.teams, transformed.data?.teams)
     }
-
 }

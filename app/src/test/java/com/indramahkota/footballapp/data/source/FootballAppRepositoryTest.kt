@@ -10,6 +10,7 @@ import com.indramahkota.footballapp.data.source.remote.EndPointService
 import com.indramahkota.footballapp.data.source.remote.model.LeagueDetailsResponse
 import com.indramahkota.footballapp.data.source.remote.model.MatchDetailsResponse
 import com.indramahkota.footballapp.data.source.remote.model.TeamDetailsResponse
+import com.indramahkota.footballapp.data.source.repository.Result
 import com.indramahkota.footballapp.mock
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
@@ -38,12 +39,13 @@ class FootballAppRepositoryTest {
             LeagueDetailsResponse(
                 generateListLeagueDetailsApiModel()
             )
-        val leagueDetailsResource: Resource<LeagueDetailsResponse?> = Resource.success(leagueDetails)
 
         Mockito.`when`(service.getLeagueDetailsByLeagueId(id))
             .thenReturn(leagueDetails)
 
-        Assert.assertEquals(leagueDetailsResource.data?.leagues, repository.loadLeagueDetailsByLeagueId(id).data?.leagues)
+        when(val resource = repository.loadLeagueDetailsByLeagueId(id)) {
+            is Result.Success -> Assert.assertEquals(leagueDetails.leagues, resource.data?.leagues)
+        }
     }
 
     @Test
@@ -53,12 +55,13 @@ class FootballAppRepositoryTest {
             MatchDetailsResponse(
                 generateListMatchDetailsApiModel()
             )
-        val matchDetailResource: Resource<MatchDetailsResponse?> = Resource.success(matchDetail)
 
         Mockito.`when`(service.getMatchDetailsById(id))
             .thenReturn(matchDetail)
 
-        Assert.assertEquals(matchDetailResource.data?.events, repository.loadMatchDetailById(id).data?.events)
+        when (val resource = repository.loadMatchDetailById(id)) {
+            is Result.Success -> Assert.assertEquals(matchDetail.events, resource.data?.events)
+        }
     }
 
     @Test
@@ -68,12 +71,13 @@ class FootballAppRepositoryTest {
             TeamDetailsResponse(
                 generateListTeamDetailsApiModel()
             )
-        val teamDetailResource: Resource<TeamDetailsResponse?> = Resource.success(teamDetail)
 
         Mockito.`when`(service.getTeamDetailsById(id))
             .thenReturn(teamDetail)
 
-        Assert.assertEquals(teamDetailResource.data?.teams, repository.loadTeamDetailById(id).data?.teams)
+        when (val resource = repository.loadTeamDetailById(id)) {
+            is Result.Success -> Assert.assertEquals(teamDetail.teams, resource.data?.teams)
+        }
     }
 
     @Test
@@ -83,12 +87,13 @@ class FootballAppRepositoryTest {
             TeamDetailsResponse(
                 generateListTeamDetailsApiModel()
             )
-        val teamDetailResource: Resource<TeamDetailsResponse?> = Resource.success(teamDetail)
 
         Mockito.`when`(service.getAllTeamByLeagueId(id))
             .thenReturn(teamDetail)
 
-        Assert.assertEquals(teamDetailResource.data?.teams, repository.loadAllTeamByLeagueId(id).data?.teams)
+        when(val resource = repository.loadAllTeamByLeagueId(id)) {
+            is Result.Success -> Assert.assertEquals(teamDetail.teams, resource.data?.teams)
+        }
     }
 
     @Test
@@ -98,12 +103,13 @@ class FootballAppRepositoryTest {
             MatchDetailsResponse(
                 generateListMatchDetailsApiModel()
             )
-        val matchDetailResource: Resource<MatchDetailsResponse?> = Resource.success(matchDetail)
 
         Mockito.`when`(service.getNextMatchByLeagueId(id))
             .thenReturn(matchDetail)
 
-        Assert.assertEquals(matchDetailResource.data?.events, repository.loadNextMatchesByLeagueId(id).data?.events)
+        when(val resource = repository.loadNextMatchesByLeagueId(id)) {
+            is Result.Success -> Assert.assertEquals(matchDetail.events, resource.data?.events)
+        }
     }
 
     @Test
@@ -113,11 +119,12 @@ class FootballAppRepositoryTest {
             MatchDetailsResponse(
                 generateListMatchDetailsApiModel()
             )
-        val matchDetailResource: Resource<MatchDetailsResponse?> = Resource.success(matchDetail)
 
         Mockito.`when`(service.getLastMatchByLeagueId(id))
             .thenReturn(matchDetail)
 
-        Assert.assertEquals(matchDetailResource.data?.events, repository.loadLastMatchesByLeagueId(id).data?.events)
+        when(val resource = repository.loadLastMatchesByLeagueId(id)) {
+            is Result.Success -> Assert.assertEquals(matchDetail.events, resource.data?.events)
+        }
     }
 }

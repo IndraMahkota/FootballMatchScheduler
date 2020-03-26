@@ -1,6 +1,6 @@
 package com.indramahkota.footballapp.di.module
 
-import com.indramahkota.footballapp.data.source.FootballAppRepository
+import com.indramahkota.footballapp.data.source.repository.FootballAppRepository
 import com.indramahkota.footballapp.data.source.locale.database.AppDao
 import com.indramahkota.footballapp.data.source.remote.EndPointService
 import dagger.Module
@@ -12,6 +12,9 @@ class RepositoryModule {
     @Provides
     @Singleton
     fun provideRepository(service: EndPointService, dao: AppDao): FootballAppRepository {
-        return FootballAppRepository(service, dao)
+        return FootballAppRepository(
+            service,
+            dao
+        )
     }
 }

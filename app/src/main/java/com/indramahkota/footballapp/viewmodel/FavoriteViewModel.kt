@@ -1,7 +1,7 @@
 package com.indramahkota.footballapp.viewmodel
 
 import androidx.lifecycle.*
-import com.indramahkota.footballapp.data.source.FootballAppRepository
+import com.indramahkota.footballapp.data.source.repository.FootballAppRepository
 import com.indramahkota.footballapp.data.source.locale.entity.MatchEntity
 import com.indramahkota.footballapp.data.source.locale.entity.TeamEntity
 import kotlinx.coroutines.Dispatchers

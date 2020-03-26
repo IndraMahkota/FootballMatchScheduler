@@ -8,76 +8,91 @@ import com.indramahkota.footballapp.data.source.remote.model.ClassementResponse
 import com.indramahkota.footballapp.data.source.remote.model.LeagueDetailsResponse
 import com.indramahkota.footballapp.data.source.remote.model.MatchDetailsResponse
 import com.indramahkota.footballapp.data.source.remote.model.TeamDetailsResponse
+import com.indramahkota.footballapp.data.source.repository.Result
 
 class FakeFootballAppRepository constructor(private val service: EndPointService,
                                             private val dao: AppDao ) {
-    suspend fun loadLeagueDetailsByLeagueId(id: String): Resource<LeagueDetailsResponse?> {
+    suspend fun loadLeagueDetailsByLeagueId(id: String): Result<LeagueDetailsResponse?> {
         return try {
-            Resource.success(service.getLeagueDetailsByLeagueId(id))
+            Result.Success(
+                service.getLeagueDetailsByLeagueId(
+                    id
+                )
+            )
         } catch(e: Exception) {
-            Resource.error(e.message,
-                LeagueDetailsResponse()
-            )
+            Result.Error(e)
         }
     }
 
-    suspend fun loadMatchDetailById(id: String): Resource<MatchDetailsResponse?> {
+    suspend fun loadMatchDetailById(id: String): Result<MatchDetailsResponse?> {
         return try {
-            Resource.success(service.getMatchDetailsById(id))
+            Result.Success(
+                service.getMatchDetailsById(
+                    id
+                )
+            )
         } catch(e: Exception) {
-            Resource.error(e.message,
-                MatchDetailsResponse()
-            )
+            Result.Error(e)
         }
     }
 
-    suspend fun loadTeamDetailById(id: String): Resource<TeamDetailsResponse?> {
+    suspend fun loadTeamDetailById(id: String): Result<TeamDetailsResponse?> {
         return try {
-            Resource.success(service.getTeamDetailsById(id))
+            Result.Success(
+                service.getTeamDetailsById(
+                    id
+                )
+            )
         } catch(e: Exception) {
-            Resource.error(e.message,
-                TeamDetailsResponse()
-            )
+            Result.Error(e)
         }
     }
 
-    suspend fun loadAllTeamByLeagueId(id: String): Resource<TeamDetailsResponse?> {
+    suspend fun loadAllTeamByLeagueId(id: String): Result<TeamDetailsResponse?> {
         return try {
-            Resource.success(service.getAllTeamByLeagueId(id))
-        } catch (e: Exception) {
-            Resource.error(e.message,
-                TeamDetailsResponse()
+            Result.Success(
+                service.getAllTeamByLeagueId(
+                    id
+                )
             )
+        } catch (e: Exception) {
+            Result.Error(e)
         }
     }
 
-    suspend fun loadNextMatchesByLeagueId(id: String): Resource<MatchDetailsResponse?> {
+    suspend fun loadNextMatchesByLeagueId(id: String): Result<MatchDetailsResponse?> {
         return try {
-            Resource.success(service.getNextMatchByLeagueId(id))
-        } catch (e: Exception) {
-            Resource.error(e.message,
-                MatchDetailsResponse()
+            Result.Success(
+                service.getNextMatchByLeagueId(
+                    id
+                )
             )
+        } catch (e: Exception) {
+            Result.Error(e)
         }
     }
 
-    suspend fun loadLastMatchesByLeagueId(id: String): Resource<MatchDetailsResponse?> {
+    suspend fun loadLastMatchesByLeagueId(id: String): Result<MatchDetailsResponse?> {
         return try {
-            Resource.success(service.getLastMatchByLeagueId(id))
-        } catch (e: Exception) {
-            Resource.error(e.message,
-                MatchDetailsResponse()
+            Result.Success(
+                service.getLastMatchByLeagueId(
+                    id
+                )
             )
+        } catch (e: Exception) {
+            Result.Error(e)
         }
     }
 
-    suspend fun loadClassementByLeagueId(id: String): Resource<ClassementResponse?> {
+    suspend fun loadClassementByLeagueId(id: String): Result<ClassementResponse?> {
         return try {
-            Resource.success(service.getClassementTable(id))
-        } catch (e: Exception) {
-            Resource.error(e.message,
-                ClassementResponse()
+            Result.Success(
+                service.getClassementTable(
+                    id
+                )
             )
+        } catch (e: Exception) {
+            Result.Error(e)
         }
     }
 

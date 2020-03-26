@@ -11,13 +11,11 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.google.android.material.snackbar.Snackbar
 import com.indramahkota.footballapp.R
-import com.indramahkota.footballapp.data.source.Resource
-import com.indramahkota.footballapp.data.source.Status
 import com.indramahkota.footballapp.data.source.locale.entity.MatchEntity
 import com.indramahkota.footballapp.data.source.remote.model.MatchDetailsModel
-import com.indramahkota.footballapp.data.source.remote.model.TeamDetailsiModel
-import com.indramahkota.footballapp.data.source.remote.model.MatchDetailsResponse
 import com.indramahkota.footballapp.data.source.remote.model.TeamDetailsResponse
+import com.indramahkota.footballapp.data.source.remote.model.TeamDetailsiModel
+import com.indramahkota.footballapp.data.source.repository.Result
 import com.indramahkota.footballapp.utilities.Utilities.formatDateFromString
 import com.indramahkota.footballapp.viewmodel.FavoriteViewModel
 import com.indramahkota.footballapp.viewmodel.MatchDetailsViewModel
@@ -56,22 +54,22 @@ class DetailsMatchActivity : AppCompatActivity() {
         matchEntity = intent?.getParcelableExtra(PARCELABLE_MATCH_DATA)
 
         viewModel = ViewModelProvider(this, viewModelFactory).get(MatchDetailsViewModel::class.java)
-        viewModel.matchDetails.observe(this, Observer<Resource<MatchDetailsResponse?>>{
-            when (it.status) {
-                Status.SUCCESS -> {
+        viewModel.matchDetails.observe(this, Observer {
+            when (it) {
+                is Result.Success -> {
                     if(it.data?.events != null) {
                         initializeUi(it.data.events[0])
                         matchDetailsData = it.data.events[0]
                         updateFavorite(matchDetailsData, homeTeamDetailsData, awayTeamDetailsData)
                     }
                 }
-                Status.ERROR -> toast(it.message.toString())
+                is Result.Error -> toast(it.exception.toString())
             }
         })
 
-        viewModel.homeTeamDetails.observe(this, Observer<Resource<TeamDetailsResponse?>>{
-            when (it.status) {
-                Status.SUCCESS -> {
+        viewModel.homeTeamDetails.observe(this, Observer<Result<TeamDetailsResponse?>>{
+            when (it) {
+                is Result.Success -> {
                     if(it.data?.teams != null) {
                         Glide.with(this)
                             .load(it.data.teams[0].strTeamBadge ?: R.drawable.image_error)
@@ -84,13 +82,13 @@ class DetailsMatchActivity : AppCompatActivity() {
                         updateFavorite(matchDetailsData, homeTeamDetailsData, awayTeamDetailsData)
                     }
                 }
-                Status.ERROR -> toast(it.message.toString())
+                is Result.Error -> toast(it.exception.toString())
             }
         })
 
-        viewModel.awayTeamDetails.observe(this, Observer<Resource<TeamDetailsResponse?>>{
-            when (it.status) {
-                Status.SUCCESS -> {
+        viewModel.awayTeamDetails.observe(this, Observer<Result<TeamDetailsResponse?>>{
+            when (it) {
+                is Result.Success -> {
                     if(it.data?.teams != null) {
                         Glide.with(this)
                             .load(it.data.teams[0].strTeamBadge ?: R.drawable.image_error)
@@ -103,7 +101,7 @@ class DetailsMatchActivity : AppCompatActivity() {
                         updateFavorite(matchDetailsData, homeTeamDetailsData, awayTeamDetailsData)
                     }
                 }
-                Status.ERROR -> toast(it.message.toString())
+                is Result.Error -> toast(it.exception.toString())
             }
         })
 

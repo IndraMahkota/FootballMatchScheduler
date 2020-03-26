@@ -8,9 +8,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.indramahkota.footballapp.R
-import com.indramahkota.footballapp.data.source.Resource
-import com.indramahkota.footballapp.data.source.Status.ERROR
-import com.indramahkota.footballapp.data.source.Status.SUCCESS
+import com.indramahkota.footballapp.data.source.repository.Result
+import com.indramahkota.footballapp.data.source.repository.Status.ERROR
+import com.indramahkota.footballapp.data.source.repository.Status.SUCCESS
 import com.indramahkota.footballapp.data.source.locale.entity.LeagueEntity
 import com.indramahkota.footballapp.data.source.remote.model.ClassementModel
 import com.indramahkota.footballapp.ui.adapter.ClassementAdapter
@@ -72,17 +72,17 @@ class ClassementFragment : Fragment() {
     private fun getAllClassementData() {
         val viewModel = activity?.let { ViewModelProvider(it, viewModelFactory).get(
             LeagueDetailsViewModel::class.java) }
-        viewModel?.allClassementData?.observe(viewLifecycleOwner, Observer<Resource<List<ClassementModel>?>> {
+        viewModel?.allClassementData?.observe(viewLifecycleOwner, Observer<Result<List<ClassementModel>?>> {
             checkState(it)
         })
     }
 
-    private fun checkState(it: Resource<List<ClassementModel>?>){
-        when (it.status) {
-            SUCCESS -> {
+    private fun checkState(it: Result<List<ClassementModel>?>){
+        when (it) {
+            is Result.Success -> {
                 initialize(it.data)
             }
-            ERROR -> toast(it.message.toString())
+            is Result.Error -> toast(it.exception.toString())
         }
     }
 

@@ -4,8 +4,8 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.indramahkota.footballapp.UnitTestFakeData.generateListMatchDetailsApiModel
 import com.indramahkota.footballapp.UnitTestFakeData.generateListTeamDetailsApiModel
 import com.indramahkota.footballapp.MainCoroutineRule
-import com.indramahkota.footballapp.data.source.FootballAppRepository
-import com.indramahkota.footballapp.data.source.Resource
+import com.indramahkota.footballapp.data.source.repository.FootballAppRepository
+import com.indramahkota.footballapp.data.source.repository.Result
 import com.indramahkota.footballapp.data.source.remote.model.MatchDetailsResponse
 import com.indramahkota.footballapp.data.source.remote.model.TeamDetailsResponse
 import com.indramahkota.footballapp.getOrAwaitValue
@@ -45,10 +45,10 @@ class MatchDetailsViewModelTest {
             MatchDetailsResponse(
                 generateListMatchDetailsApiModel()
             )
-        val resourceData: Resource<MatchDetailsResponse?> = Resource.success(data)
+        val resultData: Result<MatchDetailsResponse?> = Result.Success(data)
 
         Mockito.`when`(repository.loadMatchDetailById( id ))
-            .thenReturn(resourceData)
+            .thenReturn(resultData)
 
         viewModel.loadMatchDetails(id)
 
@@ -56,7 +56,8 @@ class MatchDetailsViewModelTest {
             mainCoroutineRule.advanceUntilIdle()
         }
 
-        assertEquals(resourceData.data?.events, transformed.data?.events)
+        if(transformed is Result.Success)
+            assertEquals(data.events, transformed.data?.events)
     }
 
     @Test
@@ -66,10 +67,10 @@ class MatchDetailsViewModelTest {
             TeamDetailsResponse(
                 generateListTeamDetailsApiModel()
             )
-        val resourceData: Resource<TeamDetailsResponse?> = Resource.success(data)
+        val resultData: Result<TeamDetailsResponse?> = Result.Success(data)
 
         Mockito.`when`(repository.loadTeamDetailById( id ))
-            .thenReturn(resourceData)
+            .thenReturn(resultData)
 
         viewModel.loadAwayTeamDetails(id)
 
@@ -77,7 +78,8 @@ class MatchDetailsViewModelTest {
             mainCoroutineRule.advanceUntilIdle()
         }
 
-        assertEquals(resourceData.data?.teams, transformed.data?.teams)
+        if(transformed is Result.Success)
+            assertEquals(data.teams, transformed.data?.teams)
     }
 
     @Test
@@ -87,10 +89,10 @@ class MatchDetailsViewModelTest {
             TeamDetailsResponse(
                 generateListTeamDetailsApiModel()
             )
-        val resourceData: Resource<TeamDetailsResponse?> = Resource.success(data)
+        val resultData: Result<TeamDetailsResponse?> = Result.Success(data)
 
         Mockito.`when`(repository.loadTeamDetailById( id ))
-            .thenReturn(resourceData)
+            .thenReturn(resultData)
 
         viewModel.loadHomeTeamDetails(id)
 
@@ -98,6 +100,7 @@ class MatchDetailsViewModelTest {
             mainCoroutineRule.advanceUntilIdle()
         }
 
-        assertEquals(resourceData.data?.teams, transformed.data?.teams)
+        if(transformed is Result.Success)
+            assertEquals(data.teams, transformed.data?.teams)
     }
 }
