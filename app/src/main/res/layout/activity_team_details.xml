@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -45,8 +44,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:paddingBottom="20dp"
                     android:gravity="center"
+                    android:paddingBottom="20dp"
                     android:text="@string/team_name"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -61,7 +60,7 @@
                 android:layout_height="?actionBarSize"
                 app:layout_collapseMode="pin"
                 app:layout_scrollFlags="scroll|snap|enterAlways"
-                app:title="@string/title_activity_team_details"/>
+                app:title="@string/title_activity_team_details" />
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -88,6 +87,6 @@
         android:layout_margin="@dimen/fab_margin"
         app:layout_anchor="@id/app_bar"
         app:layout_anchorGravity="bottom|end"
-        app:srcCompat="@drawable/ic_star_white_border"/>
+        app:srcCompat="@drawable/ic_star_white_border" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

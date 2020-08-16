@@ -1,5 +1,6 @@
 package com.indramahkota.footballapp.ui.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -10,7 +11,6 @@ import com.indramahkota.footballapp.data.source.locale.entity.LeagueEntity
 import com.indramahkota.footballapp.ui.activity.MatchActivity.Companion.PARCELABLE_LEAGUE_DATA
 import com.indramahkota.footballapp.ui.adapter.LeagueAdapter
 import kotlinx.android.synthetic.main.activity_main.*
-import org.jetbrains.anko.intentFor
 
 class MainActivity : AppCompatActivity() {
 
@@ -31,7 +31,10 @@ class MainActivity : AppCompatActivity() {
             LeagueAdapter(
                 getData()
             ) { leagueModel ->
-                startActivity(intentFor<MatchActivity>(PARCELABLE_LEAGUE_DATA to leagueModel))
+                val intent = Intent(this, MatchActivity::class.java).apply {
+                    putExtra(PARCELABLE_LEAGUE_DATA, leagueModel)
+                }
+                startActivity(intent)
             }
         rv_league.adapter = leagueAdapter
     }
@@ -56,7 +59,7 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.favorite_menu -> {
-                startActivity(intentFor<FavoriteActivity>())
+                startActivity(Intent(this, FavoriteActivity::class.java))
                 true
             }
             else -> super.onOptionsItemSelected(item)

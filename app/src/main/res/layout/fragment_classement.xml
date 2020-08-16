@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -11,10 +10,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToPadding="false"
-        android:padding="10dp"
         android:orientation="vertical"
+        android:padding="10dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/item_classement"/>
+        tools:listitem="@layout/item_classement" />
 
     <include
         android:id="@+id/no_data"
@@ -25,21 +24,28 @@
         android:id="@+id/shimmer_view_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical"
         android:padding="10dp"
-        android:visibility="visible"
-        android:orientation="vertical">
+        android:visibility="visible">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-            <include layout="@layout/item_classement_loading"/>
-            <include layout="@layout/item_classement_loading"/>
-            <include layout="@layout/item_classement_loading"/>
-            <include layout="@layout/item_classement_loading"/>
-            <include layout="@layout/item_classement_loading"/>
-            <include layout="@layout/item_classement_loading"/>
-            <include layout="@layout/item_classement_loading"/>
+
+            <include layout="@layout/item_classement_loading" />
+
+            <include layout="@layout/item_classement_loading" />
+
+            <include layout="@layout/item_classement_loading" />
+
+            <include layout="@layout/item_classement_loading" />
+
+            <include layout="@layout/item_classement_loading" />
+
+            <include layout="@layout/item_classement_loading" />
+
+            <include layout="@layout/item_classement_loading" />
         </LinearLayout>
 
     </com.facebook.shimmer.ShimmerFrameLayout>

@@ -1,31 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardCornerRadius="8dp"
-    android:layout_margin="8dp">
+    android:layout_margin="8dp"
+    app:cardCornerRadius="8dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="8dp"
-        android:paddingBottom="16dp"
+        android:layout_marginBottom="10dp"
         android:paddingStart="5dp"
+        android:paddingTop="8dp"
         android:paddingEnd="5dp"
-        android:layout_marginBottom="10dp">
+        android:paddingBottom="16dp">
 
         <View
             android:id="@+id/tvDate"
             android:layout_width="100dp"
             android:layout_height="20dp"
-            android:text="@string/tanggal"
             android:background="@color/background"
+            android:text="@string/tanggal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <View
             android:id="@+id/tvVs"
@@ -37,7 +36,7 @@
             android:text="@string/vs"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvDate"/>
+            app:layout_constraintTop_toBottomOf="@+id/tvDate" />
 
         <View
             android:id="@+id/tvTeam1"
@@ -46,10 +45,10 @@
             android:layout_marginTop="30dp"
             android:layout_marginEnd="10dp"
             android:background="@color/background"
+            android:text="@string/team1"
             app:layout_constraintEnd_toStartOf="@+id/tvVs"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvDate"
-            android:text="@string/team1"/>
+            app:layout_constraintTop_toBottomOf="@+id/tvDate" />
 
         <View
             android:id="@+id/tvSkorTeam1"
@@ -58,10 +57,10 @@
             android:layout_marginTop="5dp"
             android:layout_marginEnd="10dp"
             android:background="@color/background"
+            android:text="@string/skor"
             app:layout_constraintEnd_toStartOf="@+id/tvVs"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvDate"
-            android:text="@string/skor"/>
+            app:layout_constraintTop_toBottomOf="@+id/tvDate" />
 
         <View
             android:id="@+id/tvTeam2"
@@ -70,10 +69,10 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="30dp"
             android:background="@color/background"
+            android:text="@string/team2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/tvVs"
-            app:layout_constraintTop_toBottomOf="@+id/tvDate"
-            android:text="@string/team2"/>
+            app:layout_constraintTop_toBottomOf="@+id/tvDate" />
 
         <View
             android:id="@+id/tvSkorTeam2"
@@ -82,9 +81,9 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="5dp"
             android:background="@color/background"
+            android:text="@string/skor"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/tvVs"
-            app:layout_constraintTop_toBottomOf="@+id/tvDate"
-            android:text="@string/skor"/>
+            app:layout_constraintTop_toBottomOf="@+id/tvDate" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

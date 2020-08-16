@@ -33,7 +33,7 @@ class LeagueDetailsViewModel @Inject constructor(private val repository: Footbal
     var leagueDetails: LiveData<Result<LeagueDetailsResponse?>> =
         Transformations.switchMap(leagueId) { id: String ->
             liveData(context = viewModelScope.coroutineContext + Dispatchers.IO) {
-                emit(repository.loadLeagueDetailsByLeagueId( id ))
+                emit(repository.loadLeagueDetailsByLeagueId(id))
             }
         }
 
@@ -65,11 +65,12 @@ class LeagueDetailsViewModel @Inject constructor(private val repository: Footbal
         }
     }
 
-    private fun setNewNextMatchData(all: Result<TeamDetailsResponse?>,
-                                    next: Result<MatchDetailsResponse?>
+    private fun setNewNextMatchData(
+        all: Result<TeamDetailsResponse?>,
+        next: Result<MatchDetailsResponse?>
     ) {
         var newNextMatches = arrayListOf<MatchEntity>()
-        if(all is Result.Success && next is Result.Success) {
+        if (all is Result.Success && next is Result.Success) {
             newNextMatches = createNewListData(all.data?.teams, next.data?.events)
             newNextMatchData.postValue(Result.Success(newNextMatches))
         } else {
@@ -78,11 +79,12 @@ class LeagueDetailsViewModel @Inject constructor(private val repository: Footbal
         nextHelper = ArrayList(newNextMatches)
     }
 
-    private fun setNewPrevMatchData(all: Result<TeamDetailsResponse?>,
-                                    prev: Result<MatchDetailsResponse?>
+    private fun setNewPrevMatchData(
+        all: Result<TeamDetailsResponse?>,
+        prev: Result<MatchDetailsResponse?>
     ) {
         var newPrevMatches = arrayListOf<MatchEntity>()
-        if(all is Result.Success && prev is Result.Success) {
+        if (all is Result.Success && prev is Result.Success) {
             newPrevMatches = createNewListData(all.data?.teams, prev.data?.events)
             newPrevMatchData.postValue(Result.Success(newPrevMatches))
         } else {
@@ -91,8 +93,10 @@ class LeagueDetailsViewModel @Inject constructor(private val repository: Footbal
         prevHelper = ArrayList(newPrevMatches)
     }
 
-    private fun createNewListData(all: List<TeamDetailsiModel>?,
-                                  dataList: List<MatchDetailsModel>?):ArrayList<MatchEntity>{
+    private fun createNewListData(
+        all: List<TeamDetailsiModel>?,
+        dataList: List<MatchDetailsModel>?
+    ): ArrayList<MatchEntity> {
         val newMatchList = arrayListOf<MatchEntity>()
 
         if (dataList != null) {
@@ -105,8 +109,8 @@ class LeagueDetailsViewModel @Inject constructor(private val repository: Footbal
                 var srcImgAwayTeam = ""
 
                 if (listHelper != null) {
-                    if(listHelper.size == 2) {
-                        if(listHelper[0].idTeam.equals(dataList[i].idHomeTeam)){
+                    if (listHelper.size == 2) {
+                        if (listHelper[0].idTeam.equals(dataList[i].idHomeTeam)) {
                             srcImgHomeTeam = listHelper[0].strTeamBadge ?: ""
                             srcImgAwayTeam = listHelper[1].strTeamBadge ?: ""
                         } else {
@@ -114,7 +118,7 @@ class LeagueDetailsViewModel @Inject constructor(private val repository: Footbal
                             srcImgHomeTeam = listHelper[1].strTeamBadge ?: ""
                         }
                     } else if (listHelper.size == 1) {
-                        if(listHelper[0].idTeam.equals(dataList[i].idHomeTeam)){
+                        if (listHelper[0].idTeam.equals(dataList[i].idHomeTeam)) {
                             srcImgHomeTeam = listHelper[0].strTeamBadge ?: ""
                         } else {
                             srcImgAwayTeam = listHelper[0].strTeamBadge ?: ""
@@ -122,34 +126,41 @@ class LeagueDetailsViewModel @Inject constructor(private val repository: Footbal
                     }
                 }
 
-                newMatchList.add(MatchEntity(dataList[i].idEvent ?: "",
-                    dataList[i].idHomeTeam ?: "", dataList[i].idAwayTeam?: "",
-                    dataList[i].dateEvent ?: "-",dataList[i].strHomeTeam ?: "-",
-                    dataList[i].strAwayTeam ?: "-",dataList[i].intHomeScore ?: "-",
-                    dataList[i].intAwayScore ?: "-", srcImgHomeTeam, srcImgAwayTeam))
+                newMatchList.add(
+                    MatchEntity(
+                        dataList[i].idEvent ?: "",
+                        dataList[i].idHomeTeam ?: "", dataList[i].idAwayTeam ?: "",
+                        dataList[i].dateEvent ?: "-", dataList[i].strHomeTeam ?: "-",
+                        dataList[i].strAwayTeam ?: "-", dataList[i].intHomeScore ?: "-",
+                        dataList[i].intAwayScore ?: "-", srcImgHomeTeam, srcImgAwayTeam
+                    )
+                )
             }
         }
 
         return newMatchList
     }
 
-    private fun setAllClassementData(all: Result<TeamDetailsResponse?>, classement: Result<ClassementResponse?>) {
+    private fun setAllClassementData(
+        all: Result<TeamDetailsResponse?>,
+        classement: Result<ClassementResponse?>
+    ) {
         val newClassementList = arrayListOf<ClassementModel>()
 
         var allTeam: List<TeamDetailsiModel>? = null
-        if(all is Result.Success) {
+        if (all is Result.Success) {
             allTeam = all.data?.teams
         }
 
         var classementList: List<ClassementModel>? = null
-        if(classement is Result.Success) {
+        if (classement is Result.Success) {
             classementList = classement.data?.table
         }
 
-        if(allTeam != null && classementList != null) {
+        if (allTeam != null && classementList != null) {
             for (classementApiModel in classementList) {
                 for (teamDetailsApiModel in allTeam) {
-                    if(teamDetailsApiModel.strTeam.equals(classementApiModel.name)) {
+                    if (teamDetailsApiModel.strTeam.equals(classementApiModel.name)) {
                         classementApiModel.image = teamDetailsApiModel.strTeamBadge
                         newClassementList.add(classementApiModel)
                         break
@@ -163,14 +174,14 @@ class LeagueDetailsViewModel @Inject constructor(private val repository: Footbal
         }
     }
 
-    fun getAllMatchsData(): List<MatchEntity>{
+    fun getAllMatchsData(): ArrayList<MatchEntity> {
         val arrayList = arrayListOf<MatchEntity>()
         arrayList.addAll(nextHelper)
         arrayList.addAll(prevHelper)
         return arrayList
     }
 
-    fun getAllTeamData(): List<TeamEntity> {
+    fun getAllTeamData(): ArrayList<TeamEntity> {
         return teamHelper
     }
 }

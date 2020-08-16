@@ -3,6 +3,7 @@ package com.indramahkota.footballapp.ui.activity
 import android.graphics.Matrix
 import android.os.Bundle
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -19,7 +20,6 @@ import com.indramahkota.footballapp.viewmodel.FavoriteViewModel
 import com.indramahkota.footballapp.viewmodel.TeamDetailsViewModel
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_team_details.*
-import org.jetbrains.anko.toast
 import javax.inject.Inject
 
 class DetailsTeamActivity : AppCompatActivity() {
@@ -49,42 +49,47 @@ class DetailsTeamActivity : AppCompatActivity() {
         teamEntity = intent?.getParcelableExtra(PARCELABLE_TEAM_DATA)
 
         viewModel = ViewModelProvider(this, viewModelFactory).get(TeamDetailsViewModel::class.java)
-        viewModel.teamDetails.observe(this, Observer<Result<TeamDetailsResponse?>>{
+        viewModel.teamDetails.observe(this, Observer<Result<TeamDetailsResponse?>> {
             when (it) {
                 is Result.Success -> {
-                    if(it.data?.teams != null) {
+                    if (it.data?.teams != null) {
                         initializeUi(it.data.teams[0])
                         teamDetailsData = it.data.teams[0]
                         updateFavorite(it.data.teams[0])
                     }
                 }
-                is Result.Error -> toast(it.exception.toString())
+                is Result.Error -> Toast.makeText(
+                    applicationContext,
+                    it.exception.toString(),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         })
 
-        favoriteViewModel = ViewModelProvider(this, viewModelFactory).get(FavoriteViewModel::class.java)
-        favoriteViewModel.favoriteTeamById.observe(this, Observer<TeamEntity>{
-            if(it != null){
+        favoriteViewModel =
+            ViewModelProvider(this, viewModelFactory).get(FavoriteViewModel::class.java)
+        favoriteViewModel.favoriteTeamById.observe(this, Observer<TeamEntity> {
+            if (it != null) {
                 favoriteTeam = it
                 fab.setImageResource(R.drawable.ic_star_pink)
             }
         })
 
-        teamEntity?.idTeam?.let {favoriteViewModel.getFavoriteTeamById(it)}
-        teamEntity?.idTeam?.let {viewModel.loadTeamDetails(it)}
+        teamEntity?.idTeam?.let { favoriteViewModel.getFavoriteTeamById(it) }
+        teamEntity?.idTeam?.let { viewModel.loadTeamDetails(it) }
     }
 
     private fun initializeUi(data: TeamDetailsiModel) {
         fab.setOnClickListener { view ->
             val message: String
             val favorite = favoriteTeam
-            if(favorite != null){
+            if (favorite != null) {
                 favoriteViewModel.deleteFavoriteTeam(favorite)
                 favoriteTeam = null
                 fab.setImageResource(R.drawable.ic_star_white_border)
                 fab.imageMatrix = Matrix()
                 message = "Delete favorite"
-            } else{
+            } else {
                 val newData = data.toTeamEntity()
                 favoriteViewModel.insertFavoriteTeam(newData)
                 favoriteTeam = newData
@@ -117,8 +122,8 @@ class DetailsTeamActivity : AppCompatActivity() {
         }
     }
 
-    private fun updateFavorite(team: TeamDetailsiModel){
-        if(favoriteTeam != null){
+    private fun updateFavorite(team: TeamDetailsiModel) {
+        if (favoriteTeam != null) {
             val newData = team.toTeamEntity()
             favoriteViewModel.updateFavoriteTeam(newData)
         }

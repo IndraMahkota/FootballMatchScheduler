@@ -12,8 +12,10 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class FootballAppRepository @Inject constructor(private val service: EndPointService,
-                                                private val dao: AppDao ) {
+class FootballAppRepository @Inject constructor(
+    private val service: EndPointService,
+    private val dao: AppDao
+) {
     suspend fun loadLeagueDetailsByLeagueId(id: String): Result<LeagueDetailsResponse?> {
         return try {
             Result.Success(
@@ -21,7 +23,7 @@ class FootballAppRepository @Inject constructor(private val service: EndPointSer
                     id
                 )
             )
-        } catch(e: Exception) {
+        } catch (e: Exception) {
             Result.Error(e)
         }
     }
@@ -33,7 +35,7 @@ class FootballAppRepository @Inject constructor(private val service: EndPointSer
                     id
                 )
             )
-        } catch(e: Exception) {
+        } catch (e: Exception) {
             Result.Error(e)
         }
     }
@@ -45,7 +47,7 @@ class FootballAppRepository @Inject constructor(private val service: EndPointSer
                     id
                 )
             )
-        } catch(e: Exception) {
+        } catch (e: Exception) {
             Result.Error(e)
         }
     }

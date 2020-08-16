@@ -2,6 +2,7 @@ package com.indramahkota.footballapp.ui.activity
 
 import android.app.SearchManager
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -16,7 +17,6 @@ import com.indramahkota.footballapp.ui.activity.DetailsTeamActivity.Companion.PA
 import com.indramahkota.footballapp.ui.adapter.MatchVerticalAdapter
 import com.indramahkota.footballapp.ui.adapter.TeamAdapter
 import kotlinx.android.synthetic.main.activity_search.*
-import org.jetbrains.anko.intentFor
 import java.util.*
 
 class SearchActivity : AppCompatActivity() {
@@ -50,24 +50,34 @@ class SearchActivity : AppCompatActivity() {
 
         val rvMatchData = mutableListOf<MatchEntity>()
         matchAdapter = MatchVerticalAdapter(rvMatchData) { matchModel ->
-                startActivity(intentFor<DetailsMatchActivity>(PARCELABLE_MATCH_DATA to matchModel))
+            run {
+                val intent = Intent(this, DetailsMatchActivity::class.java).apply {
+                    putExtra(PARCELABLE_MATCH_DATA, matchModel)
+                }
+                startActivity(intent)
             }
+        }
         rv_match.adapter = matchAdapter
 
         val rvTeamData = mutableListOf<TeamEntity>()
         teamAdapter = TeamAdapter(rvTeamData) { teamModel ->
-            startActivity(intentFor<DetailsTeamActivity>(PARCELABLE_TEAM_DATA to teamModel))
+            run {
+                val intent = Intent(this, DetailsTeamActivity::class.java).apply {
+                    putExtra(PARCELABLE_TEAM_DATA, teamModel)
+                }
+                startActivity(intent)
+            }
         }
         rv_team.adapter = teamAdapter
 
         setRecycleView(null, searchType)
     }
 
-    private fun setRecycleView(query:String? = null, type: Int){
-        var newMatchData:List<MatchEntity>? = null
-        var newTeamData:List<TeamEntity>? = null
+    private fun setRecycleView(query: String? = null, type: Int) {
+        var newMatchData: List<MatchEntity>? = null
+        var newTeamData: List<TeamEntity>? = null
 
-        if(query != null && query.isNotEmpty()) {
+        if (query != null && query.isNotEmpty()) {
             newMatchData = listMatchData?.filter {
                 it.strHomeTeam.toLowerCase(Locale.getDefault()).contains(query) ||
                         it.strAwayTeam.toLowerCase(Locale.getDefault()).contains(query)
@@ -78,20 +88,20 @@ class SearchActivity : AppCompatActivity() {
             }
         }
 
-        if(newTeamData != null) {
+        if (newTeamData != null) {
             teamAdapter.replace(newTeamData)
         } else {
             teamAdapter.removeAllData()
         }
 
-        if(newMatchData != null) {
+        if (newMatchData != null) {
             matchAdapter.replace(newMatchData)
         } else {
             matchAdapter.removeAllData()
         }
 
-        if(type == 0) {
-            if(newMatchData.isNullOrEmpty()) {
+        if (type == 0) {
+            if (newMatchData.isNullOrEmpty()) {
                 no_data.visibility = View.VISIBLE
             } else {
                 no_data.visibility = View.INVISIBLE
@@ -100,7 +110,7 @@ class SearchActivity : AppCompatActivity() {
             rv_match.visibility = View.VISIBLE
             rv_team.visibility = View.GONE
         } else {
-            if(newTeamData.isNullOrEmpty()) {
+            if (newTeamData.isNullOrEmpty()) {
                 no_data.visibility = View.VISIBLE
             } else {
                 no_data.visibility = View.INVISIBLE

@@ -9,11 +9,11 @@ import dagger.android.ContributesAndroidInjector
 @Module
 abstract class ActivityModule {
     @ContributesAndroidInjector(modules = [FragmentModule::class])
-    abstract fun bindMatchActivity (): MatchActivity
+    abstract fun bindMatchActivity(): MatchActivity
 
     @ContributesAndroidInjector
-    abstract fun bindMatchDetailsActivity (): DetailsMatchActivity
+    abstract fun bindMatchDetailsActivity(): DetailsMatchActivity
 
     @ContributesAndroidInjector
-    abstract fun bindTeamDetailsActivity (): DetailsTeamActivity
+    abstract fun bindTeamDetailsActivity(): DetailsTeamActivity
 }

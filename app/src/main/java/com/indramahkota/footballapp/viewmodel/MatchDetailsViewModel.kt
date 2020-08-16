@@ -15,7 +15,7 @@ class MatchDetailsViewModel @Inject constructor(private val repository: Football
     var matchDetails: LiveData<Result<MatchDetailsResponse?>> =
         Transformations.switchMap(eventId) { id: String ->
             liveData(context = viewModelScope.coroutineContext + Dispatchers.IO) {
-                emit(repository.loadMatchDetailById( id ))
+                emit(repository.loadMatchDetailById(id))
             }
         }
 
@@ -23,7 +23,7 @@ class MatchDetailsViewModel @Inject constructor(private val repository: Football
     var awayTeamDetails: LiveData<Result<TeamDetailsResponse?>> =
         Transformations.switchMap(awayTeamId) { id: String ->
             liveData(context = viewModelScope.coroutineContext + Dispatchers.IO) {
-                emit(repository.loadTeamDetailById( id ))
+                emit(repository.loadTeamDetailById(id))
             }
         }
 
@@ -31,7 +31,7 @@ class MatchDetailsViewModel @Inject constructor(private val repository: Football
     var homeTeamDetails: LiveData<Result<TeamDetailsResponse?>> =
         Transformations.switchMap(homeTeamId) { id: String ->
             liveData(context = viewModelScope.coroutineContext + Dispatchers.IO) {
-                emit(repository.loadTeamDetailById( id ))
+                emit(repository.loadTeamDetailById(id))
             }
         }
 

@@ -11,23 +11,24 @@ import com.indramahkota.footballapp.data.source.locale.entity.MatchEntity
 import com.indramahkota.footballapp.utilities.Utilities.formatDateFromString
 import kotlinx.android.synthetic.main.item_match_horizontal.view.*
 
-class MatchHorizontalAdapter(private val matchList: MutableList<MatchEntity>,
-                             private val listener: (MatchEntity) -> Unit
+class MatchHorizontalAdapter(
+    private val matchList: MutableList<MatchEntity>,
+    private val listener: (MatchEntity) -> Unit
 ) : RecyclerView.Adapter<MatchHorizontalAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        val view = layoutInflater.inflate( R.layout.item_match_horizontal, parent, false )
+        val view = layoutInflater.inflate(R.layout.item_match_horizontal, parent, false)
         return ViewHolder(view)
     }
 
-    fun replace(items: List<MatchEntity>){
+    fun replace(items: List<MatchEntity>) {
         matchList.clear()
         matchList.addAll(items)
         notifyDataSetChanged()
     }
 
-    override fun getItemCount(): Int =  matchList.size
+    override fun getItemCount(): Int = matchList.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(matchList[position])

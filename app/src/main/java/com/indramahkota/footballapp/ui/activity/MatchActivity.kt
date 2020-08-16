@@ -1,8 +1,10 @@
 package com.indramahkota.footballapp.ui.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -22,8 +24,6 @@ import com.indramahkota.footballapp.ui.pager.TabPagerAdapter
 import com.indramahkota.footballapp.viewmodel.LeagueDetailsViewModel
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_league_details.*
-import org.jetbrains.anko.intentFor
-import org.jetbrains.anko.toast
 import javax.inject.Inject
 
 class MatchActivity : AppCompatActivity() {
@@ -73,8 +73,9 @@ class MatchActivity : AppCompatActivity() {
         val tabs: TabLayout = findViewById(R.id.tabLayout)
         tabs.setupWithViewPager(viewPager)
 
-        viewModel = ViewModelProvider(this, viewModelFactory).get(LeagueDetailsViewModel::class.java)
-        viewModel.leagueDetails.observe(this, Observer<Result<LeagueDetailsResponse?>>{
+        viewModel =
+            ViewModelProvider(this, viewModelFactory).get(LeagueDetailsViewModel::class.java)
+        viewModel.leagueDetails.observe(this, Observer<Result<LeagueDetailsResponse?>> {
             when (it) {
                 is Result.Success -> {
                     Glide.with(this)
@@ -88,7 +89,11 @@ class MatchActivity : AppCompatActivity() {
                     strCountryData.text = it.data?.leagues?.get(0)?.strCountry ?: ""
                     strWebsiteData.text = it.data?.leagues?.get(0)?.strWebsite ?: ""
                 }
-                is Result.Error -> toast(it.exception.toString())
+                is Result.Error -> Toast.makeText(
+                    applicationContext,
+                    it.exception.toString(),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         })
 
@@ -108,10 +113,11 @@ class MatchActivity : AppCompatActivity() {
                 true
             }
             R.id.search_menu_icon -> {
-                startActivity(intentFor<SearchActivity>(
-                    MATCH_PARCELABLE_DATA to viewModel.getAllMatchsData(),
-                    TEAM_PARCELABLE_DATA to viewModel.getAllTeamData()
-                ))
+                val intent = Intent(this, SearchActivity::class.java).apply {
+                    putParcelableArrayListExtra(MATCH_PARCELABLE_DATA, viewModel.getAllMatchsData())
+                    putParcelableArrayListExtra(TEAM_PARCELABLE_DATA, viewModel.getAllTeamData())
+                }
+                startActivity(intent)
                 true
             }
             else -> {

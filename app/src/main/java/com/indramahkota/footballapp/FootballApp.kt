@@ -17,7 +17,7 @@ class FootballApp : Application(), HasAndroidInjector {
     }
 
     @Inject
-    lateinit var dispatchingAndroidInjector : DispatchingAndroidInjector<Any>
+    lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Any>
 
     override fun onCreate() {
         super.onCreate()
@@ -30,5 +30,5 @@ class FootballApp : Application(), HasAndroidInjector {
         component.inject(this)
     }
 
-    override fun androidInjector(): AndroidInjector<Any>  = dispatchingAndroidInjector
+    override fun androidInjector(): AndroidInjector<Any> = dispatchingAndroidInjector
 }

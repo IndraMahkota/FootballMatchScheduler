@@ -14,7 +14,7 @@ class TeamDetailsViewModel @Inject constructor(private val repository: FootballA
     var teamDetails: LiveData<Result<TeamDetailsResponse?>> =
         Transformations.switchMap(teamId) { id: String ->
             liveData(context = viewModelScope.coroutineContext + Dispatchers.IO) {
-                emit(repository.loadTeamDetailById( id ))
+                emit(repository.loadTeamDetailById(id))
             }
         }
 

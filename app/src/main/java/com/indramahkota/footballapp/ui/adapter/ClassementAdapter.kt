@@ -10,23 +10,24 @@ import com.indramahkota.footballapp.R
 import com.indramahkota.footballapp.data.source.remote.model.ClassementModel
 import kotlinx.android.synthetic.main.item_classement.view.*
 
-class ClassementAdapter(private val classementList: MutableList<ClassementModel>,
-                        private val listener: (ClassementModel) -> Unit
+class ClassementAdapter(
+    private val classementList: MutableList<ClassementModel>,
+    private val listener: (ClassementModel) -> Unit
 ) : RecyclerView.Adapter<ClassementAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        val view = layoutInflater.inflate( R.layout.item_classement, parent, false )
+        val view = layoutInflater.inflate(R.layout.item_classement, parent, false)
         return ViewHolder(view)
     }
 
-    fun replace(items: List<ClassementModel>){
+    fun replace(items: List<ClassementModel>) {
         classementList.clear()
         classementList.addAll(items)
         notifyDataSetChanged()
     }
 
-    override fun getItemCount(): Int =  classementList.size
+    override fun getItemCount(): Int = classementList.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(classementList[position])

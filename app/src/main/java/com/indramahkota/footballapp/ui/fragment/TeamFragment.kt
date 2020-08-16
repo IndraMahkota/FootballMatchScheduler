@@ -1,9 +1,11 @@
 package com.indramahkota.footballapp.ui.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -17,8 +19,6 @@ import com.indramahkota.footballapp.viewmodel.FavoriteViewModel
 import com.indramahkota.footballapp.viewmodel.LeagueDetailsViewModel
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_team.*
-import org.jetbrains.anko.support.v4.intentFor
-import org.jetbrains.anko.support.v4.toast
 import javax.inject.Inject
 
 class TeamFragment : Fragment() {
@@ -66,11 +66,16 @@ class TeamFragment : Fragment() {
         val listTeamData = mutableListOf<TeamEntity>()
         allTeamAdapter =
             TeamAdapter(listTeamData) { teamEntity ->
-                startActivity(intentFor<DetailsTeamActivity>(PARCELABLE_TEAM_DATA to teamEntity))
+                run {
+                    val intent = Intent(activity, DetailsTeamActivity::class.java).apply {
+                        putExtra(PARCELABLE_TEAM_DATA, teamEntity)
+                    }
+                    startActivity(intent)
+                }
             }
         rv_all_team.adapter = allTeamAdapter
 
-        if(allTeamData != null) {
+        if (allTeamData != null) {
             initialize(allTeamData)
         } else {
             when (state) {
@@ -81,8 +86,11 @@ class TeamFragment : Fragment() {
     }
 
     private fun getAllTeamData() {
-        val viewModel = activity?.let { ViewModelProvider(it, viewModelFactory).get(
-            LeagueDetailsViewModel::class.java) }
+        val viewModel = activity?.let {
+            ViewModelProvider(it, viewModelFactory).get(
+                LeagueDetailsViewModel::class.java
+            )
+        }
         viewModel?.allTeamData?.observe(viewLifecycleOwner, Observer<Result<List<TeamEntity>?>> {
             checkState(it)
         })
@@ -95,17 +103,18 @@ class TeamFragment : Fragment() {
         })
     }
 
-    private fun checkState(it: Result<List<TeamEntity>?>){
+    private fun checkState(it: Result<List<TeamEntity>?>) {
         when (it) {
             is Result.Success -> {
                 initialize(it.data)
             }
-            is Result.Error -> toast(it.exception.toString())
+            is Result.Error -> Toast.makeText(activity, it.exception.toString(), Toast.LENGTH_SHORT)
+                .show()
         }
     }
 
     private fun initialize(it: List<TeamEntity>?) {
-        if(it.isNullOrEmpty()) {
+        if (it.isNullOrEmpty()) {
             no_data.visibility = View.VISIBLE
         } else {
             no_data.visibility = View.INVISIBLE

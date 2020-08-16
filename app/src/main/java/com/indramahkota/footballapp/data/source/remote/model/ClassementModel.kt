@@ -23,5 +23,5 @@ data class ClassementModel(
     val total: String? = null,
     @SerializedName("win")
     val win: String? = null,
-    var image:String? = null
+    var image: String? = null
 )

@@ -4,20 +4,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.indramahkota.footballapp.R
-import com.indramahkota.footballapp.data.source.repository.Result
-import com.indramahkota.footballapp.data.source.repository.Status.ERROR
-import com.indramahkota.footballapp.data.source.repository.Status.SUCCESS
 import com.indramahkota.footballapp.data.source.locale.entity.LeagueEntity
 import com.indramahkota.footballapp.data.source.remote.model.ClassementModel
+import com.indramahkota.footballapp.data.source.repository.Result
 import com.indramahkota.footballapp.ui.adapter.ClassementAdapter
 import com.indramahkota.footballapp.viewmodel.LeagueDetailsViewModel
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_classement.*
-import org.jetbrains.anko.support.v4.toast
 import javax.inject.Inject
 
 class ClassementFragment : Fragment() {
@@ -27,10 +25,10 @@ class ClassementFragment : Fragment() {
 
         @JvmStatic
         fun newInstance(fragment: String) = ClassementFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_SECTION_FRAGMENT, fragment)
-                }
+            arguments = Bundle().apply {
+                putString(ARG_SECTION_FRAGMENT, fragment)
             }
+        }
     }
 
     private var allClassementData: ArrayList<ClassementModel>? = null
@@ -62,7 +60,7 @@ class ClassementFragment : Fragment() {
             ClassementAdapter(listTeamData) {}
         rv_all_classement.adapter = allClassementAdapter
 
-        if(allClassementData != null) {
+        if (allClassementData != null) {
             initialize(allClassementData)
         } else {
             getAllClassementData()
@@ -70,24 +68,30 @@ class ClassementFragment : Fragment() {
     }
 
     private fun getAllClassementData() {
-        val viewModel = activity?.let { ViewModelProvider(it, viewModelFactory).get(
-            LeagueDetailsViewModel::class.java) }
-        viewModel?.allClassementData?.observe(viewLifecycleOwner, Observer<Result<List<ClassementModel>?>> {
-            checkState(it)
-        })
+        val viewModel = activity?.let {
+            ViewModelProvider(it, viewModelFactory).get(
+                LeagueDetailsViewModel::class.java
+            )
+        }
+        viewModel?.allClassementData?.observe(
+            viewLifecycleOwner,
+            Observer<Result<List<ClassementModel>?>> {
+                checkState(it)
+            })
     }
 
-    private fun checkState(it: Result<List<ClassementModel>?>){
+    private fun checkState(it: Result<List<ClassementModel>?>) {
         when (it) {
             is Result.Success -> {
                 initialize(it.data)
             }
-            is Result.Error -> toast(it.exception.toString())
+            is Result.Error -> Toast.makeText(activity, it.exception.toString(), Toast.LENGTH_SHORT)
+                .show()
         }
     }
 
     private fun initialize(it: List<ClassementModel>?) {
-        if(it.isNullOrEmpty()) {
+        if (it.isNullOrEmpty()) {
             no_data.visibility = View.VISIBLE
         } else {
             no_data.visibility = View.INVISIBLE

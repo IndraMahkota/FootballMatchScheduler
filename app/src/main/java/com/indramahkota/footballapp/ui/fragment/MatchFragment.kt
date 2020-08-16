@@ -1,25 +1,23 @@
 package com.indramahkota.footballapp.ui.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.indramahkota.footballapp.R
-import com.indramahkota.footballapp.data.source.repository.Result
-import com.indramahkota.footballapp.data.source.repository.Status.ERROR
-import com.indramahkota.footballapp.data.source.repository.Status.SUCCESS
 import com.indramahkota.footballapp.data.source.locale.entity.MatchEntity
+import com.indramahkota.footballapp.data.source.repository.Result
 import com.indramahkota.footballapp.ui.activity.DetailsMatchActivity
 import com.indramahkota.footballapp.ui.activity.DetailsMatchActivity.Companion.PARCELABLE_MATCH_DATA
 import com.indramahkota.footballapp.ui.adapter.MatchHorizontalAdapter
 import com.indramahkota.footballapp.viewmodel.LeagueDetailsViewModel
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_match.*
-import org.jetbrains.anko.support.v4.intentFor
-import org.jetbrains.anko.support.v4.toast
 import javax.inject.Inject
 
 class MatchFragment : Fragment() {
@@ -71,7 +69,12 @@ class MatchFragment : Fragment() {
             MatchHorizontalAdapter(
                 listNextData
             ) { matchModel ->
-                startActivity(intentFor<DetailsMatchActivity>(PARCELABLE_MATCH_DATA to matchModel))
+                run {
+                    val intent = Intent(activity, DetailsMatchActivity::class.java).apply {
+                        putExtra(PARCELABLE_MATCH_DATA, matchModel)
+                    }
+                    startActivity(intent)
+                }
             }
         rv_next_match.adapter = nextMatchAdapter
 
@@ -80,17 +83,22 @@ class MatchFragment : Fragment() {
             MatchHorizontalAdapter(
                 listPrevData
             ) { matchModel ->
-                startActivity(intentFor<DetailsMatchActivity>(PARCELABLE_MATCH_DATA to matchModel))
+                run {
+                    val intent = Intent(activity, DetailsMatchActivity::class.java).apply {
+                        putExtra(PARCELABLE_MATCH_DATA, matchModel)
+                    }
+                    startActivity(intent)
+                }
             }
         rv_prev_match.adapter = prevMatchAdapter
 
-        if(nextMatchsData != null) {
+        if (nextMatchsData != null) {
             initializeNext(nextMatchsData)
         } else {
             getNextListData()
         }
 
-        if(prevMatchsData != null) {
+        if (prevMatchsData != null) {
             initializePrev(prevMatchsData)
         } else {
             getPrevListData()
@@ -98,33 +106,48 @@ class MatchFragment : Fragment() {
     }
 
     private fun getNextListData() {
-        val viewModel = activity?.let { ViewModelProvider(it, viewModelFactory).get(LeagueDetailsViewModel::class.java) }
-        viewModel?.newNextMatchData?.observe(viewLifecycleOwner, Observer<Result<List<MatchEntity>?>> {
-            checkState(it, 0)
-        })
+        val viewModel = activity?.let {
+            ViewModelProvider(
+                it,
+                viewModelFactory
+            ).get(LeagueDetailsViewModel::class.java)
+        }
+        viewModel?.newNextMatchData?.observe(
+            viewLifecycleOwner,
+            Observer<Result<List<MatchEntity>?>> {
+                checkState(it, 0)
+            })
     }
 
     private fun getPrevListData() {
-        val viewModel = activity?.let { ViewModelProvider(it, viewModelFactory).get(LeagueDetailsViewModel::class.java) }
-        viewModel?.newPrevMatchData?.observe(viewLifecycleOwner, Observer<Result<List<MatchEntity>?>> {
-            checkState(it, 1)
-        })
+        val viewModel = activity?.let {
+            ViewModelProvider(
+                it,
+                viewModelFactory
+            ).get(LeagueDetailsViewModel::class.java)
+        }
+        viewModel?.newPrevMatchData?.observe(
+            viewLifecycleOwner,
+            Observer<Result<List<MatchEntity>?>> {
+                checkState(it, 1)
+            })
     }
 
-    private fun checkState(it: Result<List<MatchEntity>?>, int: Int){
+    private fun checkState(it: Result<List<MatchEntity>?>, int: Int) {
         when (it) {
             is Result.Success -> {
-                if(int == 0)
+                if (int == 0)
                     initializeNext(it.data)
                 else
                     initializePrev(it.data)
             }
-            is Result.Error -> toast(it.exception.toString())
+            is Result.Error -> Toast.makeText(activity, it.exception.toString(), Toast.LENGTH_SHORT)
+                .show()
         }
     }
 
     private fun initializeNext(it: List<MatchEntity>?) {
-        if(it.isNullOrEmpty()) {
+        if (it.isNullOrEmpty()) {
             next_no_data.visibility = View.VISIBLE
         } else {
             next_no_data.visibility = View.INVISIBLE
@@ -137,7 +160,7 @@ class MatchFragment : Fragment() {
     }
 
     private fun initializePrev(it: List<MatchEntity>?) {
-        if(it.isNullOrEmpty()) {
+        if (it.isNullOrEmpty()) {
             prev_no_data.visibility = View.VISIBLE
         } else {
             prev_no_data.visibility = View.INVISIBLE

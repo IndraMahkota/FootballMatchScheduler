@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -11,10 +10,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToPadding="false"
-        android:padding="10dp"
         android:orientation="vertical"
+        android:padding="10dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/item_team"/>
+        tools:listitem="@layout/item_team" />
 
     <include
         android:id="@+id/no_data"
@@ -25,20 +24,27 @@
         android:id="@+id/shimmer_view_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="10dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="10dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-            <include layout="@layout/item_team_loading"/>
-            <include layout="@layout/item_team_loading"/>
-            <include layout="@layout/item_team_loading"/>
-            <include layout="@layout/item_team_loading"/>
-            <include layout="@layout/item_team_loading"/>
-            <include layout="@layout/item_team_loading"/>
-            <include layout="@layout/item_team_loading"/>
+
+            <include layout="@layout/item_team_loading" />
+
+            <include layout="@layout/item_team_loading" />
+
+            <include layout="@layout/item_team_loading" />
+
+            <include layout="@layout/item_team_loading" />
+
+            <include layout="@layout/item_team_loading" />
+
+            <include layout="@layout/item_team_loading" />
+
+            <include layout="@layout/item_team_loading" />
         </LinearLayout>
 
     </com.facebook.shimmer.ShimmerFrameLayout>

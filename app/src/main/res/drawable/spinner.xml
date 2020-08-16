@@ -1,112 +1,112 @@
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:viewportWidth="100"
-    android:viewportHeight="100"
     android:width="200dp"
-    android:height="200dp">
+    android:height="200dp"
+    android:viewportWidth="100"
+    android:viewportHeight="100">
     <group
         android:pivotX="50"
         android:pivotY="50">
         <path
-            android:pathData="M50 24H50A3 6 0 0 1 53 30V30A3 6 0 0 1 50 36H50A3 6 0 0 1 47 30V30A3 6 0 0 1 50 24Z"
+            android:fillAlpha="0.0833333"
             android:fillColor="#FE718D"
-            android:fillAlpha="0.0833333" />
+            android:pathData="M50 24H50A3 6 0 0 1 53 30V30A3 6 0 0 1 50 36H50A3 6 0 0 1 47 30V30A3 6 0 0 1 50 24Z" />
     </group>
     <group
-        android:rotation="30"
         android:pivotX="50"
-        android:pivotY="50">
+        android:pivotY="50"
+        android:rotation="30">
         <path
-            android:pathData="M50 24H50A3 6 0 0 1 53 30V30A3 6 0 0 1 50 36H50A3 6 0 0 1 47 30V30A3 6 0 0 1 50 24Z"
+            android:fillAlpha="0.166667"
             android:fillColor="#FE718D"
-            android:fillAlpha="0.166667" />
+            android:pathData="M50 24H50A3 6 0 0 1 53 30V30A3 6 0 0 1 50 36H50A3 6 0 0 1 47 30V30A3 6 0 0 1 50 24Z" />
     </group>
     <group
-        android:rotation="60"
         android:pivotX="50"
-        android:pivotY="50">
+        android:pivotY="50"
+        android:rotation="60">
         <path
-            android:pathData="M50 24H50A3 6 0 0 1 53 30V30A3 6 0 0 1 50 36H50A3 6 0 0 1 47 30V30A3 6 0 0 1 50 24Z"
+            android:fillAlpha="0.25"
             android:fillColor="#FE718D"
-            android:fillAlpha="0.25" />
+            android:pathData="M50 24H50A3 6 0 0 1 53 30V30A3 6 0 0 1 50 36H50A3 6 0 0 1 47 30V30A3 6 0 0 1 50 24Z" />
     </group>
     <group
-        android:rotation="90"
         android:pivotX="50"
-        android:pivotY="50">
+        android:pivotY="50"
+        android:rotation="90">
         <path
-            android:pathData="M50 24H50A3 6 0 0 1 53 30V30A3 6 0 0 1 50 36H50A3 6 0 0 1 47 30V30A3 6 0 0 1 50 24Z"
+            android:fillAlpha="0.333333"
             android:fillColor="#FE718D"
-            android:fillAlpha="0.333333" />
+            android:pathData="M50 24H50A3 6 0 0 1 53 30V30A3 6 0 0 1 50 36H50A3 6 0 0 1 47 30V30A3 6 0 0 1 50 24Z" />
     </group>
     <group
-        android:rotation="120"
         android:pivotX="50"
-        android:pivotY="50">
+        android:pivotY="50"
+        android:rotation="120">
         <path
-            android:pathData="M50 24H50A3 6 0 0 1 53 30V30A3 6 0 0 1 50 36H50A3 6 0 0 1 47 30V30A3 6 0 0 1 50 24Z"
+            android:fillAlpha="0.416667"
             android:fillColor="#FE718D"
-            android:fillAlpha="0.416667" />
+            android:pathData="M50 24H50A3 6 0 0 1 53 30V30A3 6 0 0 1 50 36H50A3 6 0 0 1 47 30V30A3 6 0 0 1 50 24Z" />
     </group>
     <group
-        android:rotation="150"
         android:pivotX="50"
-        android:pivotY="50">
+        android:pivotY="50"
+        android:rotation="150">
         <path
-            android:pathData="M50 24H50A3 6 0 0 1 53 30V30A3 6 0 0 1 50 36H50A3 6 0 0 1 47 30V30A3 6 0 0 1 50 24Z"
+            android:fillAlpha="0.5"
             android:fillColor="#FE718D"
-            android:fillAlpha="0.5" />
+            android:pathData="M50 24H50A3 6 0 0 1 53 30V30A3 6 0 0 1 50 36H50A3 6 0 0 1 47 30V30A3 6 0 0 1 50 24Z" />
     </group>
     <group
-        android:rotation="180"
         android:pivotX="50"
-        android:pivotY="50">
+        android:pivotY="50"
+        android:rotation="180">
         <path
-            android:pathData="M50 24H50A3 6 0 0 1 53 30V30A3 6 0 0 1 50 36H50A3 6 0 0 1 47 30V30A3 6 0 0 1 50 24Z"
+            android:fillAlpha="0.583333"
             android:fillColor="#FE718D"
-            android:fillAlpha="0.583333" />
+            android:pathData="M50 24H50A3 6 0 0 1 53 30V30A3 6 0 0 1 50 36H50A3 6 0 0 1 47 30V30A3 6 0 0 1 50 24Z" />
     </group>
     <group
-        android:rotation="210"
         android:pivotX="50"
-        android:pivotY="50">
+        android:pivotY="50"
+        android:rotation="210">
         <path
-            android:pathData="M50 24H50A3 6 0 0 1 53 30V30A3 6 0 0 1 50 36H50A3 6 0 0 1 47 30V30A3 6 0 0 1 50 24Z"
+            android:fillAlpha="0.666667"
             android:fillColor="#FE718D"
-            android:fillAlpha="0.666667" />
+            android:pathData="M50 24H50A3 6 0 0 1 53 30V30A3 6 0 0 1 50 36H50A3 6 0 0 1 47 30V30A3 6 0 0 1 50 24Z" />
     </group>
     <group
-        android:rotation="240"
         android:pivotX="50"
-        android:pivotY="50">
+        android:pivotY="50"
+        android:rotation="240">
         <path
-            android:pathData="M50 24H50A3 6 0 0 1 53 30V30A3 6 0 0 1 50 36H50A3 6 0 0 1 47 30V30A3 6 0 0 1 50 24Z"
+            android:fillAlpha="0.75"
             android:fillColor="#FE718D"
-            android:fillAlpha="0.75" />
+            android:pathData="M50 24H50A3 6 0 0 1 53 30V30A3 6 0 0 1 50 36H50A3 6 0 0 1 47 30V30A3 6 0 0 1 50 24Z" />
     </group>
     <group
-        android:rotation="270"
         android:pivotX="50"
-        android:pivotY="50">
+        android:pivotY="50"
+        android:rotation="270">
         <path
-            android:pathData="M50 24H50A3 6 0 0 1 53 30V30A3 6 0 0 1 50 36H50A3 6 0 0 1 47 30V30A3 6 0 0 1 50 24Z"
+            android:fillAlpha="0.833333"
             android:fillColor="#FE718D"
-            android:fillAlpha="0.833333" />
+            android:pathData="M50 24H50A3 6 0 0 1 53 30V30A3 6 0 0 1 50 36H50A3 6 0 0 1 47 30V30A3 6 0 0 1 50 24Z" />
     </group>
     <group
-        android:rotation="300"
         android:pivotX="50"
-        android:pivotY="50">
+        android:pivotY="50"
+        android:rotation="300">
         <path
-            android:pathData="M50 24H50A3 6 0 0 1 53 30V30A3 6 0 0 1 50 36H50A3 6 0 0 1 47 30V30A3 6 0 0 1 50 24Z"
+            android:fillAlpha="0.916667"
             android:fillColor="#FE718D"
-            android:fillAlpha="0.916667" />
+            android:pathData="M50 24H50A3 6 0 0 1 53 30V30A3 6 0 0 1 50 36H50A3 6 0 0 1 47 30V30A3 6 0 0 1 50 24Z" />
     </group>
     <group
-        android:rotation="330"
         android:pivotX="50"
-        android:pivotY="50">
+        android:pivotY="50"
+        android:rotation="330">
         <path
-            android:pathData="M50 24H50A3 6 0 0 1 53 30V30A3 6 0 0 1 50 36H50A3 6 0 0 1 47 30V30A3 6 0 0 1 50 24Z"
-            android:fillColor="#FE718D" />
+            android:fillColor="#FE718D"
+            android:pathData="M50 24H50A3 6 0 0 1 53 30V30A3 6 0 0 1 50 36H50A3 6 0 0 1 47 30V30A3 6 0 0 1 50 24Z" />
     </group>
 </vector>

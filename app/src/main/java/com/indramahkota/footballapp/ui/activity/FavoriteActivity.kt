@@ -9,7 +9,7 @@ import com.indramahkota.footballapp.ui.fragment.TeamFragment
 import com.indramahkota.footballapp.ui.pager.TabPagerAdapter
 import kotlinx.android.synthetic.main.activity_favorite.*
 
-class   FavoriteActivity : AppCompatActivity() {
+class FavoriteActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,7 +21,8 @@ class   FavoriteActivity : AppCompatActivity() {
         val listTitle = arrayOf(
             resources.getString(R.string.prev_match),
             resources.getString(R.string.next_match),
-            resources.getString(R.string.team) )
+            resources.getString(R.string.team)
+        )
 
         val listFragment = mutableListOf(
             FavoriteFragment.newInstance(resources.getString(R.string.prev_favorite_match_fragment)),

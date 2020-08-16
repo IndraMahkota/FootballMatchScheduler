@@ -4,6 +4,7 @@ import android.graphics.Matrix
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -22,7 +23,6 @@ import com.indramahkota.footballapp.viewmodel.MatchDetailsViewModel
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_match_details.*
 import kotlinx.android.synthetic.main.layout_text_views.view.*
-import org.jetbrains.anko.toast
 import javax.inject.Inject
 
 class DetailsMatchActivity : AppCompatActivity() {
@@ -57,20 +57,24 @@ class DetailsMatchActivity : AppCompatActivity() {
         viewModel.matchDetails.observe(this, Observer {
             when (it) {
                 is Result.Success -> {
-                    if(it.data?.events != null) {
+                    if (it.data?.events != null) {
                         initializeUi(it.data.events[0])
                         matchDetailsData = it.data.events[0]
                         updateFavorite(matchDetailsData, homeTeamDetailsData, awayTeamDetailsData)
                     }
                 }
-                is Result.Error -> toast(it.exception.toString())
+                is Result.Error -> Toast.makeText(
+                    applicationContext,
+                    it.exception.toString(),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         })
 
-        viewModel.homeTeamDetails.observe(this, Observer<Result<TeamDetailsResponse?>>{
+        viewModel.homeTeamDetails.observe(this, Observer<Result<TeamDetailsResponse?>> {
             when (it) {
                 is Result.Success -> {
-                    if(it.data?.teams != null) {
+                    if (it.data?.teams != null) {
                         Glide.with(this)
                             .load(it.data.teams[0].strTeamBadge ?: R.drawable.image_error)
                             .placeholder(R.drawable.spinner_animation)
@@ -82,14 +86,18 @@ class DetailsMatchActivity : AppCompatActivity() {
                         updateFavorite(matchDetailsData, homeTeamDetailsData, awayTeamDetailsData)
                     }
                 }
-                is Result.Error -> toast(it.exception.toString())
+                is Result.Error -> Toast.makeText(
+                    applicationContext,
+                    it.exception.toString(),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         })
 
-        viewModel.awayTeamDetails.observe(this, Observer<Result<TeamDetailsResponse?>>{
+        viewModel.awayTeamDetails.observe(this, Observer<Result<TeamDetailsResponse?>> {
             when (it) {
                 is Result.Success -> {
-                    if(it.data?.teams != null) {
+                    if (it.data?.teams != null) {
                         Glide.with(this)
                             .load(it.data.teams[0].strTeamBadge ?: R.drawable.image_error)
                             .placeholder(R.drawable.spinner_animation)
@@ -101,22 +109,27 @@ class DetailsMatchActivity : AppCompatActivity() {
                         updateFavorite(matchDetailsData, homeTeamDetailsData, awayTeamDetailsData)
                     }
                 }
-                is Result.Error -> toast(it.exception.toString())
+                is Result.Error -> Toast.makeText(
+                    applicationContext,
+                    it.exception.toString(),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         })
 
-        favoriteViewModel = ViewModelProvider(this, viewModelFactory).get(FavoriteViewModel::class.java)
-        favoriteViewModel.favoriteMatchById.observe(this, Observer<MatchEntity>{
-            if(it != null){
+        favoriteViewModel =
+            ViewModelProvider(this, viewModelFactory).get(FavoriteViewModel::class.java)
+        favoriteViewModel.favoriteMatchById.observe(this, Observer<MatchEntity> {
+            if (it != null) {
                 favoriteMatch = it
                 fab.setImageResource(R.drawable.ic_star_pink)
             }
         })
 
-        matchEntity?.idEvent?.let {favoriteViewModel.getFavoriteMatchById(it)}
-        matchEntity?.idEvent?.let {viewModel.loadMatchDetails(it)}
-        matchEntity?.idHomeTeam?.let {viewModel.loadHomeTeamDetails(it)}
-        matchEntity?.idAwayTeam?.let {viewModel.loadAwayTeamDetails(it)}
+        matchEntity?.idEvent?.let { favoriteViewModel.getFavoriteMatchById(it) }
+        matchEntity?.idEvent?.let { viewModel.loadMatchDetails(it) }
+        matchEntity?.idHomeTeam?.let { viewModel.loadHomeTeamDetails(it) }
+        matchEntity?.idAwayTeam?.let { viewModel.loadAwayTeamDetails(it) }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -128,18 +141,22 @@ class DetailsMatchActivity : AppCompatActivity() {
         }
     }
 
-    private fun updateFavorite(match: MatchDetailsModel?,
-                               homeTeam: TeamDetailsiModel?,
-                               awayTeam: TeamDetailsiModel?){
-        if(favoriteMatch != null){
+    private fun updateFavorite(
+        match: MatchDetailsModel?,
+        homeTeam: TeamDetailsiModel?,
+        awayTeam: TeamDetailsiModel?
+    ) {
+        if (favoriteMatch != null) {
             val newData = createNewFavoriteData(match, homeTeam, awayTeam)
             favoriteViewModel.updateFavoriteMatch(newData)
         }
     }
 
-    private fun createNewFavoriteData(match: MatchDetailsModel?,
-                                      homeTeam: TeamDetailsiModel?,
-                                      awayTeam: TeamDetailsiModel?):MatchEntity {
+    private fun createNewFavoriteData(
+        match: MatchDetailsModel?,
+        homeTeam: TeamDetailsiModel?,
+        awayTeam: TeamDetailsiModel?
+    ): MatchEntity {
         return MatchEntity(
             match?.idEvent ?: "",
             match?.idHomeTeam ?: "",
@@ -257,7 +274,7 @@ class DetailsMatchActivity : AppCompatActivity() {
         list.add(data.strHomeYellowCards)
         list.add(data.strAwayYellowCards)
 
-        if(!checkAllNullAndEmpty(list)){
+        if (!checkAllNullAndEmpty(list)) {
             no_data.visibility = View.VISIBLE
         }
 
@@ -272,7 +289,7 @@ class DetailsMatchActivity : AppCompatActivity() {
     private fun checkAllNullAndEmpty(list: List<String?>): Boolean {
         var result = false
         for (str in list) {
-            if(str != null && str.isNotEmpty()) {
+            if (str != null && str.isNotEmpty()) {
                 result = true
                 break
             }

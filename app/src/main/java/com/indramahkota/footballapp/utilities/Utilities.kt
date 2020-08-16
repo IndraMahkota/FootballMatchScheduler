@@ -51,7 +51,7 @@ object Utilities {
 
 fun List<TeamDetailsiModel>?.toListTeamEntity(): List<TeamEntity> {
     val teamList = mutableListOf<TeamEntity>()
-    if(this != null) {
+    if (this != null) {
         for (matchNetworkModel in this) {
             teamList.add(matchNetworkModel.toTeamEntity())
         }
@@ -60,7 +60,8 @@ fun List<TeamDetailsiModel>?.toListTeamEntity(): List<TeamEntity> {
 }
 
 fun TeamDetailsiModel.toTeamEntity(): TeamEntity {
-    return TeamEntity(idTeam ?: "",
+    return TeamEntity(
+        idTeam ?: "",
         strTeam ?: "",
         strTeamBadge ?: "",
         strDescriptionEN ?: ""

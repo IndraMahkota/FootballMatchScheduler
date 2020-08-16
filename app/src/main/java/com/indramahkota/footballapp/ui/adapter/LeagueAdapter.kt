@@ -9,17 +9,18 @@ import com.indramahkota.footballapp.R
 import com.indramahkota.footballapp.data.source.locale.entity.LeagueEntity
 import kotlinx.android.synthetic.main.item_league.view.*
 
-class LeagueAdapter(private val matchList: List<LeagueEntity>,
-                   private val listener: (LeagueEntity) -> Unit
+class LeagueAdapter(
+    private val matchList: List<LeagueEntity>,
+    private val listener: (LeagueEntity) -> Unit
 ) : RecyclerView.Adapter<LeagueAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        val view = layoutInflater.inflate( R.layout.item_league, parent, false )
+        val view = layoutInflater.inflate(R.layout.item_league, parent, false)
         return ViewHolder(view)
     }
 
-    override fun getItemCount(): Int =  matchList.size
+    override fun getItemCount(): Int = matchList.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(matchList[position])

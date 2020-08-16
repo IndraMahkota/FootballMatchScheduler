@@ -1,5 +1,6 @@
 package com.indramahkota.footballapp.ui.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -18,7 +19,6 @@ import com.indramahkota.footballapp.utilities.Utilities.compareDateBeforeAndEqua
 import com.indramahkota.footballapp.viewmodel.FavoriteViewModel
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_favorite.*
-import org.jetbrains.anko.support.v4.intentFor
 import javax.inject.Inject
 
 class FavoriteFragment : Fragment() {
@@ -72,11 +72,16 @@ class FavoriteFragment : Fragment() {
             MatchVerticalAdapter(
                 listData
             ) { matchModel ->
-                startActivity(intentFor<DetailsMatchActivity>(PARCELABLE_MATCH_DATA to matchModel))
+                run {
+                    val intent = Intent(activity, DetailsMatchActivity::class.java).apply {
+                        putExtra(PARCELABLE_MATCH_DATA, matchModel)
+                    }
+                    startActivity(intent)
+                }
             }
         rv_match.adapter = matchAdapter
 
-        if(matchsData != null){
+        if (matchsData != null) {
             initializeUi(matchsData)
         } else {
             when (state) {
@@ -91,7 +96,7 @@ class FavoriteFragment : Fragment() {
         viewModel.getAllFavoriteMatch().observe(viewLifecycleOwner, Observer<List<MatchEntity>> {
             val newList = ArrayList<MatchEntity>()
             for (item in it) {
-                if(compareDateBeforeAndEqual(item.dateEvent)){
+                if (compareDateBeforeAndEqual(item.dateEvent)) {
                     newList.add(item)
                 }
             }
@@ -104,7 +109,7 @@ class FavoriteFragment : Fragment() {
         viewModel.getAllFavoriteMatch().observe(viewLifecycleOwner, Observer<List<MatchEntity>> {
             val newList = ArrayList<MatchEntity>()
             for (item in it) {
-                if(compareDateAfter(item.dateEvent)){
+                if (compareDateAfter(item.dateEvent)) {
                     newList.add(item)
                 }
             }
@@ -113,7 +118,7 @@ class FavoriteFragment : Fragment() {
     }
 
     private fun initializeUi(it: List<MatchEntity>?) {
-        if(it.isNullOrEmpty()) {
+        if (it.isNullOrEmpty()) {
             no_data.visibility = View.VISIBLE
         } else {
             no_data.visibility = View.INVISIBLE

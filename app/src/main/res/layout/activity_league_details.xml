@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/container"
     tools:context=".ui.activity.MatchActivity">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -24,74 +23,74 @@
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <LinearLayout
-                android:layout_height="300dp"
                 android:layout_width="match_parent"
-                android:paddingTop="?actionBarSize"
-                android:paddingBottom="75dp"
-                android:paddingStart="20dp"
-                android:paddingEnd="0dp"
+                android:layout_height="300dp"
                 android:orientation="horizontal"
+                android:paddingStart="20dp"
+                android:paddingTop="?actionBarSize"
+                android:paddingEnd="0dp"
+                android:paddingBottom="75dp"
                 app:layout_collapseMode="parallax">
 
                 <ImageView
                     android:id="@+id/image_league"
                     android:layout_width="150dp"
-                    android:src="@drawable/spinner_animation"
                     android:layout_height="match_parent"
-                    android:contentDescription="@string/league_img_details"/>
+                    android:contentDescription="@string/league_img_details"
+                    android:src="@drawable/spinner_animation" />
 
                 <LinearLayout
-                    android:layout_height="300dp"
                     android:layout_width="match_parent"
+                    android:layout_height="300dp"
                     android:orientation="vertical">
 
                     <TextView
+                        style="@style/TextContent.White"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/sport"
-                        style="@style/TextContent.White"
-                        android:paddingBottom="5dp"/>
+                        android:paddingBottom="5dp"
+                        android:text="@string/sport" />
 
                     <TextView
                         android:id="@+id/strSportData"
+                        style="@style/TextContent.Small"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/sport"
-                        style="@style/TextContent.Small"
+                        android:paddingBottom="10dp"
                         android:singleLine="true"
-                        android:paddingBottom="10dp"/>
+                        android:text="@string/sport" />
 
                     <TextView
+                        style="@style/TextContent.White"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/country"
-                        style="@style/TextContent.White"
-                        android:paddingBottom="5dp"/>
+                        android:paddingBottom="5dp"
+                        android:text="@string/country" />
 
                     <TextView
                         android:id="@+id/strCountryData"
+                        style="@style/TextContent.Small"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/country"
-                        style="@style/TextContent.Small"
+                        android:paddingBottom="10dp"
                         android:singleLine="true"
-                        android:paddingBottom="10dp"/>
+                        android:text="@string/country" />
 
                     <TextView
+                        style="@style/TextContent.White"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/website"
-                        style="@style/TextContent.White"
-                        android:paddingBottom="5dp"/>
+                        android:paddingBottom="5dp"
+                        android:text="@string/website" />
 
                     <TextView
                         android:id="@+id/strWebsiteData"
+                        style="@style/TextContent.Small"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/website"
-                        style="@style/TextContent.Small"
+                        android:paddingBottom="10dp"
                         android:singleLine="true"
-                        android:paddingBottom="10dp"/>
+                        android:text="@string/website" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -101,7 +100,7 @@
                 android:layout_height="?actionBarSize"
                 app:layout_collapseMode="pin"
                 app:layout_scrollFlags="scroll|snap|enterAlways"
-                app:title="@string/title_activity_league_details"/>
+                app:title="@string/title_activity_league_details" />
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 
@@ -109,7 +108,7 @@
             android:id="@+id/tabLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?attr/colorPrimary"/>
+            android:background="?attr/colorPrimary" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -123,8 +122,7 @@
             android:id="@+id/viewPager"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
-        </androidx.viewpager.widget.ViewPager>
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"></androidx.viewpager.widget.ViewPager>
 
     </androidx.core.widget.NestedScrollView>
 
