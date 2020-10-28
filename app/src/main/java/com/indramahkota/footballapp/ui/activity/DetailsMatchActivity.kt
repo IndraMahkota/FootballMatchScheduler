@@ -5,8 +5,6 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
@@ -14,18 +12,17 @@ import com.google.android.material.snackbar.Snackbar
 import com.indramahkota.footballapp.R
 import com.indramahkota.footballapp.data.source.locale.entity.MatchEntity
 import com.indramahkota.footballapp.data.source.remote.model.MatchDetailsModel
-import com.indramahkota.footballapp.data.source.remote.model.TeamDetailsResponse
 import com.indramahkota.footballapp.data.source.remote.model.TeamDetailsiModel
 import com.indramahkota.footballapp.data.source.repository.Result
 import com.indramahkota.footballapp.utilities.Utilities.formatDateFromString
 import com.indramahkota.footballapp.viewmodel.FavoriteViewModel
 import com.indramahkota.footballapp.viewmodel.MatchDetailsViewModel
-import dagger.android.AndroidInjection
+import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_match_details.*
 import kotlinx.android.synthetic.main.layout_text_views.view.*
 import javax.inject.Inject
 
-class DetailsMatchActivity : AppCompatActivity() {
+class DetailsMatchActivity : DaggerAppCompatActivity() {
 
     companion object {
         const val PARCELABLE_MATCH_DATA = "parcelable_match_data"
@@ -40,11 +37,10 @@ class DetailsMatchActivity : AppCompatActivity() {
     private lateinit var viewModel: MatchDetailsViewModel
     private lateinit var favoriteViewModel: FavoriteViewModel
 
-    @set:Inject
+    @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_match_details)
 
@@ -54,7 +50,7 @@ class DetailsMatchActivity : AppCompatActivity() {
         matchEntity = intent?.getParcelableExtra(PARCELABLE_MATCH_DATA)
 
         viewModel = ViewModelProvider(this, viewModelFactory).get(MatchDetailsViewModel::class.java)
-        viewModel.matchDetails.observe(this, Observer {
+        viewModel.matchDetails.observe(this, {
             when (it) {
                 is Result.Success -> {
                     if (it.data?.events != null) {
@@ -71,7 +67,7 @@ class DetailsMatchActivity : AppCompatActivity() {
             }
         })
 
-        viewModel.homeTeamDetails.observe(this, Observer<Result<TeamDetailsResponse?>> {
+        viewModel.homeTeamDetails.observe(this, {
             when (it) {
                 is Result.Success -> {
                     if (it.data?.teams != null) {
@@ -94,7 +90,7 @@ class DetailsMatchActivity : AppCompatActivity() {
             }
         })
 
-        viewModel.awayTeamDetails.observe(this, Observer<Result<TeamDetailsResponse?>> {
+        viewModel.awayTeamDetails.observe(this, {
             when (it) {
                 is Result.Success -> {
                     if (it.data?.teams != null) {
@@ -119,7 +115,7 @@ class DetailsMatchActivity : AppCompatActivity() {
 
         favoriteViewModel =
             ViewModelProvider(this, viewModelFactory).get(FavoriteViewModel::class.java)
-        favoriteViewModel.favoriteMatchById.observe(this, Observer<MatchEntity> {
+        favoriteViewModel.favoriteMatchById.observe(this, {
             if (it != null) {
                 favoriteMatch = it
                 fab.setImageResource(R.drawable.ic_star_pink)

@@ -1,34 +1,8 @@
 package com.indramahkota.footballapp
 
-import android.app.Application
-import com.indramahkota.footballapp.di.component.AppComponent
 import com.indramahkota.footballapp.di.component.DaggerAppComponent
-import com.indramahkota.footballapp.di.module.ApiModule
-import com.indramahkota.footballapp.di.module.DbModule
-import dagger.android.AndroidInjector
-import dagger.android.DispatchingAndroidInjector
-import dagger.android.HasAndroidInjector
-import javax.inject.Inject
+import dagger.android.DaggerApplication
 
-class FootballApp : Application(), HasAndroidInjector {
-
-    companion object {
-        lateinit var component: AppComponent
-    }
-
-    @Inject
-    lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Any>
-
-    override fun onCreate() {
-        super.onCreate()
-
-        component = DaggerAppComponent.builder()
-            .application(this)
-            .apiModule(ApiModule())
-            .dbModule(DbModule())
-            .build()
-        component.inject(this)
-    }
-
-    override fun androidInjector(): AndroidInjector<Any> = dispatchingAndroidInjector
+class FootballApp : DaggerApplication() {
+    override fun applicationInjector() = DaggerAppComponent.builder().application(this).build()
 }

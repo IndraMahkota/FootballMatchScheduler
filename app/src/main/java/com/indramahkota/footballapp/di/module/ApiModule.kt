@@ -30,9 +30,7 @@ class ApiModule {
 
     @Provides
     @Singleton
-    fun provideGson(): Gson {
-        return GsonBuilder().create()
-    }
+    fun provideGson(): Gson = GsonBuilder().create()
 
     @Provides
     @Singleton
@@ -46,7 +44,6 @@ class ApiModule {
 
     @Provides
     @Singleton
-    fun provideTsdbApi(retrofit: Retrofit): EndPointService {
-        return retrofit.create(EndPointService::class.java)
-    }
+    fun provideTsdbApi(retrofit: Retrofit): EndPointService =
+        retrofit.create(EndPointService::class.java)
 }

@@ -10,17 +10,18 @@ import com.indramahkota.footballapp.R
 import com.indramahkota.footballapp.data.source.locale.entity.TeamEntity
 import kotlinx.android.synthetic.main.item_team.view.*
 
-class TeamAdapter(private val teamList: MutableList<TeamEntity>,
-                  private val listener: (TeamEntity) -> Unit
+class TeamAdapter(
+    private val teamList: MutableList<TeamEntity>,
+    private val listener: (TeamEntity) -> Unit
 ) : RecyclerView.Adapter<TeamAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        val view = layoutInflater.inflate( R.layout.item_team, parent, false )
+        val view = layoutInflater.inflate(R.layout.item_team, parent, false)
         return ViewHolder(view)
     }
 
-    fun replace(items: List<TeamEntity>){
+    fun replace(items: List<TeamEntity>) {
         teamList.clear()
         teamList.addAll(items)
         notifyDataSetChanged()
@@ -31,7 +32,7 @@ class TeamAdapter(private val teamList: MutableList<TeamEntity>,
         notifyDataSetChanged()
     }
 
-    override fun getItemCount(): Int =  teamList.size
+    override fun getItemCount(): Int = teamList.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(teamList[position])

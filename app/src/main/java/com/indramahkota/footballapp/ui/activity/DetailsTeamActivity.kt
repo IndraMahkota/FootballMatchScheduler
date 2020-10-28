@@ -4,25 +4,22 @@ import android.graphics.Matrix
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.google.android.material.snackbar.Snackbar
 import com.indramahkota.footballapp.R
-import com.indramahkota.footballapp.data.source.repository.Result
 import com.indramahkota.footballapp.data.source.locale.entity.TeamEntity
 import com.indramahkota.footballapp.data.source.remote.model.TeamDetailsiModel
-import com.indramahkota.footballapp.data.source.remote.model.TeamDetailsResponse
+import com.indramahkota.footballapp.data.source.repository.Result
 import com.indramahkota.footballapp.utilities.toTeamEntity
 import com.indramahkota.footballapp.viewmodel.FavoriteViewModel
 import com.indramahkota.footballapp.viewmodel.TeamDetailsViewModel
-import dagger.android.AndroidInjection
+import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_team_details.*
 import javax.inject.Inject
 
-class DetailsTeamActivity : AppCompatActivity() {
+class DetailsTeamActivity : DaggerAppCompatActivity() {
 
     companion object {
         const val PARCELABLE_TEAM_DATA = "parcelable_team_data"
@@ -35,11 +32,10 @@ class DetailsTeamActivity : AppCompatActivity() {
     private lateinit var viewModel: TeamDetailsViewModel
     private lateinit var favoriteViewModel: FavoriteViewModel
 
-    @set:Inject
+    @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_team_details)
 
@@ -49,7 +45,7 @@ class DetailsTeamActivity : AppCompatActivity() {
         teamEntity = intent?.getParcelableExtra(PARCELABLE_TEAM_DATA)
 
         viewModel = ViewModelProvider(this, viewModelFactory).get(TeamDetailsViewModel::class.java)
-        viewModel.teamDetails.observe(this, Observer<Result<TeamDetailsResponse?>> {
+        viewModel.teamDetails.observe(this, {
             when (it) {
                 is Result.Success -> {
                     if (it.data?.teams != null) {
@@ -68,7 +64,7 @@ class DetailsTeamActivity : AppCompatActivity() {
 
         favoriteViewModel =
             ViewModelProvider(this, viewModelFactory).get(FavoriteViewModel::class.java)
-        favoriteViewModel.favoriteTeamById.observe(this, Observer<TeamEntity> {
+        favoriteViewModel.favoriteTeamById.observe(this, {
             if (it != null) {
                 favoriteTeam = it
                 fab.setImageResource(R.drawable.ic_star_pink)

@@ -5,15 +5,12 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.google.android.material.tabs.TabLayout
 import com.indramahkota.footballapp.R
 import com.indramahkota.footballapp.data.source.locale.entity.LeagueEntity
-import com.indramahkota.footballapp.data.source.remote.model.LeagueDetailsResponse
 import com.indramahkota.footballapp.data.source.repository.Result
 import com.indramahkota.footballapp.ui.activity.SearchActivity.Companion.MATCH_PARCELABLE_DATA
 import com.indramahkota.footballapp.ui.activity.SearchActivity.Companion.TEAM_PARCELABLE_DATA
@@ -22,11 +19,11 @@ import com.indramahkota.footballapp.ui.fragment.MatchFragment
 import com.indramahkota.footballapp.ui.fragment.TeamFragment
 import com.indramahkota.footballapp.ui.pager.TabPagerAdapter
 import com.indramahkota.footballapp.viewmodel.LeagueDetailsViewModel
-import dagger.android.AndroidInjection
+import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_league_details.*
 import javax.inject.Inject
 
-class MatchActivity : AppCompatActivity() {
+class MatchActivity : DaggerAppCompatActivity() {
 
     companion object {
         const val PARCELABLE_LEAGUE_DATA = "parcelable_league_data"
@@ -35,11 +32,10 @@ class MatchActivity : AppCompatActivity() {
     private var league: LeagueEntity? = null
     private lateinit var viewModel: LeagueDetailsViewModel
 
-    @set:Inject
+    @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_league_details)
 
@@ -75,7 +71,7 @@ class MatchActivity : AppCompatActivity() {
 
         viewModel =
             ViewModelProvider(this, viewModelFactory).get(LeagueDetailsViewModel::class.java)
-        viewModel.leagueDetails.observe(this, Observer<Result<LeagueDetailsResponse?>> {
+        viewModel.leagueDetails.observe(this, {
             when (it) {
                 is Result.Success -> {
                     Glide.with(this)

@@ -11,13 +11,9 @@ import javax.inject.Singleton
 class DbModule {
     @Provides
     @Singleton
-    fun provideDatabase(application: Application): MyDatabase {
-        return MyDatabase.getDatabase(application)
-    }
+    fun provideDatabase(application: Application): MyDatabase = MyDatabase.getDatabase(application)
 
     @Provides
     @Singleton
-    fun provideFavoriteDao(myDatabase: MyDatabase): AppDao {
-        return myDatabase.appDao()
-    }
+    fun provideFavoriteDao(myDatabase: MyDatabase): AppDao = myDatabase.appDao()
 }

@@ -10,14 +10,14 @@ import dagger.android.ContributesAndroidInjector
 @Module
 abstract class FragmentModule {
     @ContributesAndroidInjector
-    abstract fun matchFragmentInjector(): MatchFragment?
+    abstract fun matchFragmentInjector(): MatchFragment
 
     @ContributesAndroidInjector
-    abstract fun standingFragmentInjector(): ClassementFragment?
+    abstract fun standingFragmentInjector(): ClassementFragment
 
     @ContributesAndroidInjector
-    abstract fun teamFragmentInjector(): TeamFragment?
+    abstract fun teamFragmentInjector(): TeamFragment
 
     @ContributesAndroidInjector
-    abstract fun favoriteFragmentInjector(): FavoriteFragment?
+    abstract fun favoriteFragmentInjector(): FavoriteFragment
 }

@@ -6,8 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.indramahkota.footballapp.R
 import com.indramahkota.footballapp.data.source.locale.entity.TeamEntity
@@ -17,16 +15,15 @@ import com.indramahkota.footballapp.ui.activity.DetailsTeamActivity.Companion.PA
 import com.indramahkota.footballapp.ui.adapter.TeamAdapter
 import com.indramahkota.footballapp.viewmodel.FavoriteViewModel
 import com.indramahkota.footballapp.viewmodel.LeagueDetailsViewModel
-import dagger.android.support.AndroidSupportInjection
+import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_team.*
 import javax.inject.Inject
 
-class TeamFragment : Fragment() {
+class TeamFragment : DaggerFragment() {
     companion object {
         private const val ARG_SECTION_FRAGMENT = "section_fragment"
         private const val ARG_SAVE_DATA = "save_data"
 
-        @JvmStatic
         fun newInstance(fragment: String) = TeamFragment().apply {
             arguments = Bundle().apply {
                 putString(ARG_SECTION_FRAGMENT, fragment)
@@ -39,13 +36,11 @@ class TeamFragment : Fragment() {
 
     private lateinit var allTeamAdapter: TeamAdapter
 
-    @set:Inject
+    @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        AndroidSupportInjection.inject(this)
         super.onCreate(savedInstanceState)
-
         allTeamData = savedInstanceState?.getParcelableArrayList(ARG_SAVE_DATA)
     }
 
@@ -91,14 +86,14 @@ class TeamFragment : Fragment() {
                 LeagueDetailsViewModel::class.java
             )
         }
-        viewModel?.allTeamData?.observe(viewLifecycleOwner, Observer<Result<List<TeamEntity>?>> {
+        viewModel?.allTeamData?.observe(viewLifecycleOwner, {
             checkState(it)
         })
     }
 
     private fun getAllFavoriteTeamData() {
         val viewModel = ViewModelProvider(this, viewModelFactory).get(FavoriteViewModel::class.java)
-        viewModel.getAllFavoriteTeam().observe(viewLifecycleOwner, Observer<List<TeamEntity>> {
+        viewModel.getAllFavoriteTeam().observe(viewLifecycleOwner, {
             initialize(it)
         })
     }

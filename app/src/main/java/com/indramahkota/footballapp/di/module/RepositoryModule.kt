@@ -11,10 +11,9 @@ import javax.inject.Singleton
 class RepositoryModule {
     @Provides
     @Singleton
-    fun provideRepository(service: EndPointService, dao: AppDao): FootballAppRepository {
-        return FootballAppRepository(
+    fun provideRepository(service: EndPointService, dao: AppDao): FootballAppRepository =
+        FootballAppRepository(
             service,
             dao
         )
-    }
 }

@@ -6,6 +6,7 @@ import com.indramahkota.footballapp.di.module.*
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjectionModule
+import dagger.android.AndroidInjector
 import javax.inject.Singleton
 
 @Singleton
@@ -22,19 +23,13 @@ import javax.inject.Singleton
     ]
 )
 
-interface AppComponent {
+interface AppComponent : AndroidInjector<FootballApp> {
     @Component.Builder
     interface Builder {
+
         @BindsInstance
         fun application(app: Application): Builder
-
-        @BindsInstance
-        fun apiModule(apiModule: ApiModule): Builder
-
-        @BindsInstance
-        fun dbModule(dbModule: DbModule): Builder
         fun build(): AppComponent
-    }
 
-    fun inject(footballApp: FootballApp)
+    }
 }

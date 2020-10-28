@@ -6,8 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.indramahkota.footballapp.R
 import com.indramahkota.footballapp.data.source.locale.entity.MatchEntity
@@ -16,17 +14,16 @@ import com.indramahkota.footballapp.ui.activity.DetailsMatchActivity
 import com.indramahkota.footballapp.ui.activity.DetailsMatchActivity.Companion.PARCELABLE_MATCH_DATA
 import com.indramahkota.footballapp.ui.adapter.MatchHorizontalAdapter
 import com.indramahkota.footballapp.viewmodel.LeagueDetailsViewModel
-import dagger.android.support.AndroidSupportInjection
+import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_match.*
 import javax.inject.Inject
 
-class MatchFragment : Fragment() {
+class MatchFragment : DaggerFragment() {
     companion object {
         private const val ARG_SECTION_FRAGMENT = "section_fragment"
         private const val ARG_SAVE_NEXT_DATA = "save_next_data"
         private const val ARG_SAVE_PREV_DATA = "save_prev_data"
 
-        @JvmStatic
         fun newInstance(fragment: String) = MatchFragment().apply {
             arguments = Bundle().apply {
                 putString(ARG_SECTION_FRAGMENT, fragment)
@@ -40,13 +37,11 @@ class MatchFragment : Fragment() {
     private lateinit var nextMatchAdapter: MatchHorizontalAdapter
     private lateinit var prevMatchAdapter: MatchHorizontalAdapter
 
-    @set:Inject
+    @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        AndroidSupportInjection.inject(this)
         super.onCreate(savedInstanceState)
-
         nextMatchsData = savedInstanceState?.getParcelableArrayList(ARG_SAVE_NEXT_DATA)
         prevMatchsData = savedInstanceState?.getParcelableArrayList(ARG_SAVE_PREV_DATA)
     }
@@ -114,7 +109,7 @@ class MatchFragment : Fragment() {
         }
         viewModel?.newNextMatchData?.observe(
             viewLifecycleOwner,
-            Observer<Result<List<MatchEntity>?>> {
+            {
                 checkState(it, 0)
             })
     }
@@ -128,7 +123,7 @@ class MatchFragment : Fragment() {
         }
         viewModel?.newPrevMatchData?.observe(
             viewLifecycleOwner,
-            Observer<Result<List<MatchEntity>?>> {
+            {
                 checkState(it, 1)
             })
     }
